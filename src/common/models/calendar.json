@@ -1,12 +1,9 @@
 {
-  "timestamp": "2016-02-10T20:10:05+0300", /* time and date when data was retrieved */
+  "timestamp": "2016-02-10T20:10:05+0300", 
   "events": [
     {
-      "last_modified": "2016-01-14T12:45:06Z", /* when any of the fields was last modified */
-      "rsvp_status": "attending", /* attending = user has booked from the event search
-                                    mandatory = user cannot delete, official program
-                                    ucanceled = user has deleted from her calendar
-                                    ecanceled = entire event has been cancelled */
+      "last_modified": "2016-01-14T12:45:06Z", 
+      "rsvp_status": "attending",
       "start_time": "2016-07-22T18:00:00+0300",
       "end_time": "2016-07-22T19:00:00+0300",
       "id": "907824855971753"{
@@ -27,7 +24,7 @@
         },
         "_selectable": false,
         "comments": "id"
-      },        /* or maybe a GUID? */
+      },        
       "type":  {
         "type": "String",
         "required": false,
@@ -44,7 +41,7 @@
         },
         "_selectable": false,
         "comments": "tyyppi"
-      },/* helps in color coding, such as meals with a certain color */
+      },
       "title": {
         "type": "String",
         "required": true,
@@ -62,7 +59,7 @@
         },
       "_selectable": false,
       "comments": "nimi"
-    }, /* or in English/Swedish, depending on mobile lang */
+    }, 
 
       "description": {
         "type": "String",
@@ -80,7 +77,7 @@
         },
       "_selectable": false,
       "comments": "kuvaus"
-    }, /* or English/Swedish */
+    }, 
 
       "place_name": "Aalto Design Factory"
       {
@@ -150,7 +147,7 @@
       },
       "_selectable": false,
       "comments": "leirikartan pituutta"
-    }, /* camp map has 50 x 50 meter grid */
+    }, 
       "campmapgrid_longitude": "R"{
       "type": "String",
       "required": false,
@@ -184,7 +181,7 @@
       },
       "_selectable": false,
       "comments": "alaleiri"
-    }, /* if not empty, event is only for this subcamp */
+    }, 
       "camptroop": "117 Lommo"{
       "type": "String",
       "required": false,
@@ -201,7 +198,7 @@
       },
       "_selectable": false,
       "comments": "leiri-lpk"
-    }, /* if not empty, event is only for this */
+    }, 
       "agelevels": [
         {
           "agelevel": "rover"
@@ -242,7 +239,7 @@
       },
       "_selectable": false,
       "comments": "osallistujamäärä"
-    }, /* how many people have this in calendar */
+    }, 
       "photo": "AkjX234jS"{
       "type": "String",
       "required": false,
@@ -259,5 +256,5 @@
       },
       "_selectable": false,
       "comments": "kuva"
-    }, /* Base64 encoding? */   
+    }, 
 }
