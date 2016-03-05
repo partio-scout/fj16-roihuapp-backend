@@ -1,0 +1,263 @@
+{
+  "timestamp": "2016-02-10T20:10:05+0300", /* time and date when data was retrieved */
+  "events": [
+    {
+      "last_modified": "2016-01-14T12:45:06Z", /* when any of the fields was last modified */
+      "rsvp_status": "attending", /* attending = user has booked from the event search
+                                    mandatory = user cannot delete, official program
+                                    ucanceled = user has deleted from her calendar
+                                    ecanceled = entire event has been cancelled */
+      "start_time": "2016-07-22T18:00:00+0300",
+      "end_time": "2016-07-22T19:00:00+0300",
+      "id": "907824855971753"{
+        "type": "Number",
+        "id": true,
+        "generated": true,
+        "required": false,
+        "length": null,
+        "precision": 32,
+        "scale": 0,
+        "postgresql": {
+          "columnName": "activity_id",
+          "dataType": "integer",
+          "dataLength": null,
+          "dataPrecision": 32,
+          "dataScale": 0,
+          "nullable": "YES"
+        },
+        "_selectable": false,
+        "comments": "id"
+      },        /* or maybe a GUID? */
+      "type":  {
+        "type": "String",
+        "required": false,
+        "length": 255,
+        "precision": null,
+        "scale": null,
+        "postgresql": {
+          "columnName": "type",
+          "dataType": "character varying",
+          "dataLength": 255,
+          "dataPrecision": null,
+          "dataScale": null,
+          "nullable": "YES"
+        },
+        "_selectable": false,
+        "comments": "tyyppi"
+      },/* helps in color coding, such as meals with a certain color */
+      "title": {
+        "type": "String",
+        "required": true,
+        "index": true,
+        "length": 255,
+        "precision": null,
+        "scale": null,
+        "postgresql": {
+          "columnName": "title",
+          "dataType": "character varying",
+          "dataLength": 255,
+          "dataPrecision": null,
+          "dataScale": null,
+          "nullable": "NO"
+        },
+      "_selectable": false,
+      "comments": "nimi"
+    }, /* or in English/Swedish, depending on mobile lang */
+
+      "description": {
+        "type": "String",
+        "required": false,
+        "length": 255,
+        "precision": null,
+        "scale": null,
+        "postgresql": {
+          "columnName": "description",
+          "dataType": "character varying",
+          "dataLength": 255,
+          "dataPrecision": null,
+          "dataScale": null,
+          "nullable": "YES"
+        },
+      "_selectable": false,
+      "comments": "kuvaus"
+    }, /* or English/Swedish */
+
+      "place_name": "Aalto Design Factory"
+      {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "place_name",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "paikan nimi"
+    },
+      "latitude": 60.1809692 {
+        "type": "String",
+        "required": false,
+        "length": 255,
+        "precision": null,
+        "scale": null,
+        "postgresql": {
+          "columnName": "latitude",
+          "dataType": "character varying",
+          "dataLength": 255,
+          "dataPrecision": null,
+          "dataScale": null,
+          "nullable": "YES"
+        },
+      "_selectable": false,
+      "comments": "leveyttä"
+    },
+      "longitude": 24.8316593 {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "longitude",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "pituutta"
+    },
+      "campmapgrid_latitude": "13"{
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "campmapgrid_latitude",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "leirikartan pituutta"
+    }, /* camp map has 50 x 50 meter grid */
+      "campmapgrid_longitude": "R"{
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "campmapgrid_longitude",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "leirikartan leveyttä"
+    },
+      "subcamp": "Xyz"{
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "subcamp",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "alaleiri"
+    }, /* if not empty, event is only for this subcamp */
+      "camptroop": "117 Lommo"{
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "camptroop",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "leiri-lpk"
+    }, /* if not empty, event is only for this */
+      "agelevels": [
+        {
+          "agelevel": "rover"
+        },
+        {
+          "agelevel": "adult"
+        }
+      ]{
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "agelevels",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "kohdeikäryhmä"
+    },
+      "participant_count": 75 {
+      "type": "number",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "participant_count",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "osallistujamäärä"
+    }, /* how many people have this in calendar */
+      "photo": "AkjX234jS"{
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "photo",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "kuva"
+    }, /* Base64 encoding? */   
+}

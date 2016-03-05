@@ -1,0 +1,276 @@
+{
+  "name": "RoihuUser",
+  "base": "User",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "postgresql": {
+    "schema": "public",
+    "table": "Roihu_user"
+  },
+  "properties": {
+    "id": {
+      "type": "Number",
+      "id": true,
+      "generated": true,
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "henkilönumero"
+    },
+    "lastname": {
+      "type": "String",
+      "required": false,
+      "index": true,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "lastname",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "sukunimi"
+    },
+    "firstname": {
+      "type": "String",
+      "required": false,
+      "index": true,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "firstname",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "etunimi"
+    },
+    "phone": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "phone",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "puhelinnumero"
+    },
+    "email": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "email",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "sähköposti"
+    },
+    "nickname": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "nickname",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "partionimi"
+    },
+    "primary_troop_and_city": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "primary_troop_and_city",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "ensisijainen lippukunta ja kaupunki"
+    },
+    "scout_district": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "scout_district",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "partiopiiri"
+    },
+    "subcamp": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "subcamp",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "alaleiri"
+    },
+    "camp_troop": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "camp_troop",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "leirilippukunta"
+    },
+    "description": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "description",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "kuvausteksti"
+    },
+    "public_accounts": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "public_accounts",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "some-tilit"
+    },
+    "photo": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "photo",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "kuva"
+    },
+    "agelevel": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "agelevel",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "ikäkausi"
+    },
+    "memberNumber": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "membernumber",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "pesti"
+    }
+  },
+  "validations": [],
+  
+  "methods": []
+}

@@ -1,0 +1,84 @@
+{
+  "name": "roihuapp",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/server/bootstrap.js",
+  "scripts": {
+    "start": "node .",
+    "create-user": "babel-node scripts/create-user.js",
+    "dev-login": "babel-node scripts/dev-login.js",
+    "postinstall": "scripts/deploy-bundle.sh",
+    "test": "npm run linter && npm run test-mocha",
+    "linter": "eslint --ext js --ext jsx src test webpack.development.config.babel.js webpack.production.config.babel.js",
+    "test-mocha": "mocha --compilers js:babel-core/register",
+    "seed-database": "babel-node scripts/seed-database.js",
+    "bundle": "NODE_ENV=production webpack -p --config webpack.production.config.babel.js"
+  },
+  "dependencies": {
+    "alt": "^0.18.2",
+    "babel-core": "^6.3.15",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-add-module-exports": "^0.1.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015-node4": "^2.0.2",
+    "babel-preset-react": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "bluebird": "^3.0.5",
+    "body-parser": "^1.14.1",
+    "bootstrap": "^3.3.6",
+    "bootstrap-sass": "^3.3.6",
+    "compression": "^1.6.0",
+    "cors": "^2.7.1",
+    "css-loader": "^0.23.0",
+    "errorhandler": "^1.4.2",
+    "file-loader": "^0.8.5",
+    "history": "^1.17.0",
+    "http-proxy": "^1.12.0",
+    "loopback": "^2.25.0",
+    "loopback-boot": "^2.14.2",
+    "loopback-connector-postgresql": "^2.4.0",
+    "loopback-datasource-juggler": "^2.43.0",
+    "node-sass": "^3.4.2",
+    "passport-saml": "^0.14.0",
+    "react": "^0.14.3",
+    "react-bootstrap": "^0.28.1",
+    "react-dom": "^0.14.3",
+    "react-router": "^1.0.3",
+    "sass-loader": "^3.1.2",
+    "serve-favicon": "^2.3.0",
+    "style-loader": "^0.13.0",
+    "superagent": "^1.7.2",
+    "superagent-as-promised": "^3.2.1",
+    "uglify-js": "^2.6.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.3.15",
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
+    "commander": "^2.9.0",
+    "eslint": "^1.10.2",
+    "eslint-plugin-react": "^3.11.2",
+    "mocha": "^2.3.4"
+  },
+  "engines": {
+    "node": "~4.2.2",
+    "npm": "~2.14.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:partio-scout/reki.git"
+  },
+  "babel": {
+    "presets": [
+      "es2015-node4"
+    ],
+    "plugins": [
+      "add-module-exports"
+    ]
+  },
+  "private": true,
+  "licence": "UNLICENCED"
+}
