@@ -20,11 +20,19 @@
     "dataSource": "db",
     "public": false
   },
-  "Registryuser": {
+  "RoihuUser": {
     "dataSource": "db",
     "public": true
   },
-  "Participant": {
+  "CalendarEvent": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Help": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Location": {
     "dataSource": "db",
     "public": true
   }

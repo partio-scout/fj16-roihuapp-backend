@@ -1,6 +1,6 @@
 {
-  "name": "location",
-  "base": "PresistedModel",
+  "name": "Location",
+  "base": "PersistedModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true

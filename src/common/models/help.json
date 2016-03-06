@@ -1,6 +1,6 @@
 {
-  "name": "help",
-  "base": "PresistedModel",
+  "name": "Help",
+  "base": "PersistedModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true
