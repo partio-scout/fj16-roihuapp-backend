@@ -10,7 +10,7 @@
     "postinstall": "scripts/deploy-bundle.sh",
     "test": "npm run linter && npm run test-mocha",
     "linter": "eslint --ext js --ext jsx src test webpack.development.config.babel.js webpack.production.config.babel.js",
-    "test-mocha": "mocha --compilers js:babel-core/register",
+    "test-mocha": "npm run seed-database && mocha --compilers js:babel-core/register test/unit",
     "seed-database": "babel-node scripts/seed-database.js",
     "bundle": "NODE_ENV=production webpack -p --config webpack.production.config.babel.js"
   },
