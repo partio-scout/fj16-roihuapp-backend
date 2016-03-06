@@ -7,4 +7,4 @@ deployment:
   demo:
     branch: master
     heroku:
-      appname: fj16-roihuapp-backend
+      appname: roihuapp-demo
