@@ -63,22 +63,73 @@
       "_selectable": false,
       "comments": "tyyppi"
     },
-    "location": {
-      "type": "String",
-      "required": false,
-      "length": 255,
-      "precision": null,
-      "scale": null,
+    "gpsLatitude": {
+      "type": "string",
       "postgresql": {
-        "columnName": "location",
+        "columnName": "gps_latitude",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "YES"
-      },
-      "_selectable": false,
-      "comments": "paikka"
+      }
+    },
+    "gpsLongitude": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "gps_longitude",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gridLatitude": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "grid_latitude",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gridLongitude": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "grid_location",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "lastModified": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "last_modified",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      }
+    },
+    "sortNo": {
+      "type": "int",
+      "required": true,
+      "postgresql": {
+        "columnName": "sort_no",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": null,
+        "nullable": "YES"
+      }
     },
     "name": {
       "type": "String",

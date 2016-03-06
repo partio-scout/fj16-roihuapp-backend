@@ -49,19 +49,88 @@
     },
     "eventDescription": {
       "type": "string",
-      "required": true,
+      "required": false,
       "postgresql": {
-        "columnName": "event_Description",
+        "columnName": "event_description",
         "dataType": "character varying",
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "YES"
       }
     },
-    "eventLocation": {
+    "locationName": {
       "type": "string",
       "postgresql": {
-        "columnName": "event_location",
+        "columnName": "location_name",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "lastModified": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "last_modified",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      }
+    },
+    "rsvpStatus": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "rsvp_status",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      }
+    },
+    "startTime": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "start_time",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      }
+    },
+    "endTime": {
+      "type": "string",
+      "required": true,
+      "postgresql": {
+        "columnName": "end_time",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      }
+    },
+    "gpsLatitude": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "gps_latitude",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gpsLongitude": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "gps_longitude",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,

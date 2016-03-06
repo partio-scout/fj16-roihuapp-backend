@@ -29,9 +29,26 @@
       "_selectable": false,
       "comments": "henkilönumero"
     },
+    "lastModified": {
+      "type": "string",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "last_modified",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "henkilönumero"
+    },
     "lastname": {
       "type": "String",
-      "required": false,
+      "required": true,
       "index": true,
       "length": 255,
       "precision": null,
@@ -49,7 +66,7 @@
     },
     "firstname": {
       "type": "String",
-      "required": false,
+      "required": true,
       "index": true,
       "length": 255,
       "precision": null,
@@ -65,6 +82,23 @@
       "_selectable": false,
       "comments": "etunimi"
     },
+    "country": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "country",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "ikäkausi"
+    },
     "phone": {
       "type": "String",
       "required": false,
@@ -77,7 +111,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "puhelinnumero"
@@ -94,7 +128,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "sähköposti"
@@ -111,7 +145,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "partionimi"
@@ -128,7 +162,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "ensisijainen lippukunta ja kaupunki"
@@ -145,7 +179,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "partiopiiri"
@@ -162,7 +196,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "alaleiri"
@@ -179,7 +213,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "leirilippukunta"
@@ -196,7 +230,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "kuvausteksti"
@@ -213,7 +247,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "some-tilit"
@@ -230,7 +264,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "kuva"
@@ -247,7 +281,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "ikäkausi"
@@ -264,7 +298,7 @@
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       },
       "_selectable": false,
       "comments": "pesti"
