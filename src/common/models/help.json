@@ -56,6 +56,7 @@
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "NO"
+      }
     },
     "sortNo": {
       "type": "int",
