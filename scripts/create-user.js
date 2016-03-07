@@ -2,8 +2,8 @@ import Promise from 'bluebird';
 import app from '../src/server/server.js';
 import crypto from 'crypto';
 
-const Registryuser = app.models.Registryuser;
-const createUser = Promise.promisify(Registryuser.create, { context: Registryuser });
+const RoihuUser = app.models.RoihuUser;
+const createUser = Promise.promisify(RoihuUser.create, { context: RoihuUser });
 
 const opts = require('commander')
   .usage('<member number> <user email>')
