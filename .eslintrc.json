@@ -22,14 +22,10 @@
     "restParams": true
   },
   "extends": "eslint:recommended",
-  "plugins": [
-    "react"
-  ],
+  "plugins": [],
   "rules": {
     "strict": 0,
     "no-console": 0,
-
-    "react/require-extension": [ 2, { "extensions": [ ".js", ".jsx" ] } ],
 
     "arrow-body-style": [ 2, "as-needed" ],
     "arrow-parens": [ 2, "as-needed" ],
