@@ -1,0 +1,30 @@
+[
+	{
+		"name": {
+			"FI": "Hampaiden pesu",
+			"SV": "Hengöring av tänder",
+			"EN": "Brushing teeth"
+		},
+		"description": {
+			"FI": "1. Ota harja \n2. Laita tahnaa \n3. Laita harja suuhun ja harjaa 2min \n4. Huuhtele suu ja harja",
+			"SV": "1. Ta en borste \n n2. Sätt pastan \n n3. Sätt borsten i munnen och borsta 2min \n N4. Skölj munnen och borsta",
+			"EN": "1. Take a brush \n n2. Put the paste \n n3. Put the brush in the mouth and brush 2min \n n4. Rinse your mouth and brush"
+		},
+		"lastModified": "muokattu 11.3.2016",
+		"sortNo": 1
+	},
+	{
+		"name": {
+			"FI": "Hampaiden pesu v2.0",
+			"SV": "Hengöring av tänder",
+			"EN": "Brushing teeth"
+		},
+		"description": {
+			"FI": "1. Ota harja \n2. Laita tahnaa \n3. Laita harja suuhun ja harjaa 2min \n4. Huuhtele suu ja harja",
+			"SV": "1. Ta en borste \n n2. Sätt pastan \n n3. Sätt borsten i munnen och borsta 2min \n N4. Skölj munnen och borsta",
+			"EN": "1. Take a brush \n n2. Put the paste \n n3. Put the brush in the mouth and brush 2min \n n4. Rinse your mouth and brush"
+		},
+		"lastModified": "muokattu 11.3.2016",
+		"sortNo": 2
+	}
+]
