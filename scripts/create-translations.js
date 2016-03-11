@@ -22,7 +22,6 @@ function createTranslationsForModel(modelName) {
 	return getTranslations(modelName)
 		.then(modelData => {
 				_.forEach(modelData, function(fixture) {
-					console.log(fixture);
 					var modelJSON = {};
 					var translations = [];
 
@@ -37,7 +36,7 @@ function createTranslationsForModel(modelName) {
 								translations.push({
 									"lang": lang,
 									"text": text,
-									"guid": textUuid
+									"guId": textUuid,
 								});
 							});
 						} else {
@@ -45,7 +44,6 @@ function createTranslationsForModel(modelName) {
 						}
 						
 					});
-					console.log(modelJSON);
 					createModel(modelJSON)
 						.then(createTranslation(translations))
 					  .catch(err => console.error(`Failed to create translations for model $(modelName): `, err));

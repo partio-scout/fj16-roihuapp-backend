@@ -9,8 +9,9 @@ const modelList = [
   ['ACL', false],
   ['Role', false],
   ['RoleMapping', false],
+  ['Translation', false],
   ['CalendarEvent', false],
-  ['Help', false],
+  ['Instruction', false],
   ['RoihuUser', false],
   ['Location', false],
 ];

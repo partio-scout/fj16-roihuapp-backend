@@ -10,7 +10,8 @@
     "test": "npm run linter && npm run test-mocha",
     "linter": "eslint --ext js src test",
     "test-mocha": "mocha --compilers js:babel-core/register",
-    "seed-database": "babel-node scripts/seed-database.js"
+    "seed-database": "babel-node scripts/seed-database.js",
+    "create-translations": "babel-node scripts/create-translations.js"
   },
   "dependencies": {
     "babel-core": "^6.3.15",
@@ -32,7 +33,8 @@
     "passport-saml": "^0.14.0",
     "serve-favicon": "^2.3.0",
     "superagent": "^1.7.2",
-    "superagent-as-promised": "^3.2.1"
+    "superagent-as-promised": "^3.2.1",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.3.15",

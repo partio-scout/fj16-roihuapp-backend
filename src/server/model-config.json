@@ -28,12 +28,16 @@
     "dataSource": "db",
     "public": true
   },
-  "Help": {
+  "Instruction": {
     "dataSource": "db",
     "public": true
   },
   "Location": {
     "dataSource": "db",
     "public": true
+  },
+  "Translation": {
+    "dataSource": "db",
+    "public": false
   }
 }
