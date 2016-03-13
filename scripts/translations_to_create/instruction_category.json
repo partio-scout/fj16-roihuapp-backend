@@ -1,0 +1,20 @@
+[
+	{
+		"name": {
+			"FI": "Jätehuolto",
+			"SV": "Samma på svenska",
+			"EN": "Dump, Waste, and Recycling"
+		},
+		"idFromSource": 10,
+		"sortNo": 10
+	},
+	{
+		"name": {
+			"FI": "Pelisäännöt",
+			"SV": "Läger rulerna",
+			"EN": "Camp Rules"
+		},
+		"idFromSource": 20,
+		"sortNo": 20
+	}
+]
