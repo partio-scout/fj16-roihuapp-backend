@@ -14,7 +14,6 @@
       "type": "Number",
       "id": true,
       "generated": true,
-      "required": true,
       "length": null,
       "precision": 32,
       "scale": 0,
