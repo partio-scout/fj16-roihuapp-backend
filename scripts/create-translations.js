@@ -9,6 +9,7 @@ const createTranslation = Promise.promisify(TranslationModel.create, {context: T
 
 const translateableList = [
   'Instruction',
+  'InstructionCategory',
 ];
 
 function getTranslations(modelName) {

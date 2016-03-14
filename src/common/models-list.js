@@ -9,6 +9,7 @@ const modelList = [
   ['ACL', false],
   ['Role', false],
   ['RoleMapping', false],
+  ['InstructionCategory', false],
   ['Translation', false],
   ['CalendarEvent', false],
   ['Instruction', false],

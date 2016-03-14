@@ -7,7 +7,7 @@
   },
   "postgresql": {
     "schema": "public",
-    "table": "help"
+    "table": "instruction_category"
   },
   "properties": {
     "instructionCategoryId": {
@@ -59,11 +59,11 @@
       }
     },
     "sortNo": {
-      "type": "int",
+      "type": "Number",
       "required": true,
       "postgresql": {
         "columnName": "sort_no",
-        "dataType": "int",
+        "dataType": "integer",
         "dataLength": null,
         "dataPrecision": 32,
         "dataScale": null,

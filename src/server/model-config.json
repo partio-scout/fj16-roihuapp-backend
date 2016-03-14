@@ -39,5 +39,9 @@
   "Translation": {
     "dataSource": "db",
     "public": false
+  },
+  "InstructionCategory": {
+    "dataSource": "db",
+    "public": false
   }
 }
