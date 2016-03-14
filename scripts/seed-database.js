@@ -25,10 +25,18 @@ function forAll(values, promiseReturningFunction) {
   return values.reduce((cur, next) => cur.then(() => promiseReturningFunction(next)), Promise.resolve());
 }
 
-const db = app.datasources.db;
+export function resetDatabase() {
 
-const modelsToCreate = getModelCreationList();
-db.automigrate(modelsToCreate)
-  .then(() => console.log('The following tables were (re-)created: ', modelsToCreate))
-  .then(() => forAll(getFixtureCreationList(), createFixtures))
-  .then(() => db.disconnect(), () => db.disconnect());
+  const db = app.datasources.db;
+
+  const modelsToCreate = getModelCreationList();
+  return db.automigrate(modelsToCreate)
+    .then(() => console.log('The following tables were (re-)created: ', modelsToCreate))
+    .then(() => forAll(getFixtureCreationList(), createFixtures))
+    .then(() => db.disconnect(), () => db.disconnect());
+}
+
+if (require.main === module) {
+  resetDatabase()
+    .catch(err => console.error('Database reset and seeding failed: ', err));
+}

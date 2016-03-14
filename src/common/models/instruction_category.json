@@ -47,11 +47,11 @@
       "comments": "datan syottajan kasin kayttama id, eli dataa muuttaessa tunnistetaan aiempi tietue"
     },
     "lastModified": {
-      "type": "string",
+      "type": "Date",
       "required": true,
       "postgresql": {
         "columnName": "last_modified",
-        "dataType": "character varying",
+        "dataType": "timestamp",
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,

@@ -65,14 +65,14 @@
       "comments": "kuvaus guid"
     },
     "lastModified": {
-      "type": "String",
+      "type": "Date",
       "required": true,
       "length": null,
       "precision": null,
       "scale": null,
       "postgresql": {
         "columnName": "last_modified",
-        "dataType": "character varying",
+        "dataType": "timestamp",
         "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,

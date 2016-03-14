@@ -23,7 +23,9 @@ function createTranslationsForModel(modelName) {
 	return getTranslations(modelName)
 		.then(modelData => {
 				_.forEach(modelData, function(fixture) {
-					var modelJSON = {};
+					var modelJSON = {
+            "lastModified": Date.now(),
+          };
 					var translations = [];
 
 					_.forEach(fixture, function(value, key) {

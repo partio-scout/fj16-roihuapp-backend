@@ -6,8 +6,7 @@
 			"EN": "Dump, Waste, and Recycling"
 		},
 		"idFromSource": 10,
-		"sortNo": 10,
-		"lastModified": "muokattu 11.3.2016"
+		"sortNo": 10
 	},
 	{
 		"name": {
@@ -16,7 +15,6 @@
 			"EN": "Camp Rules"
 		},
 		"idFromSource": 20,
-		"sortNo": 20,
-		"lastModified": "muokattu 11.3.2016"
+		"sortNo": 20
 	}
 ]

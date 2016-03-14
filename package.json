@@ -9,7 +9,7 @@
     "dev-login": "babel-node scripts/dev-login.js",
     "test": "npm run linter && npm run test-mocha",
     "linter": "eslint --ext js src test",
-    "test-mocha": "mocha --compilers js:babel-core/register",
+    "test-mocha": "mocha --compilers js:babel-core/register ./test --recursive",
     "seed-database": "babel-node scripts/seed-database.js",
     "create-translations": "babel-node scripts/create-translations.js"
   },

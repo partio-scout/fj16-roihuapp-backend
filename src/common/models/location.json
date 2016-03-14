@@ -108,11 +108,11 @@
       }
     },
     "lastModified": {
-      "type": "string",
+      "type": "Date",
       "required": true,
       "postgresql": {
         "columnName": "last_modified",
-        "dataType": "character varying",
+        "dataType": "timestamp",
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
