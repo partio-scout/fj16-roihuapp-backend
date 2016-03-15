@@ -33,8 +33,7 @@ module.exports = function(Instruction) {
       const result = [];
 
       return findTranslation(nameQuery)
-      .then(names => {
-        return findTranslation(descrQuery)
+      .then(names => findTranslation(descrQuery)
         .then(descriptions => {
           if (!names || !descriptions) return Promise.reject(createError(401, 'No translations were found with given parameters.'));
 
@@ -47,8 +46,7 @@ module.exports = function(Instruction) {
           };
           result.push(x);
           return Promise.resolve(result[0]);
-        });
-      });
+        }));
     }
 
     if (id) {
@@ -60,14 +58,11 @@ module.exports = function(Instruction) {
 
     } else {
       // get all translations
-      var response = [];
+      const response = [];
       findInstruction()
-        .then(instructions => {
-          return Promise.each(instructions, function(instruction) {
-            return translationsForSingleInstrunction(instruction)
-              .then(translation => response.push(translation));
-          });
-        })
+        .then(instructions => Promise.each(instructions, instruction => translationsForSingleInstrunction(instruction)
+          .then(translation => response.push(translation)))
+        )
         .then(() => cb(null, response))
         .catch(err => cb(err, null));
     }
@@ -85,8 +80,5 @@ module.exports = function(Instruction) {
       returns: { type: 'array', root: true },
     }
   );
-
-  /* ------------------------------ */
-
 
 };

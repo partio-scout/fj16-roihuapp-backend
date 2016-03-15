@@ -1,7 +1,6 @@
 import app from '../../server/server'; // relative to file which does the import...
 import Promise from 'bluebird';
 import _ from 'lodash';
-import uuid from 'uuid';
 import validate_uuid from 'uuid-validate';
 
 export function getTranslationsForModel(model, lang) {
@@ -10,14 +9,14 @@ export function getTranslationsForModel(model, lang) {
   const findModel = Promise.promisify(model.find, { context: model });
 
   return new Promise((resolve, reject) => {
-    var allPromises = [];
-    var allTranslated = [];
+    const allPromises = [];
+    const allTranslated = [];
     findModel()
       .then(instances => {
-        _.forEach(instances, (instance) => {
-          var translatedInstance = {};
-          var promises = [];
-          _.forEach(instance.__data, function(value, key) {
+        _.forEach(instances, instance => {
+          const translatedInstance = {};
+          const promises = [];
+          _.forEach(instance.__data, (value, key) => {
             translatedInstance[key] = value;
             if (isUUID(value)) {
               const asd =  getTranslation(lang, value)
@@ -29,15 +28,20 @@ export function getTranslationsForModel(model, lang) {
               allPromises.push(asd);
             }
           });
-//korjaa tää niin että se palauttaa jotakin...
-        
-        Promise.all(promises)
-          .then(() => {
-            console.log(translatedInstance);
-            allTranslated.push(translatedInstance);
-          });
+
+          return Promise.all(promises)
+            .then(() => {
+              // push single translated instace to completed list
+              allTranslated.push(translatedInstance);
+            });
         });
-        console.log('AT', allTranslated);
+      })
+      .then(() => {
+        Promise.all(allPromises)
+          .then(val => {
+            // finally return them
+            resolve(allTranslated);
+          });
       });
   });
 
@@ -46,20 +50,11 @@ export function getTranslationsForModel(model, lang) {
   }
 
   function getTranslation(lang, guid) {
-    
+
     return findTranslation({ where: {
       and: [
         { guId: guid },
-        { lang: lang }
+        { lang: lang },
       ] } });
   }
-
-  function promiseFieldCrearText(lang, currentValue) {
-    return new Promise((resolve) => {
-      if(isUUID(currentValue)) resolve(getTranslation(lang, currentValue).value.text);
-      else resolve(currentValue);
-    })
-  }
-
 }
-    
