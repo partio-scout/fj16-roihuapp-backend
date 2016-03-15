@@ -11,7 +11,8 @@
     "linter": "eslint --ext js src test",
     "test-mocha": "mocha --compilers js:babel-core/register ./test --recursive",
     "seed-database": "babel-node scripts/seed-database.js",
-    "create-translations": "babel-node scripts/create-translations.js"
+    "create-translations": "babel-node scripts/create-translations.js",
+    "postinstall": "npm run seed-database && npm run create-translations"
   },
   "dependencies": {
     "babel-core": "^6.3.15",
