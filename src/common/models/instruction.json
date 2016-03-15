@@ -29,6 +29,24 @@
       "_selectable": false,
       "comments": "id"
     },
+    "categoryId": {
+      "type": "Number",
+      "generated": false,
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "category_id",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "kategorian id"
+    },
     "idFromSource": {
       "type": "Number",
       "required": true,
@@ -114,7 +132,11 @@
   },
   "validations": [],
   "relations": {
-    
+    "category": {
+      "type": "belongsTo",
+      "model": "InstructionCategory",
+      "foreignKey": "categoryId"
+    }
   },
   "acls": [
     {

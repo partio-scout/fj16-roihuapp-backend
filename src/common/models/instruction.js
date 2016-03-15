@@ -1,6 +1,5 @@
 import app from '../../server/server';
 import Promise from 'bluebird';
-//import _ from 'lodash';
 
 module.exports = function(Instruction) {
   Instruction.FindTranslations = function(lang, id, cb) {
@@ -16,58 +15,61 @@ module.exports = function(Instruction) {
       return err;
     }
 
-    function translationsForSingleInstrunction(id, cb) {
-      findInstructionById(id)
-        .then(instruction => {
-          if (!instruction) {
-            cb(createError(401, 'No translations were found with given parameters.'), null);
-          }
-          const nameQuery = { where: {
-            and: [
-              { guId: instruction.name },
-              { lang: lang },
-            ] } };
-          const descrQuery = { where: {
-            and: [
-              { guId: instruction.description },
-              { lang: lang },
-            ] } };
+    function translationsForSingleInstrunction(instruction) {
+      if (!instruction) {
+        return Promise.reject(createError(401, 'No translations were found with given parameters.'));
+      }
+      const nameQuery = { where: {
+        and: [
+          { guId: instruction.name },
+          { lang: lang },
+        ] } };
+      const descrQuery = { where: {
+        and: [
+          { guId: instruction.description },
+          { lang: lang },
+        ] } };
 
-          const result = [];
+      const result = [];
 
-          findTranslation(nameQuery)
-          .then(names => {
-            findTranslation(descrQuery)
-            .then(descriptions => {
-              if (!names || !descriptions) cb(createError(401, 'No translations were found with given parameters.'), null);
+      return findTranslation(nameQuery)
+      .then(names => {
+        return findTranslation(descrQuery)
+        .then(descriptions => {
+          if (!names || !descriptions) return Promise.reject(createError(401, 'No translations were found with given parameters.'));
 
-              const x = {
-                'title': names[0].text,
-                'bodytext': descriptions[0].text,
-                'sort_no': instruction.sortNo,
-                'last_modified': instruction.lastModified,
-                'language': lang,
-              };
-              result.push(x);
-              cb(null, result[0]);
-            });
-          });
-
-        })
-        .catch(() => null ); // just catch it
-
+          const x = {
+            'title': names[0].text,
+            'bodytext': descriptions[0].text,
+            'sort_no': instruction.sortNo,
+            'last_modified': instruction.lastModified,
+            'language': lang,
+          };
+          result.push(x);
+          return Promise.resolve(result[0]);
+        });
+      });
     }
 
     if (id) {
       // accessing single instruction
-      translationsForSingleInstrunction(id, cb);
+      findInstructionById(id)
+        .then(instruction => translationsForSingleInstrunction(instruction))
+        .then(response => cb(null, response))
+        .catch(err => cb(err, null));
+
     } else {
       // get all translations
+      var response = [];
       findInstruction()
         .then(instructions => {
-          // construct response...
-          cb(null, 'Not yet implemented...');
-        });
+          return Promise.each(instructions, function(instruction) {
+            return translationsForSingleInstrunction(instruction)
+              .then(translation => response.push(translation));
+          });
+        })
+        .then(() => cb(null, response))
+        .catch(err => cb(err, null));
     }
 
   };
@@ -83,4 +85,8 @@ module.exports = function(Instruction) {
       returns: { type: 'array', root: true },
     }
   );
+
+  /* ------------------------------ */
+
+
 };

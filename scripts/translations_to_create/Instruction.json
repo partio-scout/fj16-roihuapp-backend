@@ -11,7 +11,8 @@
 			"EN": "1. Take a brush \\n 2. Put the paste \\n 3. Put the brush in the mouth and brush 2min \\n 4. Rinse your mouth and brush"
 		},
 		"sortNo": 1,
-		"idFromSource": 1
+		"idFromSource": 1,
+		"categoryId": 10
 	},
 	{
 		"name": {
@@ -25,6 +26,7 @@
 			"EN": "1. Read the instructions on \\n 2. Assemble the tent"
 		},
 		"sortNo": 2,
-		"idFromSource": 2
+		"idFromSource": 2,
+		"categoryId": 10
 	}
 ]

@@ -7,9 +7,12 @@ import uuid from 'uuid';
 const TranslationModel = app.models.Translation;
 const createTranslation = Promise.promisify(TranslationModel.create, {context: TranslationModel});
 
+/* Put here model names what you want to translate automatically
+ * Order of models matters!!!
+ */
 const translateableList = [
-  'Instruction',
   'InstructionCategory',
+  'Instruction',
 ];
 
 function getTranslations(modelName) {
@@ -24,7 +27,7 @@ function createTranslationsForModel(modelName) {
 		.then(modelData => {
 				_.forEach(modelData, function(fixture) {
 					var modelJSON = {
-            "lastModified": Date.now(),
+            "lastModified": Date.now(),   // automatically set lastModified
           };
 					var translations = [];
 
@@ -49,7 +52,7 @@ function createTranslationsForModel(modelName) {
 					});
 					createModel(modelJSON)
 						.then(createTranslation(translations))
-					  .catch(err => console.error(`Failed to create translations for model $(modelName): `, err));
+					  .catch(err => console.error(`Failed to create translations for model ${ modelName }: `, err));
 				});
 
 		});

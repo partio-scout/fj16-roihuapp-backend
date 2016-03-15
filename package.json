@@ -34,7 +34,8 @@
     "serve-favicon": "^2.3.0",
     "superagent": "^1.7.2",
     "superagent-as-promised": "^3.2.1",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "uuid-validate": "0.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.3.15",
