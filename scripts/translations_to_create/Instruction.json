@@ -1,12 +1,12 @@
 [
 	{
 		"name": {
-			"FI": "Hampaiden pesu",
-			"SV": "Hengöring av tänder",
-			"EN": "Brushing teeth"
+			"FI": "Lääkintä",
+			"SV": "--- (SE- lääkintä)-",
+			"EN": "---- (EN- lääkintä)"
 		},
 		"description": {
-			"FI": "1. Ota harja \\n 2. Laita tahnaa \\n 3. Laita harja suuhun ja harjaa 2min \\n 4. Huuhtele suu ja harja",
+			"FI": "Tässä on ohjeita lääkinnästä ja EA_toiminasta leirillä",
 			"SV": "1. Ta en borste \\n 2. Sätt pastan \\n 3. Sätt borsten i munnen och borsta 2min \\n 4. Skölj munnen och borsta",
 			"EN": "1. Take a brush \\n 2. Put the paste \\n 3. Put the brush in the mouth and brush 2min \\n 4. Rinse your mouth and brush"
 		},
@@ -15,6 +15,21 @@
 		"categoryId": 10
 	},
 	{
+		"name": {
+			"FI": "Teltan kasaus",
+			"SV": "Tält placering",
+			"EN": "Tent placement"
+		},
+		"description": {
+			"FI": "1. Lue ohjeet \\n 2. Kasaa teltta ja nuku hyvin",
+			"SV": "1. Läs instruktionerna på \\n 2. Montera tältet och sov bra",
+			"EN": "1. Read the instructions on \\n 2. Assemble the tent and sleep tight"
+		},
+		"sortNo": 2,
+		"idFromSource": 2,
+		"categoryId": 10
+	}
+		{
 		"name": {
 			"FI": "Teltan kasaus",
 			"SV": "Tält placering",
