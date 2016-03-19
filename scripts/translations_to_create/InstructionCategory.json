@@ -19,8 +19,8 @@
 	},
 	{
 		"name": {
-			"FI": “Lääkintä",
-			"SV": “Medisinering”,
+			"FI": "Lääkintä",
+			"SV": "Medisinering",
 			"EN": "Medical"
 		},
 		"idFromSource": 30,
@@ -29,8 +29,8 @@
 	{
 		"name": {
 			"FI": "Turvallisesti leirillä",
-			"SV": “Säkerhet”,
-			"EN": “Camp Safety”
+			"SV": "Säkerhet",
+			"EN": "Camp Safety"
 		},
 		"idFromSource": 40,
 		"sortNo": 40
@@ -38,7 +38,7 @@
 	{
 		"name": {
 			"FI": "Vierailupäivä",
-			"SV": “Besökningsdag”,
+			"SV": "Besökningsdag",
 			"EN": "Visiting Day"
 		},
 		"idFromSource": 50,
@@ -47,8 +47,8 @@
 	{
 		"name": {
 			"FI": "Leirilippukunnan rakentaminen ja purkaminen",
-			"SV": “Lägerkår byggande och ta isär”,
-			"EN": "Building and Taking Down the Camp Unit”
+			"SV": "Lägerkår byggande och ta isär",
+			"EN": "Building and Taking Down the Camp Unit"
 		},
 		"idFromSource": 60,
 		"sortNo": 60
@@ -56,7 +56,7 @@
 	{
 		"name": {
 			"FI": "Leiritoimisto",
-			"SV": “Lägerbyrå”,
+			"SV": "Lägerbyrå",
 			"EN": "Camp Office"
 		},
 		"idFromSource": 70,
@@ -64,9 +64,9 @@
 	},
 	{
 		"name": {
-			"FI": "Kehittämö”,
-			"SV": “Developering”,
-			"EN": “Development”
+			"FI": "Kehittämö",
+			"SV": "Developering",
+			"EN": "Development"
 		},
 		"idFromSource": 80,
 		"sortNo": 80
@@ -74,8 +74,8 @@
 	{
 		"name": {
 			"FI": "Leiriluotsien tehtävät",
-			"SV": "Lägerpilotens uppdraglist”,
-			"EN": “Camp pilot dutys"
+			"SV": "Lägerpilotens uppdraglist",
+			"EN": "Camp pilot dutys"
 		},
 		"idFromSource": 90,
 		"sortNo": 90
@@ -83,8 +83,8 @@
 	{
 		"name": {
 			"FI": "Saapuminen Roihulle",
-			"SV": “Ankomst till läger”,
-			"EN": “Arriving at Roihu"
+			"SV": "Ankomst till läger",
+			"EN": "Arriving at Roihu"
 		},
 		"idFromSource": 100,
 		"sortNo": 100
@@ -92,8 +92,8 @@
 	{
 		"name": {
 			"FI": "Viestintä leirin aikana",
-			"SV": “Lägerkommunikation”,
-			"EN": “Camp Communications”
+			"SV": "Lägerkommunikation",
+			"EN": "Camp Communications"
 		},
 		"idFromSource": 110,
 		"sortNo": 110
@@ -101,8 +101,8 @@
 	{
 		"name": {
 			"FI": "Ruokailut",
-			"SV": “Mål”,
-			"EN": “Meals”
+			"SV": "Mål",
+			"EN": "Meals"
 		},
 		"idFromSource": 120,
 		"sortNo": 120
@@ -110,7 +110,7 @@
 	{
 		"name": {
 			"FI": "Ohjelma",
-			"SV": “Programm”,
+			"SV": "Programm",
 			"EN": "Program"
 		},
 		"idFromSource": 130,
@@ -119,8 +119,8 @@
 	{
 		"name": {
 			"FI": "Leiriseurakunta",
-			"SV": “Lägerförsamlingen”,
-			"EN": "Camp Parish”
+			"SV": "Lägerförsamlingen",
+			"EN": "Camp Parish"
 		},
 		"idFromSource": 140,
 		"sortNo": 140
@@ -128,7 +128,7 @@
 	{
 		"name": {
 			"FI": "Tärkeät yhteystiedot",
-			"SV": “Kontaktinformation”,
+			"SV": "Kontaktinformation",
 			"EN": "Important Contacts"
 		},
 		"idFromSource": 150,
@@ -137,7 +137,7 @@
 	{
 		"name": {
 			"FI": "Leirijohdon tervehdykset",
-			"SV": “Lägerledarens ”,
+			"SV": "Lägerledarens hälsningarna",
 			"EN": "Greetings from Camp Leaders"
 		},
 		"idFromSource": 160,
@@ -146,7 +146,7 @@
 	{
 		"name": {
 			"FI": "KV-info",
-			"SV": “Utlänningarna”,
+			"SV": "Utlänningarna",
 			"EN": "International Info"
 		},
 		"idFromSource": 170,
