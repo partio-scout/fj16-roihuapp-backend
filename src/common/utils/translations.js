@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import validate_uuid from 'uuid-validate';
 
-export function getTranslationsForModel(model, lang) {
+export function getTranslationsForModel(model, lang, filter) {
   const TranslationModel = app.models.Translation;
   const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
   const findModel = Promise.promisify(model.find, { context: model });
@@ -11,7 +11,7 @@ export function getTranslationsForModel(model, lang) {
   return new Promise((resolve, reject) => {
     const allPromises = [];
     const allTranslated = [];
-    findModel()
+    findModel(filter)
       .then(instances => {
         _.forEach(instances, instance => {
           const translatedInstance = {};
@@ -57,4 +57,13 @@ export function getTranslationsForModel(model, lang) {
         { lang: lang },
       ] } });
   }
+}
+
+export function langExists(lang) {
+  const TranslationModel = app.models.Translation;
+  const countTranslation = Promise.promisify(TranslationModel.count, { context: TranslationModel });
+
+  return countTranslation({ where: { lang: lang } })
+    .then(count => ( count == 0 ) ? 0 : 1);
+
 }
