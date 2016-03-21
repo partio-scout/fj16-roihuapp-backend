@@ -1,5 +1,5 @@
 {
-  "name": "InstructionCategory",
+  "name": "Achievement",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {
@@ -7,10 +7,10 @@
   },
   "postgresql": {
     "schema": "public",
-    "table": "instruction_category"
+    "table": "achievement"
   },
   "properties": {
-    "instructionCategoryId": {
+    "achievementId": {
       "type": "Number",
       "id": true,
       "generated": true,
@@ -19,7 +19,7 @@
       "precision": 32,
       "scale": 0,
       "postgresql": {
-        "columnName": "instruction_category_id",
+        "columnName": "achievement_id",
         "dataType": "integer",
         "dataLength": null,
         "dataPrecision": 32,
@@ -28,6 +28,24 @@
       },
       "_selectable": false,
       "comments": "id"
+    },
+    "categoryId": {
+      "type": "Number",
+      "generated": false,
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "category_id",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "kategorian id"
     },
     "idFromSource": {
       "type": "Number",
@@ -46,23 +64,58 @@
       "_selectable": false,
       "comments": "datan syottajan kasin kayttama id, eli dataa muuttaessa tunnistetaan aiempi tietue"
     },
+    "description": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "defaultFn": "uuid",
+      "postgresql": {
+        "columnName": "description",
+        "dataType": "character varying",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "kuvaus guid"
+    },
     "lastModified": {
       "type": "Date",
       "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
       "postgresql": {
         "columnName": "last_modified",
         "dataType": "timestamp",
-        "dataLength": 255,
+        "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "NO"
-      }
+      },
+      "_selectable": false,
+      "comments": "muokattu"
     },
     "sortNo": {
       "type": "Number",
       "required": true,
       "postgresql": {
         "columnName": "sort_no",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "achievementCount": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "achievement_count",
         "dataType": "integer",
         "dataLength": null,
         "dataPrecision": 32,
@@ -86,30 +139,23 @@
         "nullable": "NO"
       },
       "_selectable": false,
-      "comments": "nimi"
+      "comments": "nimi guid"
     }
   },
   "validations": [],
   "relations": {
-    "instructions": {
-      "type": "hasMany",
-      "model": "Instruction",
+    "Category": {
+      "type": "belongsTo",
+      "model": "achievementCategory",
       "foreignKey": "categoryId"
+    },
+    "usersCompleted": {
+      "type": "hasAndBelongsToMany",
+      "model": "RoihuUser"
     }
   },
   "acls": [
-    {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
-    {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW"
-    }
+
   ],
   "methods": {}
 }

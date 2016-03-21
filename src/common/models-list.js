@@ -15,6 +15,8 @@ const modelList = [
   ['Instruction', false],
   ['RoihuUser', false],
   ['Location', false],
+  ['AchievementCategory', false],
+  ['Achievement', false],
 ];
 
 export function getModelCreationList() {

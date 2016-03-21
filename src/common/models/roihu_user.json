@@ -287,6 +287,12 @@
     }
   },
   "validations": [],
+  "relations": {
+    "achievements": {
+      "type": "hasAndBelongsToMany",
+      "model": "Achievement"
+    }
+  },
   "acls": [],
-  "methods": []
+  "methods": {}
 }
