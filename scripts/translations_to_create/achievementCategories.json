@@ -1,0 +1,63 @@
+[
+	{
+		"name": {
+			"FI": "perheleiri",
+			"SV": "Familj lägret",
+			"EN": "Family Camp"
+		},
+		"achievementCount": 115,
+		"leadingScore": 10,
+		"userScore": 3,
+		"averageScore": 5,
+		"sortNo": 10
+	},
+	{
+		"name": {
+			"FI": "tarpojat",
+			"SV": "tarpojat",
+			"EN": "tarpojat"
+		},
+		"achievementCount": 215,
+		"leadingScore": 18,
+		"userScore": 1,
+		"averageScore": 10,
+		"sortNo": 20
+	},
+
+	{
+		"name": {
+			"FI": "samoajat",
+			"SV": "samoajat",
+			"EN": "samoajat"
+		},
+		"achievementCount": 35,
+		"leadingScore": 8,
+		"userScore": 8,
+		"averageScore": 9,
+		"sortNo": 30
+	},
+	{
+		"name": {
+			"FI": "vaeltajat",
+			"SV": "vaeltajat",
+			"EN": "tarpojat"
+		},
+		"achievementCount": 15,
+		"leadingScore": 2,
+		"userScore": 1,
+		"averageScore": 1,
+		"sortNo": 40
+	},
+	{
+		"name": {
+			"FI": "aikuiset",
+			"SV": "aikuiset",
+			"EN": "adults"
+		},
+		"achievementCount": 15,
+		"leadingScore": 9,
+		"userScore": 8,
+		"averageScore": 10,
+		"sortNo": 50
+	}
+]
