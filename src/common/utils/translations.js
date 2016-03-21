@@ -18,14 +18,14 @@ export function getTranslationsForModel(model, lang, filter) {
           const promises = [];
           _.forEach(instance.__data, (value, key) => {
             translatedInstance[key] = value;
-            if (isUUID(value)) {
-              const asd =  getTranslation(lang, value)
+            if (isUUID(value)) {  // test if field value is guid and get cleartext of it
+              const promiseOfTranslation = getTranslation(lang, value)
                 .then(tr => {
                   translatedInstance[key] = tr.text;
                   return translatedInstance[key];
                 });
-              promises.push(asd);
-              allPromises.push(asd);
+              promises.push(promiseOfTranslation);
+              allPromises.push(promiseOfTranslation);
             }
           });
 
@@ -59,11 +59,17 @@ export function getTranslationsForModel(model, lang, filter) {
   }
 }
 
-export function langExists(lang) {
+export function getLangIfNotExists(lang) {
   const TranslationModel = app.models.Translation;
   const countTranslation = Promise.promisify(TranslationModel.count, { context: TranslationModel });
 
-  return countTranslation({ where: { lang: lang } })
-    .then(count => ( count == 0 ) ? 0 : 1);
+  return new Promise((resolve, reject) => {
+    if (!lang) resolve('EN');
+    else countTranslation({ lang: lang })
+      .then(count => {
+        if (count == 0) resolve('EN');
+        else resolve(lang);
+      });
+  });
 
 }
