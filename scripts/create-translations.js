@@ -13,6 +13,7 @@ const createTranslation = Promise.promisify(TranslationModel.create, {context: T
 const translateableList = [
   'InstructionCategory',
   'Instruction',
+  'AchievementCategory'
 ];
 
 function getTranslations(modelName) {
