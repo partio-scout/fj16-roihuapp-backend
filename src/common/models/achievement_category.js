@@ -4,57 +4,63 @@ import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
 
 module.exports = function(AchievementCategory) {
-  AchievementCategory.FindTranslations = function(lang, cb) {
-    const achievement = app.models.achievement;
 
-    if (!lang || !translationUtils.langExists(lang)) {
-      lang = 'EN';
-    }
+  AchievementCategory.FindTranslations = function(language, cb) {
+    const Achievement = app.models.Achievement;
 
-    const timeNow = Date.now();
-    const response = {
-      'timestamp': timeNow,
-      'language': lang,
-    };
-    const rCategories = [];
-    translationUtils.getTranslationsForModel(AchievementCategory, lang)
-      .then(categoryTranslations => {
-        const promises = [];
-        _.forEach(categoryTranslations, category => {
-          const catArticles = [];
-          const achievementPromise = translationUtils.getTranslationsForModel(achievement, lang, { where: { categoryId: category.idFromSource } })
-            .then(achievementTranslations => {
-              const catInstr = [];
-              _.forEach(achievementTranslations, instruct => {
-                catInstr.push({             // add single achievement
-                  'title': instruct.name,
-                  'bodytext': instruct.description,
-                  'sort_no': instruct.sortNo,
-                  'last_modified': instruct.lastModified,
-                  'id': instruct.id,
-                });
+    translationUtils.getLangIfNotExists(language)
+      .then(lang => {
+
+        const timeNow = new Date();
+        const timeNext = new Date(timeNow);
+        timeNext.setHours(timeNow.getHours() + 1);
+        const response = {
+          'timestamp': timeNow.toISOString(),
+          'next_check': timeNext.toISOString(),
+          'language': lang,
+        };
+        const rCategories = [];
+
+        translationUtils.getTranslationsForModel(AchievementCategory, lang)
+          .then(categoryTranslations => {
+            const promises = [];
+            _.forEach(categoryTranslations, category => {
+              const catAchievements = [];
+              const AchievementPromise = translationUtils.getTranslationsForModel(Achievement, lang, { where: { categoryId: category.idFromSource } })
+                .then(AchievementTranslations => {
+                  _.forEach(AchievementTranslations, ach => {
+                    catAchievements.push({             // add single Achievement
+                      'title': ach.name,
+                      'bodytext': ach.description,
+                      'sort_no': ach.sortNo,
+                      'last_modified': ach.lastModified,
+                      'id': ach.AchievementId,
+                      'achievement_count': ach.achievementCount,
+                    });
+                  });
+                })
+                .then(rCategories.push({
+                  'title': category.name,
+                  'id': category.AchievementCategoryId,
+                  'sort_no': category.sortNo,
+                  'last_modified': category.lastModified,
+                  'achievement_count': category.achievementCount,
+                  'leading_score': category.leadingScore,
+                  'average_score': category.averageScore,
+                  'user_score': Math.floor(((category.leadingScore + category.averageScore) / 2)*Math.random()),
+                  'achievements': catAchievements,
+                }));
+
+              promises.push(AchievementPromise);
+            });
+
+            Promise.all(promises)
+              .then(() => {
+                response.agelevels = rCategories;
+                cb(null, response);
               });
-              catArticles.push(catInstr);   // add achievement group to category
-
-            })
-            .then(rCategories.push({
-              'title': category.name,
-              'id': category.id,
-              'sort_no': category.sortNo,
-              'last_modified': category.lastModified,
-              'articles': catArticles,
-            }));
-
-          promises.push(achievementPromise);
-        });
-
-        Promise.all(promises)
-          .then(() => {
-            response.categories = rCategories;
-            cb(null, response);
           });
       });
-
   };
 
   AchievementCategory.remoteMethod(
@@ -67,4 +73,5 @@ module.exports = function(AchievementCategory) {
       returns: { type: 'array', root: true },
     }
   );
+
 };
