@@ -1,0 +1,18 @@
+[
+  {
+    "lastModified": "2016-03-22T10:14:25.631Z",
+    "lastname": "Tarpoja",
+    "firstname": "Teuvo",
+    "email": "Teuvo.Tarpoja@example.com",
+    "password": "teuvotarpoja",
+    "memberNumber": "7859823"
+  },
+  {
+    "lastModified": "2016-03-22T10:14:25.631Z",
+    "lastname": "admin",
+    "firstname": "aatu",
+    "email": "aatu.admin@example.com",
+    "password": "s{GFJLDw-4Z+asd{",
+    "memberNumber": "123ADMIN456"
+  }
+]
