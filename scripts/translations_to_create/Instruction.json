@@ -1,47 +1,422 @@
 [
 	{
 		"name": {
-			"FI": "Lääkintä",
-			"SV": "--- (SE- lääkintä)-",
-			"EN": "---- (EN- lääkintä)"
+			"FI": "Kierrätyksen aakkoset",
+			"SV": "SV Kierrätyksen aakkoset",
+			"EN": "Alphabet of Recycling"
 		},
 		"description": {
-			"FI": "Tässä on ohjeita lääkinnästä ja EA_toiminasta leirillä",
-			"SV": "1. Ta en borste \\n 2. Sätt pastan \\n 3. Sätt borsten i munnen och borsta 2min \\n 4. Skölj munnen och borsta",
-			"EN": "1. Take a brush \\n 2. Put the paste \\n 3. Put the brush in the mouth and brush 2min \\n 4. Rinse your mouth and brush"
+			"FI": "Ohjeita kierrätykseen yms...",
+			"SV": "SV Ohjeita kierrätykseen yms...",
+			"EN": "Instructions to recycling e.g."
 		},
-		"sortNo": 1,
-		"idFromSource": 1,
+		"sortNo": 10010,
+		"idFromSource": 10010,
 		"categoryId": 10
 	},
 	{
 		"name": {
-			"FI": "Teltan kasaus",
-			"SV": "Tält placering",
-			"EN": "Tent placement"
+			"FI": "Tärkeät pelisäännöt",
+			"SV": "SV Tärkeät pelisäännöt",
+			"EN": "Important Rules"
 		},
 		"description": {
-			"FI": "1. Lue ohjeet \\n 2. Kasaa teltta ja nuku hyvin",
-			"SV": "1. Läs instruktionerna på \\n 2. Montera tältet och sov bra",
-			"EN": "1. Read the instructions on \\n 2. Assemble the tent and sleep tight"
+			"FI": "Tärkeimmät säännöt",
+			"SV": "SV Tärkeimmät säännöt",
+			"EN": "The Most Important Rules"
 		},
-		"sortNo": 2,
-		"idFromSource": 2,
-		"categoryId": 10
+		"sortNo": 20010,
+		"idFromSource": 20010,
+		"categoryId": 20
 	},
 	{
 		"name": {
-			"FI": "Teltan kasaus",
-			"SV": "Tält placering",
-			"EN": "Tent placement"
+			"FI": "Uintisäännöt",
+			"SV": "SV Uintisäännöt",
+			"EN": "Swim Rules"
 		},
 		"description": {
-			"FI": "1. Lue ohjeet \\n 2. Kasaa teltta ja nuku hyvin",
-			"SV": "1. Läs instruktionerna på \\n 2. Montera tältet och sov bra",
-			"EN": "1. Read the instructions on \\n 2. Assemble the tent and sleep tight"
+			"FI": "Uintisääntöjä...",
+			"SV": "SV Uintisääntöjä...",
+			"EN": "More Swim Rules..."
 		},
-		"sortNo": 2,
-		"idFromSource": 2,
-		"categoryId": 10
+		"sortNo": 20020,
+		"idFromSource": 20020,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Ei niin tärkeitä sääntöjä",
+			"SV": "SV Ei niin tärkeitä sääntöjä",
+			"EN": "Not That Important Rules"
+		},
+		"description": {
+			"FI": "Asiaa kaikesta kivasta",
+			"SV": "SV Asiaa kaikesta kivasta",
+			"EN": "Stuff from Everything Fun"
+		},
+		"sortNo": 20030,
+		"idFromSource": 20030,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Kielenkäyttö",
+			"SV": "SV Kielenkäyttö",
+			"EN": "Rude Language"
+		},
+		"description": {
+			"FI": "Ei kiroilua yms.",
+			"SV": "SV Ei kiroilua yms.",
+			"EN": "No swearing e.g..."
+		},
+		"sortNo": 20040,
+		"idFromSource": 20040,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Hätätilanteessa",
+			"SV": "SV Hätätilanteessa",
+			"EN": "In an Emergency Situation"
+		},
+		"description": {
+			"FI": "Juokse ja lujaa",
+			"SV": "SV Juokse ja lujaa",
+			"EN": "Run fast"
+		},
+		"sortNo": 20050,
+		"idFromSource": 20050,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Teltassa",
+			"SV": "SV Teltassa",
+			"EN": "In a Tent"
+		},
+		"description": {
+			"FI": "Vain omaan telttaan",
+			"SV": "SV Vain omaan telttaan",
+			"EN": "Only to your own tent"
+		},
+		"sortNo": 20060,
+		"idFromSource": 20060,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Kun näet tytön",
+			"SV": "SV Kun näet tytön",
+			"EN": "when You See Girl"
+		},
+		"description": {
+			"FI": "Panikoi ja jäädy",
+			"SV": "SV Panikoi ja jäädy",
+			"EN": "Panic and Freeze"
+		},
+		"sortNo": 20070,
+		"idFromSource": 20070,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Jalkapallon säännöt",
+			"SV": "SV Jalkapallon säännöt",
+			"EN": "Soccer Rules"
+		},
+		"description": {
+			"FI": "Vain jaloilla",
+			"SV": "SV Vain jaloilla",
+			"EN": "Only with feet"
+		},
+		"sortNo": 20080,
+		"idFromSource": 20080,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Partiomainen käytös",
+			"SV": "SV Partiomainen käytös",
+			"EN": "Behave Like a Scout"
+		},
+		"description": {
+			"FI": "Aina valmiina",
+			"SV": "SV Aina valmiina",
+			"EN": "Be prepared"
+		},
+		"sortNo": 20090,
+		"idFromSource": 20090,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Random Keywords haku testiin",
+			"SV": "SV Random Keywords haku testiin",
+			"EN": "Random Keywords for Search Test"
+		},
+		"description": {
+			"FI": "Opettaja, koira, kukka, ihminen, partio",
+			"SV": "SV Opettaja, koira, kukka, ihminen, partio",
+			"EN": "Teacher, dog, flower, human, scouting"
+		},
+		"sortNo": 20100,
+		"idFromSource": 20100,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Vähän lisää niitä",
+			"SV": "SV Vähän lisää niitä",
+			"EN": "A Few More of Them"
+		},
+		"description": {
+			"FI": "Opettaja, tuli, KUKKA, musiikki",
+			"SV": "SV Opettaja, tuli, KUKKA, musiikki",
+			"EN": "Teacher, fire, FLOWER, music"
+		},
+		"sortNo": 20110,
+		"idFromSource": 20110,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Ideat loppus",
+			"SV": "SV Ideat loppus",
+			"EN": "Run Out of Ideas"
+		},
+		"description": {
+			"FI": "Pälä pälä",
+			"SV": "SV Pälä pälä",
+			"EN": "Chit chat"
+		},
+		"sortNo": 20120,
+		"idFromSource": 20120,
+		"categoryId": 20
+	},
+	{
+		"name": {
+			"FI": "Tooosi pitkä leipäteksti",
+			"SV": "SV Tooosi pitkä leipäteksti",
+			"EN": "Veery Long Text"
+		},
+		"description": {
+			"FI": "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.\\nQuis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			"SV": "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.\\nQuis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			"EN": "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\\nExcepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+		},
+		"sortNo": 30010,
+		"idFromSource": 30010,
+		"categoryId": 30
+	},
+	{
+		"name": {
+			"FI": "Turvallisuussäännöt",
+			"SV": "SV Turvallisuussäännöt",
+			"EN": "Safety Rules"
+		},
+		"description": {
+			"FI": "Ei riippumattoja yli 2 m",
+			"SV": "SV Ei riippumattoja yli 2 m",
+			"EN": "No hammocks over 2m"
+		},
+		"sortNo": 40010,
+		"idFromSource": 40010,
+		"categoryId": 40 
+	},
+	{
+		"name": {
+			"FI": "Vierailulla",
+			"SV": "SV Vierailulla",
+			"EN": "Visiting"
+		},
+		"description": {
+			"FI": "1. Etsi lapsesi\\n2. Tervehdi heitä\\n3. Älä nolaa heitä",
+			"SV": "SV 1. Etsi lapsesi\\n2. Tervehdi heitä\\n3. Älä nolaa heitä",
+			"EN": "1. Find your child\\n2. Say hello to them\\n3. Don't embarrass them"
+		},
+		"sortNo": 50010,
+		"idFromSource": 50010,
+		"categoryId": 50
+	},
+	{
+		"name": {
+			"FI": "Tee siitä hieno",
+			"SV": "SV Tee siitä hieno",
+			"EN": "Make It Awesome"
+		},
+		"description": {
+			"FI": "Ei mitään järkevää",
+			"SV": "SV Ei mitään järkevää",
+			"EN": "Nothing Sensible"
+		},
+		"sortNo": 60010,
+		"idFromSource": 60010,
+		"categoryId": 60
+	},
+	{
+		"name": {
+			"FI": "Mistä sen voi löytää",
+			"SV": "SV Mistä sen voi löytää",
+			"EN": "Where Can You Find It"
+		},
+		"description": {
+			"FI": "Suomesta",
+			"SV": "SV Suomesta",
+			"EN": "From Finland"
+		},
+		"sortNo": 70010,
+		"idFromSource": 70010,
+		"categoryId": 70
+	},
+	{
+		"name": {
+			"FI": "Ei hajuakaan mikä se on",
+			"SV": "SV Ei hajuakaan mikä se on",
+			"EN": "No Idea What It Is"
+		},
+		"description": {
+			"FI": "Jotain kivaa varmaan",
+			"SV": "SV Jotain kivaa varmaan",
+			"EN": "Something Funny for Sure"
+		},
+		"sortNo": 80010,
+		"idFromSource": 80010,
+		"categoryId": 80
+	},
+	{
+		"name": {
+			"FI": "Tehtävälista",
+			"SV": "SV Tehtävälista",
+			"EN": "Duty List"
+		},
+		"description": {
+			"FI": "Paljon tehtävää",
+			"SV": "SV Paljon tehtävää",
+			"EN": "Much To Do"
+		},
+		"sortNo": 90010,
+		"idFromSource": 90010,
+		"categoryId": 90
+	},
+	{
+		"name": {
+			"FI": "Ohjeet",
+			"SV": "SV Ohjeet",
+			"EN": "Instructions"
+		},
+		"description": {
+			"FI": "Älä jää bussin alle",
+			"SV": "SV Älä jää bussin alle",
+			"EN": "Don't Get Hit by a Bus"
+		},
+		"sortNo": 100010,
+		"idFromSource": 100010,
+		"categoryId": 100 
+	},
+	{
+		"name": {
+			"FI": "Älä kuormita verkkoa paljoa",
+			"SV": "SV Älä kuormita verkkoa paljoa",
+			"EN": "Don't Overload the Web"
+		},
+		"description": {
+			"FI": "Hillitty datan käyttö",
+			"SV": "SV Hillitty datan käyttö",
+			"EN": "Less Data Usage"
+		},
+		"sortNo": 110010,
+		"idFromSource": 110010,
+		"categoryId": 110
+	},
+	{
+		"name": {
+			"FI": "Ruokalista",
+			"SV": "SV Ruokalista",
+			"EN": "Menu"
+		},
+		"description": {
+			"FI": "Kaikkea hyvää",
+			"SV": "SV Kaikkea hyvää",
+			"EN": "Everything Yummy"
+		},
+		"sortNo": 120010,
+		"idFromSource": 120010,
+		"categoryId": 120
+	},
+	{
+		"name": {
+			"FI": "Ohjelmalista",
+			"SV": "SV Ohjelmalista",
+			"EN": "Prorgam List"
+		},
+		"description": {
+			"FI": "Hauskaa",
+			"SV": "SV Hauskaa",
+			"EN": "Funny"
+		},
+		"sortNo": 130010,
+		"idFromSource": 130010,
+		"categoryId": 130
+	},
+	{
+		"name": {
+			"FI": "Kaikki uskonnot",
+			"SV": "SV Kaikki uskonnot",
+			"EN": "All Religions"
+		},
+		"description": {
+			"FI": "Ihan kaikki",
+			"SV": "SV Ihan kaikki",
+			"EN": "Every Single of Them"
+		},
+		"sortNo": 140010,
+		"idFromSource": 140010,
+		"categoryId": 140
+	},
+	{
+		"name": {
+			"FI": "Turva",
+			"SV": "SV Turva",
+			"EN": "Safety"
+		},
+		"description": {
+			"FI": "FI 238524892048920",
+			"SV": "SV 238524892048920",
+			"EN": "EN 238524892048920"
+		},
+		"sortNo": 150010,
+		"idFromSource": 150010,
+		"categoryId": 150
+	},
+	{
+		"name": {
+			"FI": "Tervetuloa",
+			"SV": "SV Tervetuloa",
+			"EN": "Welcome"
+		},
+		"description": {
+			"FI": "Hyvää leiriä",
+			"SV": "SV Hyvää leiriä",
+			"EN": "Have a Good Camp"
+		},
+		"sortNo": 160010,
+		"idFromSource": 160010,
+		"categoryId": 160
+	},
+	{
+		"name": {
+			"FI": "Jos näet ulkomaalaisen",
+			"SV": "SV Jos näet ulkomaalaisen",
+			"EN": "If You See a Foreigner"
+		},
+		"description": {
+			"FI": "Esitä kuuromykkää",
+			"SV": "SV Esitä kuuromykkää",
+			"EN": "Play Deaf and Numb"
+		},
+		"sortNo": 170010,
+		"idFromSource": 170010,
+		"categoryId": 170
 	}
 ]
