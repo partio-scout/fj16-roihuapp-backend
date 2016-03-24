@@ -287,6 +287,19 @@
     }
   },
   "validations": [],
-  "acls": [],
-  "methods": []
+  "relations": {
+    "achievements": {
+      "type": "hasAndBelongsToMany",
+      "model": "Achievement"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
 }

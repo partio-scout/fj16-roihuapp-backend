@@ -1,5 +1,5 @@
 {
-  "name": "InstructionCategory",
+  "name": "AchievementCategory",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {
@@ -7,10 +7,10 @@
   },
   "postgresql": {
     "schema": "public",
-    "table": "instruction_category"
+    "table": "achievement_category"
   },
   "properties": {
-    "instructionCategoryId": {
+    "achievementCategoryId": {
       "type": "Number",
       "id": true,
       "generated": true,
@@ -19,7 +19,7 @@
       "precision": 32,
       "scale": 0,
       "postgresql": {
-        "columnName": "instruction_category_id",
+        "columnName": "achievement_category_id",
         "dataType": "integer",
         "dataLength": null,
         "dataPrecision": 32,
@@ -70,6 +70,42 @@
         "nullable": "YES"
       }
     },
+    "leadingScore": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "leading_score",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "averageScore": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "average_score",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "achievementCount": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "achievement_count",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
     "name": {
       "type": "String",
       "required": true,
@@ -91,9 +127,9 @@
   },
   "validations": [],
   "relations": {
-    "instructions": {
+    "achievements": {
       "type": "hasMany",
-      "model": "Instruction",
+      "model": "Achievement",
       "foreignKey": "categoryId"
     }
   },
@@ -101,13 +137,7 @@
     {
       "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
-    {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
+      "principalId": "admin",
       "permission": "ALLOW"
     }
   ],

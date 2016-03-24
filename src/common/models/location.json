@@ -150,5 +150,8 @@
       "comments": "nimi"
     }
   },
-  "validations": []
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
 }

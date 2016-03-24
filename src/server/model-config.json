@@ -43,5 +43,13 @@
   "InstructionCategory": {
     "dataSource": "db",
     "public": true
+  },
+  "Achievement": {
+    "dataSource": "db",
+    "public": true
+  },
+  "AchievementCategory": {
+    "dataSource": "db",
+    "public": true
   }
 }

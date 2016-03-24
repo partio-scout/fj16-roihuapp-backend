@@ -12,8 +12,8 @@
   "properties": {
     "guId": {
       "type": "String",
-      "required": true,
       "id": 1,
+      "required": true,
       "index": true,
       "length": 255,
       "precision": null,
@@ -31,9 +31,9 @@
     },
     "translationId": {
       "type": "String",
-      "required": false,
-      "generated": true,
       "id": 2,
+      "generated": true,
+      "required": false,
       "index": true,
       "length": 255,
       "precision": null,
@@ -99,5 +99,6 @@
       "principalId": "$everyone",
       "permission": "ALLOW"
     }
-  ]
+  ],
+  "methods": {}
 }
