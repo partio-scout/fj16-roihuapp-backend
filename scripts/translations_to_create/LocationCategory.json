@@ -1,0 +1,29 @@
+[
+	{
+		"name": {
+			"FI": "Kahvilat",
+			"SV": "SV Kahvilat",
+			"EN": "Coffee Shops"
+		},
+		"idFromSource": 10,
+		"sortNo": 10
+	},
+	{
+		"name": {
+			"FI": "Jäätelökioskit",
+			"SV": "SV Jäätelökioskit",
+			"EN": "Ice Cream"
+		},
+		"idFromSource": 20,
+		"sortNo": 20
+	},
+	{
+		"name": {
+			"FI": "Alaleiriportit",
+			"SV": "SV Alaleiriportit",
+			"EN": "Subcamp Gates"
+		},
+		"idFromSource": 30,
+		"sortNo": 30
+	}
+]
