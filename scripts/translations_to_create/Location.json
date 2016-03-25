@@ -1,1 +1,16 @@
-
+[
+	{
+		"name": {
+			"FI": "xxx",
+			"SV": "xxx",
+			"EN": "Coffee Shops"
+		},
+		"description": {
+			"FI": "Ohjeita kierrätykseen yms...",
+			"SV": "SV Ohjeita kierrätykseen yms...",
+			"EN": "Instructions to recycling e.g."
+		},
+		"sortNo": 10010,
+		"idFromSource": 10010,
+		"categoryId": 10
+	},
