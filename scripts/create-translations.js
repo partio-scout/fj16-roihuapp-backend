@@ -16,7 +16,8 @@ const translateableList = [
   'AchievementCategory',
   'Achievement',
   'LocationCategory',
-  'Location'
+  'Location',
+  'RoihuUser'
 ];
 
 function getTranslations(modelName) {
