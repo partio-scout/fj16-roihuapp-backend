@@ -115,6 +115,23 @@
       "_selectable": false,
       "comments": "puhelinnumero"
     },
+    "email": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "email",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "sahkopostiosoite"
+    },
     "nickname": {
       "type": "String",
       "required": false,
@@ -183,7 +200,7 @@
       "_selectable": false,
       "comments": "alaleiri"
     },
-    "camp_troop": {
+    "camp_unit": {
       "type": "String",
       "required": false,
       "length": 255,
@@ -251,7 +268,7 @@
       "_selectable": false,
       "comments": "kuva"
     },
-    "agelevel": {
+    "ageGroup": {
       "type": "String",
       "required": false,
       "length": 255,
