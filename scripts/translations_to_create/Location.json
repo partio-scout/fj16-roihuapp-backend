@@ -1,59 +1,55 @@
-[
-	{
-		"name": {
-			"FI": "Kahvila 1",
-			"SV": "SV Kahvila 1",
-			"EN": "Coffee Shop 1"
-		},
-		"description": {
-			"FI": "Kahvila 1 on auki seuraavasti...",
-			"SV": "SV Kahvila 1 on auki seuraavasti...",
-			"EN": "Opening hours of Coffee Shop 1 are..."
-		},
-		"sortNo": 10010,
-		"idFromSource": 10010,
-		"categoryId": 10,
-		"gpsLatitude": "62.343434",
-		"gpsLongitude": "25.454545",
-		"gridLatitude": "H".
-		"gridLongitude": "08"
+[{
+	"name": {
+		"FI": "Kahvila 1",
+		"SV": "SV Kahvila 1",
+		"EN": "Coffee Shop 1"
 	},
-	{
-		"name": {
-			"FI": "Kahvila 2",
-			"SV": "SV Kahvila 2",
-			"EN": "Coffee Shop 2"
-		},
-		"description": {
-			"FI": "Kahvila 2 on auki seuraavasti...",
-			"SV": "SV Kahvila 2 on auki seuraavasti...",
-			"EN": "Opening hours of Coffee Shop 2 are..."
-		},
-		"sortNo": 10020,
-		"idFromSource": 10020,
-		"categoryId": 10,
-		"gpsLatitude": "62.343734",
-		"gpsLongitude": "25.457545",
-		"gridLatitude": "J".
-		"gridLongitude": "11"
+	"description": {
+		"FI": "Kahvila 1 on auki seuraavasti...",
+		"SV": "SV Kahvila 1 on auki seuraavasti...",
+		"EN": "Opening hours of Coffee Shop 1 are..."
 	},
-	{
-		"name": {
-			"FI": "Kahvila 3",
-			"SV": "SV Kahvila 3",
-			"EN": "Coffee Shop 3"
-		},
-		"description": {
-			"FI": "Kahvila 3 on auki seuraavasti...",
-			"SV": "SV Kahvila 3 on auki seuraavasti...",
-			"EN": "Opening hours of Coffee Shop 3 are..."
-		},
-		"sortNo": 10030,
-		"idFromSource": 10030,
-		"categoryId": 10,
-		"gpsLatitude": "62.349434",
-		"gpsLongitude": "25.459545",
-		"gridLatitude": "R".
-		"gridLongitude": "21"
-	}
-]
+	"sortNo": 10010,
+	"idFromSource": 10010,
+	"categoryId": 10,
+	"gpsLatitude": "62.343434",
+	"gpsLongitude": "25.454545",
+	"gridLatitude": "H",
+	"gridLongitude": "08"
+}, {
+	"name": {
+		"FI": "Kahvila 2",
+		"SV": "SV Kahvila 2",
+		"EN": "Coffee Shop 2"
+	},
+	"description": {
+		"FI": "Kahvila 2 on auki seuraavasti...",
+		"SV": "SV Kahvila 2 on auki seuraavasti...",
+		"EN": "Opening hours of Coffee Shop 2 are..."
+	},
+	"sortNo": 10020,
+	"idFromSource": 10020,
+	"categoryId": 10,
+	"gpsLatitude": "62.343734",
+	"gpsLongitude": "25.457545",
+	"gridLatitude": "J",
+	"gridLongitude": "11"
+}, {
+	"name": {
+		"FI": "Kahvila 3",
+		"SV": "SV Kahvila 3",
+		"EN": "Coffee Shop 3"
+	},
+	"description": {
+		"FI": "Kahvila 3 on auki seuraavasti...",
+		"SV": "SV Kahvila 3 on auki seuraavasti...",
+		"EN": "Opening hours of Coffee Shop 3 are..."
+	},
+	"sortNo": 10030,
+	"idFromSource": 10030,
+	"categoryId": 10,
+	"gpsLatitude": "62.349434",
+	"gpsLongitude": "25.459545",
+	"gridLatitude": "R",
+	"gridLongitude": "21"
+}]
