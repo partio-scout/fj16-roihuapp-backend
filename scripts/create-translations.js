@@ -14,7 +14,9 @@ const translateableList = [
   'InstructionCategory',
   'Instruction',
   'AchievementCategory',
-  'Achievement'
+  'Achievement',
+  'LocationCategory',
+  'Location'
 ];
 
 function getTranslations(modelName) {
