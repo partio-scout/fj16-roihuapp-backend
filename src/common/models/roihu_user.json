@@ -132,7 +132,7 @@
       "_selectable": false,
       "comments": "partionimi"
     },
-    "primary_troop_and_city": {
+    "primaryTroopAndCity": {
       "type": "String",
       "required": false,
       "length": 255,
@@ -149,7 +149,7 @@
       "_selectable": false,
       "comments": "ensisijainen lippukunta ja kaupunki"
     },
-    "scout_district": {
+    "scoutDistrict": {
       "type": "String",
       "required": false,
       "length": 255,
@@ -183,14 +183,14 @@
       "_selectable": false,
       "comments": "alaleiri"
     },
-    "camp_troop": {
+    "campUnit": {
       "type": "String",
       "required": false,
       "length": 255,
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "camp_troop",
+        "columnName": "camp_unit",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,
@@ -217,7 +217,7 @@
       "_selectable": false,
       "comments": "kuvausteksti"
     },
-    "public_accounts": {
+    "publicAccounts": {
       "type": "String",
       "required": false,
       "length": 255,
@@ -251,14 +251,14 @@
       "_selectable": false,
       "comments": "kuva"
     },
-    "agelevel": {
+    "ageGroup": {
       "type": "String",
       "required": false,
       "length": 255,
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "agelevel",
+        "columnName": "age_group",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,

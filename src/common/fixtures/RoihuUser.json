@@ -1,11 +1,21 @@
 [
   {
     "lastModified": "2016-03-22T10:14:25.631Z",
-    "lastname": "Tarpoja",
-    "firstname": "Teuvo",
-    "email": "Teuvo.Tarpoja@example.com",
-    "password": "teuvotarpoja",
-    "memberNumber": "7859823"
+    "lastname": "Nieminen",
+    "firstname": "Ville",
+    "nickname": "Vinde",
+    "phone": "358501234567",
+    "email": "ville.nieminen@roihu2016.fi",
+    "primaryTroopAndCity": "Olarin Eräkotkat ry (Espoo)",
+    "scoutDistrict": "Pääkaupunkiseudun Partiolaiset",
+    "country": "Suomi/Finland/Finland",
+    "ageGroup": "Aikuiset/Vuxna/Adults",
+    "subcamp": "Perheleiri/SV Perheleiri/Family Camp",
+    "campUnit": "117 Lommo",
+    "description": "Tähän jotain viksua",
+    "publicAccounts": "Instagram: vnie, Snapchat: vnie",
+    "memberNumber": "23492349",
+    "password": "}&)F.&E<K=wxg3xS;#Y"
   },
   {
     "lastModified": "2016-03-22T10:14:25.631Z",
