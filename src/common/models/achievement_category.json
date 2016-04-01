@@ -1,6 +1,6 @@
 {
   "name": "AchievementCategory",
-  "base": "PersistedModel",
+  "base": "BaseCategory",
   "idInjection": false,
   "options": {
     "validateUpsert": true
@@ -10,66 +10,6 @@
     "table": "achievement_category"
   },
   "properties": {
-    "achievementCategoryId": {
-      "type": "Number",
-      "id": true,
-      "generated": true,
-      "required": false,
-      "length": null,
-      "precision": 32,
-      "scale": 0,
-      "postgresql": {
-        "columnName": "achievement_category_id",
-        "dataType": "integer",
-        "dataLength": null,
-        "dataPrecision": 32,
-        "dataScale": 0,
-        "nullable": "YES"
-      },
-      "_selectable": false,
-      "comments": "id"
-    },
-    "idFromSource": {
-      "type": "Number",
-      "required": true,
-      "length": null,
-      "precision": 32,
-      "scale": 0,
-      "postgresql": {
-        "columnName": "id_from_source",
-        "dataType": "integer",
-        "dataLength": null,
-        "dataPrecision": 32,
-        "dataScale": 0,
-        "nullable": "NO"
-      },
-      "_selectable": false,
-      "comments": "datan syottajan kasin kayttama id, eli dataa muuttaessa tunnistetaan aiempi tietue"
-    },
-    "lastModified": {
-      "type": "Date",
-      "required": true,
-      "postgresql": {
-        "columnName": "last_modified",
-        "dataType": "timestamp",
-        "dataLength": 255,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "NO"
-      }
-    },
-    "sortNo": {
-      "type": "Number",
-      "required": true,
-      "postgresql": {
-        "columnName": "sort_no",
-        "dataType": "integer",
-        "dataLength": null,
-        "dataPrecision": 32,
-        "dataScale": null,
-        "nullable": "YES"
-      }
-    },
     "leadingScore": {
       "type": "Number",
       "required": true,
@@ -105,24 +45,6 @@
         "dataScale": null,
         "nullable": "YES"
       }
-    },
-    "name": {
-      "type": "String",
-      "required": true,
-      "index": true,
-      "length": 255,
-      "precision": null,
-      "scale": null,
-      "postgresql": {
-        "columnName": "name",
-        "dataType": "character varying",
-        "dataLength": 255,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "NO"
-      },
-      "_selectable": false,
-      "comments": "nimi"
     }
   },
   "validations": [],

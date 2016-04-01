@@ -51,5 +51,9 @@
   "AchievementCategory": {
     "dataSource": "db",
     "public": true
+  },
+  "LocationCategory": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "InstructionCategory",
+  "name": "LocationCategory",
   "base": "BaseCategory",
   "idInjection": true,
   "options": {
@@ -7,15 +7,14 @@
   },
   "postgresql": {
     "schema": "public",
-    "table": "instruction_category"
+    "table": "location_category"
+  },
+  "properties": {
+
   },
   "validations": [],
   "relations": {
-    "instructions": {
-      "type": "hasMany",
-      "model": "Instruction",
-      "foreignKey": "categoryId"
-    }
+    
   },
   "acls": [
 

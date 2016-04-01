@@ -41,7 +41,7 @@ module.exports = function(AchievementCategory) {
                 })
                 .then(rCategories.push({
                   'title': category.name,
-                  'id': category.AchievementCategoryId,
+                  'id': category.categoryId,
                   'sort_no': category.sortNo,
                   'last_modified': category.lastModified,
                   'achievement_count': category.achievementCount,
