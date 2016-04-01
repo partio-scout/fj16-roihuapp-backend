@@ -18,6 +18,7 @@ const modelList = [
   ['AchievementCategory', false],
   ['Achievement', false],
   ['AchievementRoihuUser', false],
+  ['LocationCategory', false],
 ];
 
 export function getModelCreationList() {

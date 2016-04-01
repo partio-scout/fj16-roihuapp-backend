@@ -43,7 +43,7 @@ module.exports = function(InstructionCategory) {
                 })
                 .then(rCategories.push({
                   'title': category.name,
-                  'id': category.instructionCategoryId,
+                  'id': category.categoryId,
                   'sort_no': category.sortNo,
                   'last_modified': category.lastModified,
                   'articles': catArticles,
