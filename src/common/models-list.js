@@ -14,11 +14,11 @@ const modelList = [
   ['CalendarEvent', false],
   ['Instruction', false],
   ['RoihuUser', true],
+  ['LocationCategory', false],
   ['Location', false],
   ['AchievementCategory', false],
   ['Achievement', false],
   ['AchievementRoihuUser', false],
-  ['LocationCategory', false],
 ];
 
 export function getModelCreationList() {
