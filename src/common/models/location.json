@@ -64,7 +64,7 @@
       "comments": "tyyppi"
     },
     "gpsLatitude": {
-      "type": "string",
+      "type": "String",
       "postgresql": {
         "columnName": "gps_latitude",
         "dataType": "character varying",
@@ -75,7 +75,7 @@
       }
     },
     "gpsLongitude": {
-      "type": "string",
+      "type": "String",
       "postgresql": {
         "columnName": "gps_longitude",
         "dataType": "character varying",
@@ -86,7 +86,7 @@
       }
     },
     "gridLatitude": {
-      "type": "string",
+      "type": "String",
       "postgresql": {
         "columnName": "grid_latitude",
         "dataType": "character varying",
@@ -120,16 +120,51 @@
       }
     },
     "sortNo": {
-      "type": "int",
+      "type": "Number",
       "required": true,
       "postgresql": {
         "columnName": "sort_no",
-        "dataType": "int",
+        "dataType": "integer",
         "dataLength": null,
         "dataPrecision": 32,
         "dataScale": null,
         "nullable": "YES"
       }
+    },
+    "categoryId": {
+      "type": "Number",
+      "generated": false,
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "category_id",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "kategorian id"
+    },
+    "idFromSource": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "id_from_source",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "datan syottajan kasin kayttama id, eli dataa muuttaessa tunnistetaan aiempi tietue"
     },
     "name": {
       "type": "String",
