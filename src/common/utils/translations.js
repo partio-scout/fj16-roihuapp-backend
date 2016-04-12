@@ -122,17 +122,21 @@ export function deleteTranslationsForModel(modelName, instanceId) {
   //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });
   const model = app.models[modelName];
   const findModelById = Promise.promisify(model.find, { context: model });
-  console.log('id', instanceId);
-  findModelById({ 'id': instanceId })
-  .then(modelInstance => {
-    console.log('M', modelInstance);
-    _.forEach(modelInstance, (value, key) => {
-      if (isUUID(value)) {
-        TranslationModel.destroyAll({ 'guId': value });
-      }
-    });
-    model.destroyById(instanceId);
-  })
-  //.then(() => model.destroyById(instanceId))
-  .catch(err => console.log(err));
+
+/* EI VAIKUTA TOIMIVALTA! */
+  return new Promise((resolve, reject) => {
+    findModelById({ 'id': instanceId })
+    .then(modelInstance => {
+      _.forEach(modelInstance, (value, key) => {
+        if (isUUID(value)) {
+          TranslationModel.destroyAll({ 'guId': value });
+        }
+      });
+    })
+    .then(() => {
+      model.destroyById(instanceId);
+      resolve(true);
+    })
+    .catch(err => reject(err));
+  });
 }
