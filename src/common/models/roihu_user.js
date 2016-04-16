@@ -47,7 +47,6 @@ export default function(RoihuUser) {
     .then(token => {
       // mail settings in nodemailer format
       const url = `roihu://${token.userId}/${token.id}`;
-
       const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.js'));
       const transporter = nodemailer.createTransport(mailSettings);
       const mailOptions = {
@@ -63,6 +62,7 @@ export default function(RoihuUser) {
           console.error(err);
           cb(errorUtils.createHTTPError('mail send failed', 500, null), null);
         }
+        cb(null, 'Mail sent!');
         console.log(info);
       });
     })
