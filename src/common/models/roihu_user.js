@@ -46,11 +46,12 @@ export default function(RoihuUser) {
     .then(generateAccessToken)
     .then(token => {
       // mail settings in nodemailer format
-      const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.json'));
       const url = `roihu://${token.userId}/${token.id}`;
+
+      const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.js'));
       const transporter = nodemailer.createTransport(mailSettings);
       const mailOptions = {
-        from: `"roihuapp" <${mailSettings.auth.user}>`,
+        from: `"roihuapp" <noreply@roihu2016.fi>`,
         to: mail,
         subject: 'Roihuapp email login',
         text: url,
@@ -68,6 +69,7 @@ export default function(RoihuUser) {
     .catch(err => {
       cb(err, null);
     });
+
   };
 
   RoihuUser.remoteMethod(
