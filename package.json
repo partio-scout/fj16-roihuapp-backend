@@ -33,6 +33,7 @@
     "loopback-component-explorer": "^2.4.0",
     "loopback-connector-postgresql": "^2.4.0",
     "loopback-datasource-juggler": "^2.43.0",
+    "nodemailer": "^2.3.2",
     "passport-saml": "^0.14.0",
     "serve-favicon": "^2.3.0",
     "superagent": "^1.7.2",
