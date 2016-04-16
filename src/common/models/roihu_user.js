@@ -2,6 +2,7 @@ import Promise from 'bluebird';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import * as errorUtils from '../utils/errors';
+import path from 'path';
 
 export default function(RoihuUser) {
 
@@ -17,18 +18,39 @@ export default function(RoihuUser) {
   RoihuUser.emailLogin = function(mail, cb) {
     const ACCESS_TOKEN_LIFETIME = 90 * 24 * 60 * 60;
     const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
-    //const createUser = Promise.promisify(RoihuUser.create, { context: RoihuUser });
+    const createUser = Promise.promisify(RoihuUser.create, { context: RoihuUser });
+
+    function findOrCreateUser(mail) {
+      return findUser({ where: { email: mail } })
+      .then(user => {
+        if (user) return user;
+        else {
+          return createUser({
+            firstname: 'NoName',
+            lastname: 'NoName',
+            email: mail,
+            password: crypto.randomBytes(24).toString('hex'),
+            lastModified: new Date(),
+          })
+          .catch(err => console.log(err));
+        }
+      });
+    }
+
+    function generateAccessToken(user) {
+      console.log(user);
+      return user.createAccessToken(ACCESS_TOKEN_LIFETIME);
+    }
 
     findOrCreateUser(mail)
     .then(generateAccessToken)
     .then(token => {
-      // send email
+      // mail settings in nodemailer format
+      const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.json'));
       const url = `roihu://${token.userId}/${token.id}`;
-      const transporter = nodemailer.createTransport({
-
-      });
+      const transporter = nodemailer.createTransport(mailSettings);
       const mailOptions = {
-        from: '"roihuapp" <roihuapp-noreply@roihu2016.fi>',
+        from: `"roihuapp" <${mailSettings.auth.user}>`,
         to: mail,
         subject: 'Roihuapp email login',
         text: url,
@@ -42,29 +64,10 @@ export default function(RoihuUser) {
         }
         console.log(info);
       });
-
     })
     .catch(err => {
       cb(err, null);
     });
-
-    function findOrCreateUser(mail) {
-      return findUser({ where: { email: mail } })
-      .then(user => {
-        (user || RoihuUser.create({
-          firstname: 'NoName',
-          lastname: 'NoName',
-          email: mail,
-          password: crypto.randomBytes(24).toString('hex'),
-          lastModified: new Date(),
-        }));
-      });
-    }
-
-    function generateAccessToken(user) {
-      return user.createAccessToken(ACCESS_TOKEN_LIFETIME);
-    }
-
   };
 
   RoihuUser.remoteMethod(
@@ -77,5 +80,4 @@ export default function(RoihuUser) {
       returns: { arg: 'token', type: 'string' },
     }
   );
-
 }

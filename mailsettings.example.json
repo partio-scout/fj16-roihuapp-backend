@@ -1,9 +1,9 @@
 {
-  "service": "",
+  "service": "Mailgun",
   "auth": {
-    "api_key": "",
-    "domain": "",
-    "user": "",
-    "pass": ""
+    "api_key": "key-1312312331313123312",
+    "domain": "sandbox1111222222333334444455555.mailgun.org",
+    "user": "postmaster@sandbox1111222222333334444455555.mailgun.org",
+    "pass": "123123123password123123"
   }
 }
