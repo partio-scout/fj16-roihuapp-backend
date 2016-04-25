@@ -57,10 +57,12 @@ export function loadLocations() {
 
     translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
       // delete all other categories
+      console.log('Created', categories.length, 'location categories');
       destroyAllByNameGuid('LocationCategory', cr);
     });
     translationUtils.createTranslationsForModel('Location', locations).then(loc => {
       // delete all other locations
+      console.log('Created', locations.length, 'locations');
       destroyAllByNameGuid('Location', loc);
     });
   });
