@@ -3,12 +3,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import * as translationUtils from '../src/common/utils/translations';
 
-export function loadLocations() {
-  const LocationCategory = app.models.LocationCategory;
-  const Location = app.models.Location;
-  const findOrCreateLocationCategory = Promise.promisify(LocationCategory.findOrCreate, { context: LocationCategory });
-  const findOrCreateLocation = Promise.promisify(Location.findOrCreate, { context: Location });
-
+export function locationsHandler(err, data) {
   const categories = [];
   const catNames = [];
   const locations = [];
@@ -16,63 +11,59 @@ export function loadLocations() {
   let categoryIndex = 1;
   let categorySortNo = 1;
 
-  readSharepointList('Paikat', (err, data) => {
-    if (err) {
-      console.log('Aborting sharepoint loading due error:', err);
-      return 0;
-    } else {
-
-      _.forEach(data, item => {
-        const categoryObj = {
-          'name': {
-            'FI': item.Kategoria,
-          },
-          'sortNo': categorySortNo,
-          'idFromSource': categoryIndex,
-        };
-        // compare categories with their name instead of full object
-        let cIndexNum = catNames.indexOf(item.Kategoria);
-        if ( cIndexNum === -1) {
-          categories.push(categoryObj);
-          catNames.push(item.Kategoria);
-          cIndexNum = categoryIndex-1;
-          categoryIndex += 1;
-          categorySortNo += 1;
-        }
-        locations.push({
-          'name': {
-            'FI': item.Title,
-            'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
-            'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
-          },
-          'description': {
-            'FI': selfOrEmpty(item.Kuvaus),
-            'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
-            'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
-          },
-          'sortNo': item.Id,
-          'idFromSource': item.Id,
-          'categoryId': cIndexNum + 1,
-          'gpsLatitude': selfOrEmpty(item.Latitude),
-          'gpsLongitude': selfOrEmpty(item.Longitude),
-          'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
-          'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
-        });
+  if (err) {
+    console.log('Aborting sharepoint loading due error:', err);
+    return 0;
+  } else {
+    _.forEach(data, item => {
+      const categoryObj = {
+        'name': {
+          'FI': item.Kategoria,
+        },
+        'sortNo': categorySortNo,
+        'idFromSource': categoryIndex,
+      };
+      // compare categories with their name instead of full object
+      let cIndexNum = catNames.indexOf(item.Kategoria);
+      if ( cIndexNum === -1) {
+        categories.push(categoryObj);
+        catNames.push(item.Kategoria);
+        cIndexNum = categoryIndex-1;
+        categoryIndex += 1;
+        categorySortNo += 1;
+      }
+      locations.push({
+        'name': {
+          'FI': item.Title,
+          'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
+          'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
+        },
+        'description': {
+          'FI': selfOrEmpty(item.Kuvaus),
+          'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
+          'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
+        },
+        'sortNo': item.Id,
+        'idFromSource': item.Id,
+        'categoryId': cIndexNum + 1,
+        'gpsLatitude': selfOrEmpty(item.Latitude),
+        'gpsLongitude': selfOrEmpty(item.Longitude),
+        'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
+        'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
       });
+    });
 
-      translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
-        // delete all other categories
-        console.log('Created', categories.length, 'location categories');
-        destroyAllByNameGuid('LocationCategory', cr);
-      });
-      translationUtils.createTranslationsForModel('Location', locations).then(loc => {
-        // delete all other locations
-        console.log('Created', locations.length, 'locations');
-        destroyAllByNameGuid('Location', loc);
-      });
-    }
-  });
-
+    translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
+      // delete all other categories
+      console.log('Created', categories.length, 'location categories');
+      destroyAllByNameGuid('LocationCategory', cr);
+    });
+    translationUtils.createTranslationsForModel('Location', locations).then(loc => {
+      // delete all other locations
+      console.log('Created', locations.length, 'locations');
+      destroyAllByNameGuid('Location', loc);
+    });
+  }
 }
 
 function isInArray(obj, arr) {
@@ -130,5 +121,5 @@ function readSharepointList(listName, handler) {
 }
 
 if (require.main === module) {
-  loadLocations();
+  readSharepointList('Paikat', locationsHandler);
 }
