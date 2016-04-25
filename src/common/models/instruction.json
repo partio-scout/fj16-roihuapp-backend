@@ -1,6 +1,6 @@
 {
   "name": "Instruction",
-  "base": "PersistedModel",
+  "base": "TranslateableModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true
