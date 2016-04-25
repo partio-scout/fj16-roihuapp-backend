@@ -5,8 +5,6 @@ import validate_uuid from 'uuid-validate';
 import uuid from 'uuid';
 
 export function getTranslationsForModel(model, lang, filter) {
-  const TranslationModel = app.models.Translation;
-  const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
   const findModel = Promise.promisify(model.find, { context: model });
 
   return new Promise((resolve, reject) => {
@@ -22,7 +20,11 @@ export function getTranslationsForModel(model, lang, filter) {
             if (isUUID(value)) {  // test if field value is guid and get cleartext of it
               const promiseOfTranslation = getTranslation(lang, value)
                 .then(tr => {
-                  translatedInstance[key] = tr.text;
+                  console.log('TR', tr);
+                  if (!tr) translatedInstance[key] = '';
+                  else {
+                    translatedInstance[key] = tr.text;
+                  }
                   return translatedInstance[key];
                 });
               promises.push(promiseOfTranslation);
@@ -45,15 +47,16 @@ export function getTranslationsForModel(model, lang, filter) {
           });
       });
   });
+}
 
-  function getTranslation(lang, guid) {
-
-    return findTranslation({ where: {
-      and: [
-        { guId: guid },
-        { lang: lang },
-      ] } });
-  }
+export function getTranslation(lang, guid) {
+  const TranslationModel = app.models.Translation;
+  const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
+  return findTranslation({ where: {
+    and: [
+      { guId: guid },
+      { lang: lang },
+    ] } });
 }
 
 export function isUUID(text) {
@@ -84,6 +87,7 @@ export function createTranslationsForModel(modelName, jsonData) {
     // make data into array if it isn't already
     if (!_.isArray(jsonData)) jsonData = [jsonData];
 
+    const modelsCreatedPromices = [];
     _.forEach(jsonData, fixture => {
       const modelJSON = {
         'lastModified': Date.now(),   // automatically set lastModified
@@ -110,10 +114,11 @@ export function createTranslationsForModel(modelName, jsonData) {
       });
 
       createModel(modelJSON)
-      .then(createTranslation(translations))
-      .then(newModel => resolve(newModel))
+      .then(modelsCreatedPromices.push(createTranslation(translations)))
       .catch(err => reject(err));
     });
+
+    Promise.all(modelsCreatedPromices).then(val => resolve(val));
   });
 }
 
