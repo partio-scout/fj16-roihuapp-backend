@@ -1,15 +1,19 @@
-import app from '../../server/server';
+//import app from '../../server/server';
 
 module.exports = function(TranslateableModel) {
 
   TranslateableModel.observe('before delete', (ctx, next) => {
-    console.log('Deleting translations for', ctx.Model.pluralModelName);
+    // Can't delete translations by guid in this case, because we only have guids for instances of single model
+    // calling delete with these guids leaves only translations for single modeltype and destroys everything else
+    /*
     // assumes that models are deleted by their name guid
     app.models.Translation.destroyAll({ guId: ctx.where.name }, (err, info) => {
       if (err) console.error(err);
-      console.log('Deleted', info.count, 'translations');
+      console.log('Deleted', info.count, 'translations for', ctx.Model.pluralModelName);
       next();
     });
+    */
 
+    next();
   });
 };
