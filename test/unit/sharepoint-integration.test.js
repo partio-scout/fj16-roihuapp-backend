@@ -15,14 +15,14 @@ const locationsData = require('./sharepoint-locationsdata.json');
 
 describe('Sharepoint loading', () => {
 
-  before(done => {
+  before(() => {
     // handle sharepoint data without actually getting it from sharepoint
     // resetDatabase() ???
-    locationsHandler(null, locationsData).then(done());
+    locationsHandler(null, locationsData);
   });
 
   it('translations should exitst after loading', () => {
-    request(app).get('/api/LocationCategories/translations?lang=FI')
+    request(app).get('/api/LocationCategories/translations?lang=FI').expect(500)
     .then(response => {
       // THIS SHOULD FAIL
       console.log(response);

@@ -11,11 +11,12 @@ export function locationsHandler(err, data) {
   let categoryIndex = 1;
   let categorySortNo = 1;
 
-  return new Promise((resolve, reject) => {
+  //return new Promise((resolve, reject) => {
 
     if (err) {
       console.log('Aborting sharepoint loading due error:', err);
-      reject(err);
+      //reject(err);
+      return 0;
     } else {
       _.forEach(data, item => {
         const categoryObj = {
@@ -57,6 +58,7 @@ export function locationsHandler(err, data) {
         });
       });
 
+/* Promised version
       Promise.join(
         translationUtils.createTranslationsForModel('LocationCategory', categories),
         translationUtils.createTranslationsForModel('Location', locations),
@@ -68,21 +70,21 @@ export function locationsHandler(err, data) {
           destroyAllByNameGuid('Location', loc);
       })
       .then(() => resolve());
+*/
 
-      /*
       translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
         // delete all other categories
-        console.log('Created', categories.length, 'location categories');
+        //console.log('Created', categories.length, 'location categories');
         destroyAllByNameGuid('LocationCategory', cr);
       });
       translationUtils.createTranslationsForModel('Location', locations).then(loc => {
         // delete all other locations
-        console.log('Created', locations.length, 'locations');
+        //console.log('Created', locations.length, 'locations');
         destroyAllByNameGuid('Location', loc);
       });
-      */
+
     }
-  });
+  //});
 }
 
 function isInArray(obj, arr) {
