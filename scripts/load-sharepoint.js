@@ -11,59 +11,78 @@ export function locationsHandler(err, data) {
   let categoryIndex = 1;
   let categorySortNo = 1;
 
-  if (err) {
-    console.log('Aborting sharepoint loading due error:', err);
-    return 0;
-  } else {
-    _.forEach(data, item => {
-      const categoryObj = {
-        'name': {
-          'FI': item.Kategoria,
-        },
-        'sortNo': categorySortNo,
-        'idFromSource': categoryIndex,
-      };
-      // compare categories with their name instead of full object
-      let cIndexNum = catNames.indexOf(item.Kategoria);
-      if ( cIndexNum === -1) {
-        categories.push(categoryObj);
-        catNames.push(item.Kategoria);
-        cIndexNum = categoryIndex-1;
-        categoryIndex += 1;
-        categorySortNo += 1;
-      }
-      locations.push({
-        'name': {
-          'FI': item.Title,
-          'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
-          'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
-        },
-        'description': {
-          'FI': selfOrEmpty(item.Kuvaus),
-          'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
-          'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
-        },
-        'sortNo': item.Id,
-        'idFromSource': item.Id,
-        'categoryId': cIndexNum + 1,
-        'gpsLatitude': selfOrEmpty(item.Latitude),
-        'gpsLongitude': selfOrEmpty(item.Longitude),
-        'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
-        'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
-      });
-    });
+  return new Promise((resolve, reject) => {
 
-    translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
-      // delete all other categories
-      console.log('Created', categories.length, 'location categories');
-      destroyAllByNameGuid('LocationCategory', cr);
-    });
-    translationUtils.createTranslationsForModel('Location', locations).then(loc => {
-      // delete all other locations
-      console.log('Created', locations.length, 'locations');
-      destroyAllByNameGuid('Location', loc);
-    });
-  }
+    if (err) {
+      console.log('Aborting sharepoint loading due error:', err);
+      reject(err);
+    } else {
+      _.forEach(data, item => {
+        const categoryObj = {
+          'name': {
+            'FI': item.Kategoria,
+            'SV': item.Kategoria,
+            'EN': item.Kategoria,
+          },
+          'sortNo': categorySortNo,
+          'idFromSource': categoryIndex,
+        };
+        // compare categories with their name instead of full object
+        let cIndexNum = catNames.indexOf(item.Kategoria);
+        if ( cIndexNum === -1) {
+          categories.push(categoryObj);
+          catNames.push(item.Kategoria);
+          cIndexNum = categoryIndex-1;
+          categoryIndex += 1;
+          categorySortNo += 1;
+        }
+        locations.push({
+          'name': {
+            'FI': item.Title,
+            'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
+            'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
+          },
+          'description': {
+            'FI': selfOrEmpty(item.Kuvaus),
+            'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
+            'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
+          },
+          'sortNo': item.Id,
+          'idFromSource': item.Id,
+          'categoryId': cIndexNum + 1,
+          'gpsLatitude': selfOrEmpty(item.Latitude),
+          'gpsLongitude': selfOrEmpty(item.Longitude),
+          'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
+          'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
+        });
+      });
+
+      Promise.join(
+        translationUtils.createTranslationsForModel('LocationCategory', categories),
+        translationUtils.createTranslationsForModel('Location', locations),
+        (cr, loc) => {
+          //console.log('Created', categories.length, 'location categories');
+          destroyAllByNameGuid('LocationCategory', cr);
+
+          //console.log('Created', locations.length, 'locations');
+          destroyAllByNameGuid('Location', loc);
+      })
+      .then(() => resolve());
+
+      /*
+      translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
+        // delete all other categories
+        console.log('Created', categories.length, 'location categories');
+        destroyAllByNameGuid('LocationCategory', cr);
+      });
+      translationUtils.createTranslationsForModel('Location', locations).then(loc => {
+        // delete all other locations
+        console.log('Created', locations.length, 'locations');
+        destroyAllByNameGuid('Location', loc);
+      });
+      */
+    }
+  });
 }
 
 function isInArray(obj, arr) {
@@ -85,7 +104,7 @@ function destroyAllByNameGuid(modelName, guIdList) {
   // deletes all instances where name guId is not in our array
   app.models[modelName].destroyAll({ name: { nin: guidsToDelete } }, (err, info) => {
     if (err) console.error(err);
-    console.log('Deleted', info.count, 'unused instances of', modelName);
+    //console.log('Deleted', info.count, 'unused instances of', modelName);
   });
 }
 

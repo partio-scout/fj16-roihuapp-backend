@@ -20,7 +20,6 @@ export function getTranslationsForModel(model, lang, filter) {
             if (isUUID(value)) {  // test if field value is guid and get cleartext of it
               const promiseOfTranslation = getTranslation(lang, value)
                 .then(tr => {
-                  console.log('TR', tr);
                   if (!tr) translatedInstance[key] = '';
                   else {
                     translatedInstance[key] = tr.text;
