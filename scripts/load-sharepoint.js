@@ -115,7 +115,7 @@ function selfOrEmpty(val) {
   return val || '';
 }
 
-function readSharepointList(listName, handler) {
+export function readSharepointList(listName, handler) {
   try {
     const sharepoint = require('sharepointconnector')({
       username : process.env.SHAREPOINT_USER,
