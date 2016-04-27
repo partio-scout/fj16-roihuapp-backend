@@ -2,7 +2,7 @@ import app from '../../src/server/server.js';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { locationsHandler } from '../../scripts/load-sharepoint';
-import request from 'supertest-as-promised';
+import request from 'supertest';
 //import Promise from 'bluebird';
 //import { resetDatabase } from '../../scripts/seed-database';
 
@@ -15,19 +15,30 @@ const locationsData = require('./sharepoint-locationsdata.json');
 
 describe('Sharepoint loading', () => {
 
-  before(() => {
+  before(done => {
     // handle sharepoint data without actually getting it from sharepoint
     // resetDatabase() ???
-    locationsHandler(null, locationsData);
+    locationsHandler(null, locationsData, done);
   });
 
-  it('translations should exitst after loading', () => {
-    request(app).get('/api/LocationCategories/translations?lang=FI').expect(500)
-    .then(response => {
-      // THIS SHOULD FAIL
-      console.log(response);
-      expect(response).to.not.exist;
-      expect(response).to.exist;
-    });
+  it('translations should exitst after loading', done => {
+    request(app).get('/api/LocationCategories/translations?lang=FI')
+    .expect(200)
+    .expect(res => {
+      /* same as below
+      expect(res.body).to.have.property('categories')
+        .that.is.an('array')
+        .with.deep.property('[0]')
+          .that.have.property('articles')
+          .that.is.an('array')
+          .with.deep.property('[0]')
+          .that.have.property('title', 'OTSIKKO_FI');
+          */
+      expect(res.body).to.deep.have.property('categories.[0].articles.[0].title', 'OTSIKKO_FI');
+      expect(res.body).to.deep.have.property('categories.[0].articles.[0].bodytext', 'KUVAUS_FI');
+      expect(res.body).to.deep.have.property('categories.[0].title', 'TESTI_KATEGORIA');
+    })
+    .end(done);
+
   });
 });

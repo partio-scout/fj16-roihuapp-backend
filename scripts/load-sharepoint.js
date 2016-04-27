@@ -3,7 +3,8 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import * as translationUtils from '../src/common/utils/translations';
 
-export function locationsHandler(err, data) {
+export function locationsHandler(err, data, cb) {
+  // cb is used for running this in tests
   const categories = [];
   const catNames = [];
   const locations = [];
@@ -16,7 +17,8 @@ export function locationsHandler(err, data) {
     if (err) {
       console.log('Aborting sharepoint loading due error:', err);
       //reject(err);
-      return 0;
+      if (cb) cb();
+      else return 0;
     } else {
       _.forEach(data, item => {
         const categoryObj = {
@@ -58,7 +60,6 @@ export function locationsHandler(err, data) {
         });
       });
 
-/* Promised version
       Promise.join(
         translationUtils.createTranslationsForModel('LocationCategory', categories),
         translationUtils.createTranslationsForModel('Location', locations),
@@ -69,19 +70,19 @@ export function locationsHandler(err, data) {
           //console.log('Created', locations.length, 'locations');
           destroyAllByNameGuid('Location', loc);
       })
-      .then(() => resolve());
-*/
+      .then(() => {
+        if (cb) cb();
+        else return 1;
+      });
 
+/*
       translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
-        // delete all other categories
-        //console.log('Created', categories.length, 'location categories');
         destroyAllByNameGuid('LocationCategory', cr);
       });
       translationUtils.createTranslationsForModel('Location', locations).then(loc => {
-        // delete all other locations
-        //console.log('Created', locations.length, 'locations');
         destroyAllByNameGuid('Location', loc);
       });
+*/
 
     }
   //});
