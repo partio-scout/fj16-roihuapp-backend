@@ -3,7 +3,8 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import * as translationUtils from '../src/common/utils/translations';
 
-export function locationsHandler(err, data) {
+export function locationsHandler(err, data, cb) {
+  // callback is used for running this in tests
   const categories = [];
   const catNames = [];
   const locations = [];
@@ -12,16 +13,20 @@ export function locationsHandler(err, data) {
   let categorySortNo = 1;
 
   if (err) {
-    console.log('Aborting sharepoint loading due error:', err);
-    return 0;
+    if (cb) cb();
+    else return 0;
+
   } else {
     _.forEach(data, item => {
       const categoryObj = {
         'name': {
           'FI': item.Kategoria,
+          'SV': item.Kategoria,
+          'EN': item.Kategoria,
         },
         'sortNo': categorySortNo,
         'idFromSource': categoryIndex,
+        'lastModified': item.Modified,
       };
       // compare categories with their name instead of full object
       let cIndexNum = catNames.indexOf(item.Kategoria);
@@ -50,28 +55,23 @@ export function locationsHandler(err, data) {
         'gpsLongitude': selfOrEmpty(item.Longitude),
         'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
         'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
+        'lastModified': item.Modified,
       });
     });
 
-    translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
-      // delete all other categories
-      console.log('Created', categories.length, 'location categories');
-      destroyAllByNameGuid('LocationCategory', cr);
-    });
-    translationUtils.createTranslationsForModel('Location', locations).then(loc => {
-      // delete all other locations
-      console.log('Created', locations.length, 'locations');
-      destroyAllByNameGuid('Location', loc);
+    Promise.join(
+      translationUtils.createTranslationsForModel('LocationCategory', categories),
+      translationUtils.createTranslationsForModel('Location', locations),
+      (cr, loc) => {
+        // delete all other model instances
+        destroyAllByNameGuid('LocationCategory', cr);
+        destroyAllByNameGuid('Location', loc);
+    })
+    .then(() => {
+      if (cb) cb();
+      else return 1;
     });
   }
-}
-
-function isInArray(obj, arr) {
-  let i;
-  for (i = 0; i < arr.length; i++) {
-    if(arr[i] == obj) return true;
-  }
-  return false;
 }
 
 function destroyAllByNameGuid(modelName, guIdList) {
@@ -85,7 +85,6 @@ function destroyAllByNameGuid(modelName, guIdList) {
   // deletes all instances where name guId is not in our array
   app.models[modelName].destroyAll({ name: { nin: guidsToDelete } }, (err, info) => {
     if (err) console.error(err);
-    console.log('Deleted', info.count, 'unused instances of', modelName);
   });
 }
 
@@ -93,7 +92,7 @@ function selfOrEmpty(val) {
   return val || '';
 }
 
-function readSharepointList(listName, handler) {
+export function readSharepointList(listName, handler) {
   try {
     const sharepoint = require('sharepointconnector')({
       username : process.env.SHAREPOINT_USER,
@@ -112,12 +111,11 @@ function readSharepointList(listName, handler) {
           handler(null, data);
         });
       }
-
     });
   } catch (e) {
+    // missing credentials will throw catchable error
     handler(e, null);
   }
-  
 }
 
 if (require.main === module) {

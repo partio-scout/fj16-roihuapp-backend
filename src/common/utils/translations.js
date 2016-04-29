@@ -20,7 +20,6 @@ export function getTranslationsForModel(model, lang, filter) {
             if (isUUID(value)) {  // test if field value is guid and get cleartext of it
               const promiseOfTranslation = getTranslation(lang, value)
                 .then(tr => {
-                  console.log('TR', tr);
                   if (!tr) translatedInstance[key] = '';
                   else {
                     translatedInstance[key] = tr.text;
@@ -90,7 +89,7 @@ export function createTranslationsForModel(modelName, jsonData) {
     const modelsCreatedPromices = [];
     _.forEach(jsonData, fixture => {
       const modelJSON = {
-        'lastModified': Date.now(),   // automatically set lastModified
+        'lastModified': fixture.lastModified || Date.now(), // automatically set lastModified
       };
       const translations = [];
 
@@ -122,6 +121,7 @@ export function createTranslationsForModel(modelName, jsonData) {
   });
 }
 
+/* EI VAIKUTA TOIMIVALTA! */
 export function deleteTranslationsForModel(modelName, instanceId) {
   const TranslationModel = app.models.Translation;
   //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });

@@ -1,19 +1,32 @@
-//import app from '../../server/server';
+import app from '../../server/server';
+import Promise from 'bluebird';
+import _ from 'lodash';
+import { isUUID } from '../utils/translations';
 
 module.exports = function(TranslateableModel) {
 
   TranslateableModel.observe('before delete', (ctx, next) => {
-    // Can't delete translations by guid in this case, because we only have guids for instances of single model
-    // calling delete with these guids leaves only translations for single modeltype and destroys everything else
-    /*
-    // assumes that models are deleted by their name guid
-    app.models.Translation.destroyAll({ guId: ctx.where.name }, (err, info) => {
-      if (err) console.error(err);
-      console.log('Deleted', info.count, 'translations for', ctx.Model.pluralModelName);
-      next();
-    });
-    */
 
-    next();
+    const model = app.models[ctx.Model.modelName];
+    const findModels = Promise.promisify(model.find, { context: model });
+    const deleteTranslations = Promise.promisify(app.models.Translation.destroyAll, { context: app.models.Translation });
+
+    findModels({ where: ctx.where })
+    .then(models => {
+      const guIdsToDelete = [];
+
+      _.forEach(models, mod => {
+        _.forEach(mod.__data, value => {
+          if (isUUID(value)) {
+            // add translation guid to deletes list
+            guIdsToDelete.push(value);
+          }
+        });
+      });
+
+      // delete translations
+      return deleteTranslations({ guId: { inq: guIdsToDelete } });
+    }).asCallback(next);
   });
+
 };
