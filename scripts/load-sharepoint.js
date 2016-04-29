@@ -4,7 +4,7 @@ import _ from 'lodash';
 import * as translationUtils from '../src/common/utils/translations';
 
 export function locationsHandler(err, data, cb) {
-  // cb is used for running this in tests
+  // callback is used for running this in tests
   const categories = [];
   const catNames = [];
   const locations = [];
@@ -13,10 +13,9 @@ export function locationsHandler(err, data, cb) {
   let categorySortNo = 1;
 
   if (err) {
-    console.log('Aborting sharepoint loading due error:', err);
-    //reject(err);
     if (cb) cb();
     else return 0;
+
   } else {
     _.forEach(data, item => {
       const categoryObj = {
@@ -64,10 +63,8 @@ export function locationsHandler(err, data, cb) {
       translationUtils.createTranslationsForModel('LocationCategory', categories),
       translationUtils.createTranslationsForModel('Location', locations),
       (cr, loc) => {
-        //console.log('Created', categories.length, 'location categories');
+        // delete all other model instances
         destroyAllByNameGuid('LocationCategory', cr);
-
-        //console.log('Created', locations.length, 'locations');
         destroyAllByNameGuid('Location', loc);
     })
     .then(() => {
@@ -75,14 +72,6 @@ export function locationsHandler(err, data, cb) {
       else return 1;
     });
   }
-}
-
-function isInArray(obj, arr) {
-  let i;
-  for (i = 0; i < arr.length; i++) {
-    if(arr[i] == obj) return true;
-  }
-  return false;
 }
 
 function destroyAllByNameGuid(modelName, guIdList) {
@@ -96,7 +85,6 @@ function destroyAllByNameGuid(modelName, guIdList) {
   // deletes all instances where name guId is not in our array
   app.models[modelName].destroyAll({ name: { nin: guidsToDelete } }, (err, info) => {
     if (err) console.error(err);
-    //console.log('Deleted', info.count, 'unused instances of', modelName);
   });
 }
 
@@ -123,12 +111,11 @@ export function readSharepointList(listName, handler) {
           handler(null, data);
         });
       }
-
     });
   } catch (e) {
+    // missing credentials will throw catchable error
     handler(e, null);
   }
-  
 }
 
 if (require.main === module) {
