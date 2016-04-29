@@ -12,7 +12,8 @@
     "test-mocha": "mocha --compilers js:babel-core/register ./test --recursive",
     "seed-database": "babel-node scripts/seed-database.js",
     "create-translations": "babel-node scripts/create-translations.js",
-    "postinstall": "npm run seed-database && npm run create-translations"
+    "load-sharepoint": "babel-node scripts/load-sharepoint.js",
+    "postinstall": "npm run seed-database && npm run create-translations && npm run load-sharepoint"
   },
   "dependencies": {
     "babel-cli": "^6.6.5",
@@ -35,6 +36,7 @@
     "loopback-datasource-juggler": "^2.43.0",
     "passport-saml": "^0.14.0",
     "serve-favicon": "^2.3.0",
+    "sharepointconnector": "^1.0.65",
     "superagent": "^1.7.2",
     "superagent-as-promised": "^3.2.1",
     "uuid": "^2.0.1",

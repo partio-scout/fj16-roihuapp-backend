@@ -61,7 +61,6 @@ module.exports = function(LocationCategory) {
               });
           });
       });
-
   };
 
   LocationCategory.remoteMethod(

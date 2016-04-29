@@ -2,10 +2,9 @@ import app from '../../server/server'; // relative to file which does the import
 import Promise from 'bluebird';
 import _ from 'lodash';
 import validate_uuid from 'uuid-validate';
+import uuid from 'uuid';
 
 export function getTranslationsForModel(model, lang, filter) {
-  const TranslationModel = app.models.Translation;
-  const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
   const findModel = Promise.promisify(model.find, { context: model });
 
   return new Promise((resolve, reject) => {
@@ -47,19 +46,20 @@ export function getTranslationsForModel(model, lang, filter) {
           });
       });
   });
+}
 
-  function isUUID(text) {
-    return (validate_uuid(text, 1) || validate_uuid(text, 4)) ? 1 : 0;
-  }
+export function getTranslation(lang, guid) {
+  const TranslationModel = app.models.Translation;
+  const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
+  return findTranslation({ where: {
+    and: [
+      { guId: guid },
+      { lang: lang },
+    ] } });
+}
 
-  function getTranslation(lang, guid) {
-
-    return findTranslation({ where: {
-      and: [
-        { guId: guid },
-        { lang: lang },
-      ] } });
-  }
+export function isUUID(text) {
+  return (validate_uuid(text, 1) || validate_uuid(text, 4)) ? true : false;
 }
 
 export function getLangIfNotExists(lang) {
@@ -74,5 +74,74 @@ export function getLangIfNotExists(lang) {
         else resolve(lang);
       });
   });
+}
 
+export function createTranslationsForModel(modelName, jsonData) {
+  const model = app.models[modelName];
+  const createModel = Promise.promisify(model.create, { context: model });
+  const TranslationModel = app.models.Translation;
+  const createTranslation = Promise.promisify(TranslationModel.create, { context: TranslationModel });
+
+  return new Promise((resolve, reject) => {
+    // make data into array if it isn't already
+    if (!_.isArray(jsonData)) jsonData = [jsonData];
+
+    const modelsCreatedPromices = [];
+    _.forEach(jsonData, fixture => {
+      const modelJSON = {
+        'lastModified': fixture.lastModified || Date.now(), // automatically set lastModified
+      };
+      const translations = [];
+
+      _.forEach(fixture, (value, key) => {
+        if (typeof value === 'object') {
+          // generate model JSON with uuids in case of translation
+          const textUuid = uuid.v1();
+          modelJSON[key] = textUuid;
+
+          // add translations too
+          _.forEach(value, (text, lang) => {
+            translations.push({
+              'lang': lang,
+              'text': text,
+              'guId': textUuid,
+            });
+          });
+        } else {
+          modelJSON[key] = value;
+        }
+      });
+
+      createModel(modelJSON)
+      .then(modelsCreatedPromices.push(createTranslation(translations)))
+      .catch(err => reject(err));
+    });
+
+    Promise.all(modelsCreatedPromices).then(val => resolve(val));
+  });
+}
+
+/* EI VAIKUTA TOIMIVALTA! */
+export function deleteTranslationsForModel(modelName, instanceId) {
+  const TranslationModel = app.models.Translation;
+  //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });
+  const model = app.models[modelName];
+  const findModelById = Promise.promisify(model.find, { context: model });
+
+/* EI VAIKUTA TOIMIVALTA! */
+  return new Promise((resolve, reject) => {
+    findModelById({ 'id': instanceId })
+    .then(modelInstance => {
+      _.forEach(modelInstance, (value, key) => {
+        if (isUUID(value)) {
+          TranslationModel.destroyAll({ 'guId': value });
+        }
+      });
+    })
+    .then(() => {
+      model.destroyById(instanceId);
+      resolve(true);
+    })
+    .catch(err => reject(err));
+  });
 }
