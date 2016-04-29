@@ -89,7 +89,7 @@ export function createTranslationsForModel(modelName, jsonData) {
     const modelsCreatedPromices = [];
     _.forEach(jsonData, fixture => {
       const modelJSON = {
-        'lastModified': Date.now(),   // automatically set lastModified
+        'lastModified': fixture.lastModified || Date.now(), // automatically set lastModified
       };
       const translations = [];
 

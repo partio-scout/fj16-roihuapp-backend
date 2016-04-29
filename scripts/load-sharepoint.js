@@ -12,80 +12,69 @@ export function locationsHandler(err, data, cb) {
   let categoryIndex = 1;
   let categorySortNo = 1;
 
-  //return new Promise((resolve, reject) => {
-
-    if (err) {
-      console.log('Aborting sharepoint loading due error:', err);
-      //reject(err);
-      if (cb) cb();
-      else return 0;
-    } else {
-      _.forEach(data, item => {
-        const categoryObj = {
-          'name': {
-            'FI': item.Kategoria,
-            'SV': item.Kategoria,
-            'EN': item.Kategoria,
-          },
-          'sortNo': categorySortNo,
-          'idFromSource': categoryIndex,
-        };
-        // compare categories with their name instead of full object
-        let cIndexNum = catNames.indexOf(item.Kategoria);
-        if ( cIndexNum === -1) {
-          categories.push(categoryObj);
-          catNames.push(item.Kategoria);
-          cIndexNum = categoryIndex-1;
-          categoryIndex += 1;
-          categorySortNo += 1;
-        }
-        locations.push({
-          'name': {
-            'FI': item.Title,
-            'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
-            'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
-          },
-          'description': {
-            'FI': selfOrEmpty(item.Kuvaus),
-            'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
-            'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
-          },
-          'sortNo': item.Id,
-          'idFromSource': item.Id,
-          'categoryId': cIndexNum + 1,
-          'gpsLatitude': selfOrEmpty(item.Latitude),
-          'gpsLongitude': selfOrEmpty(item.Longitude),
-          'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
-          'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
-        });
+  if (err) {
+    console.log('Aborting sharepoint loading due error:', err);
+    //reject(err);
+    if (cb) cb();
+    else return 0;
+  } else {
+    _.forEach(data, item => {
+      const categoryObj = {
+        'name': {
+          'FI': item.Kategoria,
+          'SV': item.Kategoria,
+          'EN': item.Kategoria,
+        },
+        'sortNo': categorySortNo,
+        'idFromSource': categoryIndex,
+        'lastModified': item.Modified,
+      };
+      // compare categories with their name instead of full object
+      let cIndexNum = catNames.indexOf(item.Kategoria);
+      if ( cIndexNum === -1) {
+        categories.push(categoryObj);
+        catNames.push(item.Kategoria);
+        cIndexNum = categoryIndex-1;
+        categoryIndex += 1;
+        categorySortNo += 1;
+      }
+      locations.push({
+        'name': {
+          'FI': item.Title,
+          'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
+          'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
+        },
+        'description': {
+          'FI': selfOrEmpty(item.Kuvaus),
+          'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
+          'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
+        },
+        'sortNo': item.Id,
+        'idFromSource': item.Id,
+        'categoryId': cIndexNum + 1,
+        'gpsLatitude': selfOrEmpty(item.Latitude),
+        'gpsLongitude': selfOrEmpty(item.Longitude),
+        'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
+        'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
+        'lastModified': item.Modified,
       });
+    });
 
-      Promise.join(
-        translationUtils.createTranslationsForModel('LocationCategory', categories),
-        translationUtils.createTranslationsForModel('Location', locations),
-        (cr, loc) => {
-          //console.log('Created', categories.length, 'location categories');
-          destroyAllByNameGuid('LocationCategory', cr);
-
-          //console.log('Created', locations.length, 'locations');
-          destroyAllByNameGuid('Location', loc);
-      })
-      .then(() => {
-        if (cb) cb();
-        else return 1;
-      });
-
-/*
-      translationUtils.createTranslationsForModel('LocationCategory', categories).then(cr => {
+    Promise.join(
+      translationUtils.createTranslationsForModel('LocationCategory', categories),
+      translationUtils.createTranslationsForModel('Location', locations),
+      (cr, loc) => {
+        //console.log('Created', categories.length, 'location categories');
         destroyAllByNameGuid('LocationCategory', cr);
-      });
-      translationUtils.createTranslationsForModel('Location', locations).then(loc => {
-        destroyAllByNameGuid('Location', loc);
-      });
-*/
 
-    }
-  //});
+        //console.log('Created', locations.length, 'locations');
+        destroyAllByNameGuid('Location', loc);
+    })
+    .then(() => {
+      if (cb) cb();
+      else return 1;
+    });
+  }
 }
 
 function isInArray(obj, arr) {
