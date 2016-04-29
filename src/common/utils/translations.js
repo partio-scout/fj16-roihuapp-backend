@@ -121,6 +121,7 @@ export function createTranslationsForModel(modelName, jsonData) {
   });
 }
 
+/* EI VAIKUTA TOIMIVALTA! */
 export function deleteTranslationsForModel(modelName, instanceId) {
   const TranslationModel = app.models.Translation;
   //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });
