@@ -26,17 +26,22 @@ function forAll(values, promiseReturningFunction) {
 }
 
 export function resetDatabase() {
+  function automigrate() {
+    const db = app.datasources.db;
+    const modelsToCreate = getModelCreationList();
+    return new Promise((resolve, reject) => db.automigrate(modelsToCreate).then(resolve, reject));
+  }
 
-  const db = app.datasources.db;
-
-  const modelsToCreate = getModelCreationList();
-  return db.automigrate(modelsToCreate)
-    .then(() => console.log('The following tables were (re-)created: ', modelsToCreate))
-    .then(() => forAll(getFixtureCreationList(), createFixtures))
-    .then(() => db.disconnect(), () => db.disconnect());
+  return automigrate()
+    .then(() => forAll(getFixtureCreationList(), createFixtures));
 }
 
+// Ajetaan resetDatabase jos tiedosto ajetaan skriptinä, ei silloin kun importataan
+// Tällöin suljetaan yhteys tietokantaan lopuksi
 if (require.main === module) {
+  const db = app.datasources.db;
+
   resetDatabase()
-    .catch(err => console.error('Database reset and seeding failed: ', err));
+    .catch(err => console.error('Database reset and seeding failed: ', err))
+    .finally(() => db.disconnect());
 }
