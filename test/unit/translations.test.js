@@ -2,14 +2,28 @@ import app from '../../src/server/server.js';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import * as translationUtils from '../../src/common/utils/translations';
+import * as testUtils from '../utils/testutils';
+import { resetDatabase } from '../../scripts/seed-database';
 
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
+function deleteModels(modelsToDelete) {
+  modelsToDelete.forEach(model => {
+    if (model.id && model.name) {
+      testUtils.deleteFixtureIfExists(model.name, model.id);
+    }
+  });
+}
+
 describe('Translations', () => {
   describe('create', () => {
     const modelsToDelete = [];
+
+    beforeEach(done => {
+      resetDatabase().asCallback(done);
+    });
 
     it('should add new translation', done => {
       translationUtils.createTranslationsForModel('LocationCategory', {
@@ -23,20 +37,26 @@ describe('Translations', () => {
       })
       .then(data => {
         modelsToDelete.push({ 'name': 'LocationCategory', 'id': data.categoryId });
-        expect(translationUtils.isUUID(data.name)).to.be.true;
+
+        testUtils.find('LocationCategory', { id: data.categoryId })
+        .then(item => {
+          expect(translationUtils.isUUID(item[0].name)).to.be.true;
+        });
       }).nodeify(done);
     });
 
-    after(() => {
-      modelsToDelete.forEach(model => {
-        translationUtils.deleteTranslationsForModel(model.name, model.id);
-      });
+    afterEach(() => {
+      deleteModels(modelsToDelete);
     });
   });
 
   describe('find', () => {
     const modelsToDelete = [];
     const LocationCategory = app.models.LocationCategory;
+
+    beforeEach(done => {
+      resetDatabase().asCallback(done);
+    });
 
     it('should get translated model', done => {
       translationUtils.createTranslationsForModel('LocationCategory', {
@@ -54,16 +74,14 @@ describe('Translations', () => {
       .then(() => translationUtils.getTranslationsForModel(LocationCategory, 'FI'))
       .then(result => {
         result = result[0];
-        console.log(result);
+
         expect(result).to.not.be.null;
         expect(result.name).to.equal('markkinapaikat');
       }).nodeify(done);
     });
 
-    after(() => {
-      modelsToDelete.forEach(model => {
-        translationUtils.deleteTranslationsForModel(model.name, model.id);
-      });
+    afterEach(() => {
+      deleteModels(modelsToDelete);
     });
   });
 });
