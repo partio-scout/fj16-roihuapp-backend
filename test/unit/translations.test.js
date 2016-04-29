@@ -1,85 +1,87 @@
-//import app from '../../src/server/server.js';
+import app from '../../src/server/server.js';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-//import * as translationUtils from '../../src/common/utils/translations';
-//import * as testUtils from '../utils/testutils';
+import * as translationUtils from '../../src/common/utils/translations';
+import * as testUtils from '../utils/testutils';
+import { resetDatabase } from '../../scripts/seed-database';
 
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
+function deleteModels(modelsToDelete) {
+  modelsToDelete.forEach(model => {
+    if (model.id && model.name) {
+      testUtils.deleteFixtureIfExists(model.name, model.id);
+    }
+  });
+}
+
 describe('Translations', () => {
   describe('create', () => {
-    //const locIds = [];
+    const modelsToDelete = [];
 
-    it('should add new translation', () => {
-      expect(1);
-      // this does not work properly
-      /*
-      translationUtils.createTranslationsForModel('Location', {
+    beforeEach(done => {
+      resetDatabase().asCallback(done);
+    });
+
+    it('should add new translation', done => {
+      translationUtils.createTranslationsForModel('LocationCategory', {
         'name': {
-          'FI': 'Testikäännös',
-          'SV': 'SV TEST 1',
-          'EN': 'TEST translation',
-        },
-        'description': {
-          'FI': 'Kahvila 1 on auki seuraavasti...',
-          'SV': 'SV Kahvila 1 on auki seuraavasti...',
-          'EN': 'Opening hours of Coffee Shop 1 are...',
+          'FI': 'Kahvilat',
+          'SV': 'SV KATEGORIA',
+          'EN': 'EN CATEGORY',
         },
         'sortNo': 99999,
-        'idFromSource': 99999,
-        'categoryId': 10,
-        'gpsLatitude': '62.343434',
-        'gpsLongitude': '25.454545',
-        'gridLatitude': 'H',
-        'gridLongitude': '08',
+        'idFromSource': 999,
       })
       .then(data => {
-        locIds.push(data.locationId);
-        expect(translationUtils.isUUID(data.name)).to.be.true;
-        expect(translationUtils.isUUID(data.description)).to.be.true;
-      });
-      */
+        modelsToDelete.push({ 'name': 'LocationCategory', 'id': data.categoryId });
+
+        testUtils.find('LocationCategory', { id: data.categoryId })
+        .then(item => {
+          expect(translationUtils.isUUID(item[0].name)).to.be.true;
+        });
+      }).nodeify(done);
     });
-/*
-    after(() => {
-      translationUtils.deleteTranslationsForModel('Location', locIds[0]);
-    });*/
+
+    afterEach(() => {
+      deleteModels(modelsToDelete);
+    });
   });
 
-/*
-  describe('delete', () => {
-    let idToDelete;
-    before(() => {
-      translationUtils.createTranslationsForModel('Location', {
+  describe('find', () => {
+    const modelsToDelete = [];
+    const LocationCategory = app.models.LocationCategory;
+
+    beforeEach(done => {
+      resetDatabase().asCallback(done);
+    });
+
+    it('should get translated model', done => {
+      translationUtils.createTranslationsForModel('LocationCategory', {
         'name': {
-          'FI': 'Testikäännös',
-          'SV': 'SV TEST 1',
-          'EN': 'TEST translation',
+          'FI': 'markkinapaikat',
+          'SV': 'SV KATEGORIA',
+          'EN': 'EN CATEGORY',
         },
-        'description': {
-          'FI': 'Kahvila 1 on auki seuraavasti...',
-          'SV': 'SV Kahvila 1 on auki seuraavasti...',
-          'EN': 'Opening hours of Coffee Shop 1 are...',
-        },
-        'sortNo': 99998,
-        'idFromSource': 99998,
-        'categoryId': 10,
-        'gpsLatitude': '62.343434',
-        'gpsLongitude': '25.454545',
-        'gridLatitude': 'H',
-        'gridLongitude': '08',
+        'sortNo': 88888,
+        'idFromSource': 8888,
       })
-      .then(loc => idToDelete = loc.locationId);
+      .then(data => {
+        modelsToDelete.push({ 'name': 'LocationCategory', 'id': data.categoryId });
+      })
+      .then(() => translationUtils.getTranslationsForModel(LocationCategory, 'FI'))
+      .then(result => {
+        result = result[0];
+
+        expect(result).to.not.be.null;
+        expect(result.name).to.equal('markkinapaikat');
+      }).nodeify(done);
     });
 
-    it('should delete translation', () => {
-      translationUtils.deleteTranslationsForModel('Location', idToDelete)
-      .then(value => {
-        expect(value).to.be.true;
-      });
+    afterEach(() => {
+      deleteModels(modelsToDelete);
     });
   });
-*/
 });
