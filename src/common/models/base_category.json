@@ -1,6 +1,6 @@
 {
   "name": "BaseCategory",
-  "base": "PersistedModel",
+  "base": "TranslateableModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true
