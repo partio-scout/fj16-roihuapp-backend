@@ -34,7 +34,7 @@ module.exports = function(AchievementCategory) {
                       'bodytext': ach.description,
                       'sort_no': ach.sortNo,
                       'last_modified': ach.lastModified,
-                      'id': ach.AchievementId,
+                      'id': ach.achievementId,
                       'achievement_count': ach.achievementCount,
                     });
                   });
