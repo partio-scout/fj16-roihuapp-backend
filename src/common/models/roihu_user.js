@@ -46,7 +46,7 @@ export default function(RoihuUser) {
     .then(generateAccessToken)
     .then(token => {
       // mail settings in nodemailer format
-      const url = `roihu://${token.userId}/${token.id}`;
+      const url = `${process.env.APP_URL}/emailredirect/${token.userId}/${token.id}`;
       const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.js'));
       const transporter = nodemailer.createTransport(mailSettings);
       const mailOptions = {
