@@ -322,11 +322,11 @@
       "property": "__link__achievements"
     },
     {
-      "accessType": "EXECUTE",
+      "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "completeAchievement"
+      "property": "completedAchievements"
     }
   ],
   "methods": {}

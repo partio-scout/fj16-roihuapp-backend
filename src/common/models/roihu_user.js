@@ -3,6 +3,9 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import * as errorUtils from '../utils/errors';
 import path from 'path';
+import app from '../../server/server';
+import _ from 'lodash';
+import * as translationUtils from '../utils/translations';
 
 export default function(RoihuUser) {
 
@@ -72,6 +75,28 @@ export default function(RoihuUser) {
 
   };
 
+  RoihuUser.completedAchievements = function(userId, lang, cb) {
+    const findAchievement = Promise.promisify(app.models.Achievement.find, { context: app.models.Achievement });
+    const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+
+    findUser({
+      where: { id: userId },
+      include: 'achievements',
+    })
+    .then(user => {
+      console.log('-----11111111');
+      console.log(user.achievements);
+      console.log('-----22222222');
+      console.log(user.achievements[0]);
+      _.forEach(user.achievements, achievement => {
+        console.log('asd');
+        console.log(achievement);
+      });
+      cb(null, 'OK');
+    })
+    .catch(err => cb(err, null)); 
+  };
+
   RoihuUser.remoteMethod(
     'emailLogin',
     {
@@ -80,6 +105,18 @@ export default function(RoihuUser) {
         { arg: 'email', type: 'string' },
       ],
       returns: { arg: 'token', type: 'string' },
+    }
+  );
+
+  RoihuUser.remoteMethod(
+    'completedAchievements',
+    {
+      http: { path: '/:id/completedAchievements', verb: 'get' },
+      accepts: [
+        { arg: 'id', type: 'number', required: 'true', http: { source: 'path' } },
+        { arg: 'include', type: 'string' },
+      ],
+      returns: { arg: 'achievements', type: 'array' },
     }
   );
 }
