@@ -4,11 +4,16 @@ import { expect } from 'chai';
 
 export function loginUser(username, userpass) {
   userpass = userpass || 'salasana';
-  const promiseUserLogin = Promise.promisify(app.models.Registryuser.login, { context: app.models.Registryuser });
+  const promiseUserLogin = Promise.promisify(app.models.RoihuUser.login, { context: app.models.RoihuUser });
   return promiseUserLogin({
     username: username,
     password: userpass,
   });
+}
+
+export function withLoggedInUser(username, userpass, func) {
+  loginUser(username, userpass)
+  .then(accessToken => func(accessToken));
 }
 
 export function createFixture(modelName, fixture) {
