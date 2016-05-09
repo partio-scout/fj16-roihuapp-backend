@@ -3,7 +3,6 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import * as errorUtils from '../utils/errors';
 import path from 'path';
-import app from '../../server/server';
 import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 
@@ -76,7 +75,6 @@ export default function(RoihuUser) {
   };
 
   RoihuUser.completedAchievements = function(userId, lang, cb) {
-    const findAchievement = Promise.promisify(app.models.Achievement.find, { context: app.models.Achievement });
     const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
 
     findUser({
@@ -84,17 +82,25 @@ export default function(RoihuUser) {
       include: 'achievements',
     })
     .then(user => {
-      console.log('-----11111111');
-      console.log(user.achievements);
-      console.log('-----22222222');
-      console.log(user.achievements[0]);
-      _.forEach(user.achievements, achievement => {
-        console.log('asd');
-        console.log(achievement);
+      const u = user.toJSON();
+
+      translationUtils.getLangIfNotExists(lang)
+      .then(language => {
+        const response = [];
+        const promises = [];
+        _.forEach(u.achievements, achievement => {
+          const p = translationUtils.translateModel(achievement, language)
+          .then(ach => response.push(ach));
+          promises.push(p);
+        });
+
+        Promise.all(promises)
+        .then(() => {
+          cb(null, response);
+        });
       });
-      cb(null, 'OK');
     })
-    .catch(err => cb(err, null)); 
+    .catch(err => cb(err, null));
   };
 
   RoihuUser.remoteMethod(
@@ -114,9 +120,9 @@ export default function(RoihuUser) {
       http: { path: '/:id/completedAchievements', verb: 'get' },
       accepts: [
         { arg: 'id', type: 'number', required: 'true', http: { source: 'path' } },
-        { arg: 'include', type: 'string' },
+        { arg: 'lang', type: 'string' },
       ],
-      returns: { arg: 'achievements', type: 'array' },
+      returns: { arg: 'completedAchievements', type: 'array' },
     }
   );
 }

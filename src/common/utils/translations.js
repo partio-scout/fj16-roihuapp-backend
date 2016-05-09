@@ -4,6 +4,9 @@ import _ from 'lodash';
 import validate_uuid from 'uuid-validate';
 import uuid from 'uuid';
 
+/*
+  FInd all models to match filter and translate them
+*/
 export function getTranslationsForModel(model, lang, filter) {
   const findModel = Promise.promisify(model.find, { context: model });
 
@@ -15,6 +18,7 @@ export function getTranslationsForModel(model, lang, filter) {
         _.forEach(instances, instance => {
           const translatedInstance = {};
           const promises = [];
+
           _.forEach(instance.__data, (value, key) => {
             translatedInstance[key] = value;
             if (isUUID(value)) {  // test if field value is guid and get cleartext of it
@@ -48,6 +52,41 @@ export function getTranslationsForModel(model, lang, filter) {
   });
 }
 
+/*
+  Translate single model instance
+*/
+export function translateModel(modelInstance, lang) {
+
+  return new Promise((resolve, reject) => {
+    const translatedInstance = {};
+    const promises = [];
+
+    /*
+      NOT EXACTLY SAME AS ABOVE
+    */
+    _.forEach(modelInstance, (value, key) => {
+      translatedInstance[key] = value;
+      if (isUUID(value)) {  // test if field value is guid and get cleartext of it
+        const promiseOfTranslation = getTranslation(lang, value)
+          .then(tr => {
+            if (!tr) translatedInstance[key] = '';
+            else {
+              translatedInstance[key] = tr.text;
+            }
+            return translatedInstance[key];
+          });
+        promises.push(promiseOfTranslation);
+      }
+    });
+
+    Promise.all(promises)
+    .then(() => resolve(translatedInstance));
+  });
+}
+
+/*
+  Turn single guid into cleartext
+*/
 export function getTranslation(lang, guid) {
   const TranslationModel = app.models.Translation;
   const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
@@ -62,6 +101,9 @@ export function isUUID(text) {
   return (validate_uuid(text, 1) || validate_uuid(text, 4)) ? true : false;
 }
 
+/*
+  Get default language if lang is not found
+*/
 export function getLangIfNotExists(lang) {
   const TranslationModel = app.models.Translation;
   const countTranslation = Promise.promisify(TranslationModel.count, { context: TranslationModel });
