@@ -41,4 +41,28 @@ Start server with `npm start`
 
 You can enable dev settings and api explorer with `NODE_ENV=dev npm start`
 
+## Valid endpoints
 
+All GET requests should use lang parameter like `LocationCategories/translations?lang=FI`
+
+#### Achievements
+
+* User completed achievements -> GET api/RoihuUsers/{id}/completedAchievements
+* Mark achievement completed -> PUT api/RoihuUsers/{id}/achievements/rel/{fk}
+* Mark achievement un-completed -> DELETE api/RoihuUsers/{id}/achievements/rel/{fk}
+* All achievements -> GET api/AchievementCategories/translations
+
+#### Locations
+
+* All Locations -> GET api/LocationCategories/translations
+
+#### Instructions
+
+* All instructions -> GET api/InstructionCategories/translations
+
+#### Users
+
+* Login -> POST api/RoihuUsers/login
+* Logout ->  POST api/RoihuUsers/logout
+* Email login -> POST api/RoihuUsers/emailLogin
+* Saml login -> POST saml/login
