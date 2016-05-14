@@ -37,6 +37,7 @@ export function locationsHandler(err, data, cb) {
         categoryIndex += 1;
         categorySortNo += 1;
       }
+
       locations.push({
         'name': {
           'FI': item.Title,
@@ -53,8 +54,8 @@ export function locationsHandler(err, data, cb) {
         'categoryId': cIndexNum + 1,
         'gpsLatitude': selfOrEmpty(item.Latitude),
         'gpsLongitude': selfOrEmpty(item.Longitude),
-        'gridLatitude': selfOrEmpty(item.Koordinaattiruutu.substring(0,1)),
-        'gridLongitude': selfOrEmpty(item.Koordinaattiruutu.substring(1,3)),
+        'gridLatitude': selfOrEmpty(item.Koordinaattiruutu).substring(0,1),
+        'gridLongitude': selfOrEmpty(item.Koordinaattiruutu).substring(1,3),
         'lastModified': item.Modified,
       });
     });
