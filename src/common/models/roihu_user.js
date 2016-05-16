@@ -103,6 +103,37 @@ export default function(RoihuUser) {
     .catch(err => cb(err, null));
   };
 
+  RoihuUser.getCompletedAchievementIds = function(userId) {
+    return new Promise((resolve, reject) => {
+      const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+
+      if (userId) {
+        findUser({
+          where: { id: userId },
+          include: {
+            relation: 'achievements',
+            scope: {
+              fields: ['achievementId'],
+            },
+          },
+        })
+        .then(user => {
+          user = user.toJSON();
+
+          const userCompletedAchievemets = [];
+          _.forEach(user.achievements, achievement => {
+            userCompletedAchievemets.push(achievement.achievementId);
+          });
+          return userCompletedAchievemets;
+        })
+        .then(completed => resolve(completed))
+        .catch(() => resolve([]));
+      } else {
+        resolve([]);
+      }
+    });
+  };
+
   RoihuUser.remoteMethod(
     'emailLogin',
     {
