@@ -96,6 +96,14 @@ describe('Achievement', () => {
       });
     });
 
+    it('should allow to mark achievement not completed', () => {
+      testUtils.withLoggedInUser('letmein', 'letmein', token => {
+        request(app).delete(`/api/RoihuUsers/${User.id}/achievements/rel/${achId}`)
+        .query({ access_token: token.id })
+        .expect(200);
+      });
+    });
+
     it('should not allow to mark others achievement completed', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
         request(app).put(`/api/RoihuUsers/${User2Id}/achievements/rel/${achId}`)
