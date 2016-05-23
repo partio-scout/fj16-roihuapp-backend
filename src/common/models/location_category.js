@@ -29,9 +29,14 @@ module.exports = function(LocationCategory) {
               let articleFilter = { where: { categoryId: category.idFromSource } };
 
               if (afterDate) {
+                // Five minustes "safezone" for filtering
+                const afterDate_5min_before = new Date(afterDate);
+                afterDate_5min_before.setMinutes(afterDate_5min_before.getMinutes() - 5);
+
                 articleFilter = { where: {
                   and: [
-                    { lastModified: { gt: afterDate } },
+                    /*{ lastModified: { gt: afterDate } },*/
+                    { lastModified: { gt: afterDate_5min_before } },
                     { categoryId: category.idFromSource },
                   ],
                 } };
