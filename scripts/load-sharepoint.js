@@ -18,6 +18,11 @@ export function locationsHandler(err, data, cb) {
 
   } else {
     _.forEach(data, item => {
+      // filter out places without category
+      if (item.Kategoria === null || item.Kategoria === '') {
+        return;
+      }
+
       const categoryObj = {
         'name': {
           'FI': item.Kategoria,

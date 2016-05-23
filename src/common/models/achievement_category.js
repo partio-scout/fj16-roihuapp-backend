@@ -2,6 +2,7 @@ import app from '../../server/server';
 import Promise from 'bluebird';
 import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
+import * as errorUtils from '../utils/errors';
 import loopback from 'loopback';
 
 module.exports = function(AchievementCategory) {
@@ -53,6 +54,7 @@ module.exports = function(AchievementCategory) {
                     'achievement_count': ach.achievementCount,
                     'userAchieved': userAchieved,
                   });
+
                 });
               })
               .then(() => rCategories.push({
@@ -65,7 +67,11 @@ module.exports = function(AchievementCategory) {
                 'average_score': category.averageScore,
                 'user_score': userScoreInCategory,
                 'achievements': catAchievements,
-              }));
+              }))
+              .catch(err => {
+                cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
+                return;
+              });
 
             promises.push(AchievementPromise);
           });

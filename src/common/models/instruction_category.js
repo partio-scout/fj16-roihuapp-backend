@@ -2,10 +2,11 @@ import app from '../../server/server';
 import Promise from 'bluebird';
 import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
+import * as errorUtils from '../utils/errors';
 
 module.exports = function(InstructionCategory) {
 
-  InstructionCategory.FindTranslations = function(language, cb) {
+  InstructionCategory.FindTranslations = function(language, afterDate, cb) {
     const Instruction = app.models.Instruction;
 
     translationUtils.getLangIfNotExists(language)
@@ -26,7 +27,23 @@ module.exports = function(InstructionCategory) {
             const promises = [];
             _.forEach(categoryTranslations, category => {
               const catArticles = [];
-              const instructionPromise = translationUtils.getTranslationsForModel(Instruction, lang, { where: { categoryId: category.idFromSource } })
+              let articleFilter = { where: { categoryId: category.idFromSource } };
+
+              if (afterDate) {
+                // Five minustes "safezone" for filtering
+                const afterDate_5min_before = new Date(afterDate);
+                afterDate_5min_before.setMinutes(afterDate_5min_before.getMinutes() - 5);
+
+                articleFilter = { where: {
+                  and: [
+                    /*{ lastModified: { gt: afterDate } },*/
+                    { lastModified: { gt: afterDate_5min_before } },
+                    { categoryId: category.idFromSource },
+                  ],
+                } };
+              }
+
+              const instructionPromise = translationUtils.getTranslationsForModel(Instruction, lang, articleFilter)
                 .then(instructionTranslations => {
                   const catInstr = [];
                   _.forEach(instructionTranslations, instruct => {
@@ -47,7 +64,11 @@ module.exports = function(InstructionCategory) {
                   'sort_no': category.sortNo,
                   'last_modified': category.lastModified,
                   'articles': catArticles,
-                }));
+                }))
+                .catch(err => {
+                  cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
+                  return;
+                });
 
               promises.push(instructionPromise);
             });
@@ -68,6 +89,7 @@ module.exports = function(InstructionCategory) {
       http: { path: '/translations', verb: 'get' },
       accepts: [
         { arg: 'lang', type: 'string', http: { source: 'query' }, required: false },
+        { arg: 'afterDate', type: 'string', http: { source: 'query' }, required: false, description: 'Find only articles that have been modified afted this date' },
       ],
       returns: { type: 'array', root: true },
     }

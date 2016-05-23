@@ -48,7 +48,8 @@ export function getTranslationsForModel(model, lang, filter) {
             // finally return them
             resolve(allTranslated);
           });
-      });
+      })
+      .catch(err => reject(err));
   });
 }
 

@@ -55,10 +55,12 @@ All GET requests should use lang parameter like `LocationCategories/translations
 #### Locations
 
 * All Locations -> GET api/LocationCategories/translations
+    * use param `afterDate` with javascript ISO formatted date to get articles after that date. There is five minute "safezone" before that. (Date format: `2016-05-23T13:10:08.553Z`)
 
 #### Instructions
 
 * All instructions -> GET api/InstructionCategories/translations
+    * use param `afterDate` with javascript ISO formatted date to get articles after that date. There is five minute "safezone" before that. (Date format: `2016-05-23T13:10:08.553Z`)
 
 #### Users
 
