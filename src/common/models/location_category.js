@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 module.exports = function(LocationCategory) {
 
-  LocationCategory.FindTranslations = function(language, cb) {
+  LocationCategory.FindTranslations = function(language, afterDate, cb) {
     const Location = app.models.Location;
 
     translationUtils.getLangIfNotExists(language)
@@ -26,7 +26,18 @@ module.exports = function(LocationCategory) {
             const promises = [];
             _.forEach(categoryTranslations, category => {
               const articles = [];
-              const LocationPromise = translationUtils.getTranslationsForModel(Location, lang, { where: { categoryId: category.idFromSource } })
+              let articleFilter = { where: { categoryId: category.idFromSource } };
+
+              if (afterDate) {
+                articleFilter = { where: {
+                  and: [
+                    { lastModified: { gt: afterDate } },
+                    { categoryId: category.idFromSource },
+                  ],
+                } };
+              }
+
+              const LocationPromise = translationUtils.getTranslationsForModel(Location, lang, articleFilter)
                 .then(LocationTranslations => {
                   _.forEach(LocationTranslations, loc => {
                     articles.push({             // add single Location
@@ -69,6 +80,7 @@ module.exports = function(LocationCategory) {
       http: { path: '/translations', verb: 'get' },
       accepts: [
         { arg: 'lang', type: 'string', http: { source: 'query' }, required: false },
+        { arg: 'afterDate', type: 'string', http: { source: 'query' }, required: false, description: 'Find only articles that have been modified afted this date' },
       ],
       returns: { type: 'array', root: true },
     }
