@@ -4,7 +4,7 @@ import path from 'path';
 import Promise from 'bluebird';
 import crypto from 'crypto';
 
-const ACCESS_TOKEN_LIFETIME = 14 * 24 * 60 * 60;
+const ACCESS_TOKEN_LIFETIME = 6 * 30 * 24 * 60 * 60;
 
 const useProductionPartioID = process.env.PARTIOID_USE_PRODUCTION === 'true';
 const partioIDRemoteName = useProductionPartioID ? 'id' : 'qaid';

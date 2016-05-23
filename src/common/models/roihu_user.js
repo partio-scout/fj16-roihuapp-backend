@@ -18,7 +18,7 @@ export default function(RoihuUser) {
   };
 
   RoihuUser.emailLogin = function(mail, cb) {
-    const ACCESS_TOKEN_LIFETIME = 90 * 24 * 60 * 60;
+    const ACCESS_TOKEN_LIFETIME = 6 * 30 * 24 * 60 * 60;
     const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
     const createUser = Promise.promisify(RoihuUser.create, { context: RoihuUser });
 
