@@ -37,9 +37,15 @@ describe('Sharepoint loading', () => {
         expect(res.body).to.deep.have.property('categories.[0].articles.[0].title', 'OTSIKKO_FI');
         expect(res.body).to.deep.have.property('categories.[0].articles.[0].bodytext', 'KUVAUS_FI');
         expect(res.body).to.deep.have.property('categories.[0].title', 'TESTI_KATEGORIA');
-      })
-      .end(done);
+      }).end(done);
+    });
 
+    it('Locations with empty or null categories should not exist', done => {
+      request(app).get('/api/LocationCategories/translations?lang=FI')
+      .expect(200)
+      .expect(res => {
+        expect(res.body.categories).to.have.lengthOf(1);
+      }).end(done);
     });
   });
 
