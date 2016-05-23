@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 module.exports = function(InstructionCategory) {
 
-  InstructionCategory.FindTranslations = function(language, cb) {
+  InstructionCategory.FindTranslations = function(language, afterDate, cb) {
     const Instruction = app.models.Instruction;
 
     translationUtils.getLangIfNotExists(language)
@@ -26,7 +26,22 @@ module.exports = function(InstructionCategory) {
             const promises = [];
             _.forEach(categoryTranslations, category => {
               const catArticles = [];
-              const instructionPromise = translationUtils.getTranslationsForModel(Instruction, lang, { where: { categoryId: category.idFromSource } })
+              let articleFilter = { where: { categoryId: category.idFromSource } };
+
+              if (afterDate) {
+                // Five minustes "safezone" for filtering
+                const afterDate_5min_before = new Date(afterDate);
+                afterDate_5min_before.setMinutes(afterDate_5min_before.getMinutes() - 5);
+
+                articleFilter = { where: {
+                  and: [
+                    /*{ lastModified: { gt: afterDate } },*/
+                    { lastModified: { gt: afterDate_5min_before } },
+                    { categoryId: category.idFromSource },
+                  ],
+                } };
+              }
+              const instructionPromise = translationUtils.getTranslationsForModel(Instruction, lang, articleFilter)
                 .then(instructionTranslations => {
                   const catInstr = [];
                   _.forEach(instructionTranslations, instruct => {
@@ -68,6 +83,7 @@ module.exports = function(InstructionCategory) {
       http: { path: '/translations', verb: 'get' },
       accepts: [
         { arg: 'lang', type: 'string', http: { source: 'query' }, required: false },
+        { arg: 'afterDate', type: 'string', http: { source: 'query' }, required: false, description: 'Find only articles that have been modified afted this date' },
       ],
       returns: { type: 'array', root: true },
     }
