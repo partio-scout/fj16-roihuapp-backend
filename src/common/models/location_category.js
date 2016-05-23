@@ -2,6 +2,7 @@ import app from '../../server/server';
 import Promise from 'bluebird';
 import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
+import * as errorUtils from '../utils/errors';
 
 module.exports = function(LocationCategory) {
 
@@ -57,7 +58,6 @@ module.exports = function(LocationCategory) {
                       'grid_longitude': loc.gridLongitude,
                     });
                   });
-
                 })
                 .then(rCategories.push({
                   'title': category.name,
@@ -65,7 +65,11 @@ module.exports = function(LocationCategory) {
                   'sort_no': category.sortNo,
                   'last_modified': category.lastModified,
                   'articles': articles,
-                }));
+                }))
+                .catch(err => {
+                  cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
+                  return;
+                });
 
               promises.push(LocationPromise);
             });

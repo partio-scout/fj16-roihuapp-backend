@@ -2,6 +2,7 @@ import app from '../../server/server';
 import Promise from 'bluebird';
 import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
+import * as errorUtils from '../utils/errors';
 
 module.exports = function(InstructionCategory) {
 
@@ -41,6 +42,7 @@ module.exports = function(InstructionCategory) {
                   ],
                 } };
               }
+
               const instructionPromise = translationUtils.getTranslationsForModel(Instruction, lang, articleFilter)
                 .then(instructionTranslations => {
                   const catInstr = [];
@@ -62,7 +64,11 @@ module.exports = function(InstructionCategory) {
                   'sort_no': category.sortNo,
                   'last_modified': category.lastModified,
                   'articles': catArticles,
-                }));
+                }))
+                .catch(err => {
+                  cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
+                  return;
+                });
 
               promises.push(instructionPromise);
             });

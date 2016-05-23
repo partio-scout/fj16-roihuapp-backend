@@ -2,6 +2,7 @@ import app from '../../server/server';
 import Promise from 'bluebird';
 import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
+import * as errorUtils from '../utils/errors';
 
 module.exports = function(AchievementCategory) {
 
@@ -49,7 +50,11 @@ module.exports = function(AchievementCategory) {
                   'average_score': category.averageScore,
                   'user_score': Math.floor(((category.leadingScore + category.averageScore) / 2)*Math.random()),
                   'achievements': catAchievements,
-                }));
+                }))
+                .catch(err => {
+                  cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
+                  return;
+                });
 
               promises.push(AchievementPromise);
             });
