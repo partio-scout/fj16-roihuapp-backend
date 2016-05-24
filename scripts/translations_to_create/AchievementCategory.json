@@ -5,9 +5,9 @@
 			"SV": "Familj lägret",
 			"EN": "Family Camp"
 		},
-		"achievementCount": 115,
-		"leadingScore": 10,
-		"averageScore": 5,
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
     "idFromSource": 10,
 		"sortNo": 10
 	},
@@ -17,9 +17,9 @@
 			"SV": "Spejarscouterna",
 			"EN": "Trackers"
 		},
-		"achievementCount": 215,
-		"leadingScore": 18,
-		"averageScore": 10,
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
     "idFromSource": 20,
 		"sortNo": 20
 	},
@@ -30,9 +30,9 @@
 			"SV": "Explorerscouterna",
 			"EN": "Explorers"
 		},
-		"achievementCount": 35,
-		"leadingScore": 8,
-		"averageScore": 9,
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
     "idFromSource": 30,
 		"sortNo": 30
 	},
@@ -42,9 +42,9 @@
 			"SV": "Roverscouterna",
 			"EN": "Rovers"
 		},
-		"achievementCount": 15,
-		"leadingScore": 2,
-		"averageScore": 1,
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
     "idFromSource": 40,
 		"sortNo": 40
 	},
@@ -54,9 +54,9 @@
 			"SV": "Vuxna",
 			"EN": "Adults"
 		},
-		"achievementCount": 15,
-		"leadingScore": 9,
-		"averageScore": 10,
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
     "idFromSource": 50,
 		"sortNo": 50
 	}
