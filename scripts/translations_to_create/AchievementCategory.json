@@ -8,7 +8,7 @@
 		"achievementCount": 0,
 		"leadingScore": 0,
 		"averageScore": 0,
-    "idFromSource": 10,
+    	"idFromSource": 10,
 		"sortNo": 10
 	},
 	{
@@ -20,7 +20,7 @@
 		"achievementCount": 0,
 		"leadingScore": 0,
 		"averageScore": 0,
-    "idFromSource": 20,
+    	"idFromSource": 20,
 		"sortNo": 20
 	},
 
@@ -33,7 +33,7 @@
 		"achievementCount": 0,
 		"leadingScore": 0,
 		"averageScore": 0,
-    "idFromSource": 30,
+   		"idFromSource": 30,
 		"sortNo": 30
 	},
 	{
@@ -45,7 +45,7 @@
 		"achievementCount": 0,
 		"leadingScore": 0,
 		"averageScore": 0,
-    "idFromSource": 40,
+    	"idFromSource": 40,
 		"sortNo": 40
 	},
 	{
@@ -57,7 +57,19 @@
 		"achievementCount": 0,
 		"leadingScore": 0,
 		"averageScore": 0,
-    "idFromSource": 50,
+    	"idFromSource": 50,
 		"sortNo": 50
+	},
+	{
+		"name": {
+			"FI": "Friendship Challenge",
+			"SV": "Friendship Challenge",
+			"EN": "Friendship Challenge"
+		},
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
+    	"idFromSource": 60,
+		"sortNo": 60
 	}
 ]
