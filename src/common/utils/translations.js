@@ -37,7 +37,7 @@ export function getTranslationsForModel(model, lang, filter) {
 
           return Promise.all(promises)
             .then(() => {
-              // push single translated instace to completed list
+              // push single translated instance to completed list
               allTranslated.push(translatedInstance);
             });
         });
@@ -161,6 +161,43 @@ export function createTranslationsForModel(modelName, jsonData) {
     });
 
     Promise.all(modelsCreatedPromices).then(val => resolve(val));
+  });
+}
+
+/*
+  Update all fields for single model instance
+*/
+export function updateTranslationsForModel(modelName, data, where) {
+  const model = app.models[modelName];
+  const findModel = Promise.promisify(model.find, { context: model });
+  const TranslationModel = app.models.Translation;
+  const findTranslation = Promise.promisify(TranslationModel.find, { context: TranslationModel });
+
+  return new Promise((resolve, reject) => {
+    findModel({ where: where })
+    .then(models => {
+      // should be only one instance, but use foreach just-in-case
+      _.forEach(models, instance => {
+        _.forEach(instance.__data, (value, key) => {
+          // current field is uuid and data has possible translations for it
+          if (isUUID(value) && ( typeof data[key] === 'object' )) {
+            findTranslation({ where: { guId: value } })
+            .then(translations => {
+              _.forEach(translations, translationObj => {
+                if (data[key][translationObj.lang]) {
+                  translationObj.text = data[key][translationObj.lang];
+                  translationObj.save();
+                }
+              });
+            });
+          } else if (data[key] && (data[key] !== instance[key])) {
+            instance[key] = data[key];
+            instance.save();  // saving here is propably not the best for DB performance
+          }
+        });
+      });
+    })
+    .then(() => resolve());
   });
 }
 

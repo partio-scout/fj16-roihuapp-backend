@@ -64,7 +64,7 @@ export function locationsHandler(err, data, cb) {
         'lastModified': item.Modified,
       });
     });
-
+/*
     Promise.join(
       translationUtils.createTranslationsForModel('LocationCategory', categories),
       translationUtils.createTranslationsForModel('Location', locations),
@@ -72,6 +72,18 @@ export function locationsHandler(err, data, cb) {
         // delete all other model instances
         destroyAllByNameGuid('LocationCategory', cr);
         destroyAllByNameGuid('Location', loc);
+    })
+    .then(() => {
+      if (cb) cb();
+      else return 1;
+    });
+    */
+    Promise.join(
+      /*CRUDModels('LocationCategory', categories,  true),*/
+      translationUtils.createTranslationsForModel('LocationCategory', categories),
+      CRUDModels('Location', locations, true),
+      (cr, loc) => {
+        destroyAllByNameGuid('LocationCategory', cr);
     })
     .then(() => {
       if (cb) cb();
@@ -91,6 +103,66 @@ function destroyAllByNameGuid(modelName, guIdList) {
   // deletes all instances where name guId is not in our array
   app.models[modelName].destroyAll({ name: { nin: guidsToDelete } }, (err, info) => {
     if (err) console.error(err);
+  });
+}
+
+function CRUDModels(modelName, newFixtures, soft) {
+  const findModels = Promise.promisify(app.models[modelName].find, { context: app.models[modelName] });  
+  const updateModel = Promise.promisify(app.models[modelName].updateAll, { context: app.models[modelName] });
+  const destroyModels = Promise.promisify(app.models[modelName].destroyAll, { context: app.models[modelName] });
+
+  const toUpdate = [];
+  const toCreate = [];
+  const toDelete = [];
+
+  const currentIds = [];
+  const newIds = [];
+
+  return new Promise((resolve, reject) => {
+    findModels() // get all current
+    .then(currentData => {
+      _.forEach(currentData, currentInstance => {
+        currentIds.push(currentInstance.idFromSource);
+      });
+      _.forEach(newFixtures, newFixture => {
+        newIds.push(newFixture.idFromSource);
+        if (currentIds.indexOf(newFixture.idFromSource) == -1) {
+          toCreate.push(newFixture);
+        } else {
+          toUpdate.push(newFixture);
+        }
+      });
+
+      _.forEach(currentData, currentInstance => {
+        if (newIds.indexOf(currentInstance.idFromSource) == -1) {
+          toDelete.push(currentInstance);
+        }
+      });
+    })
+    .then(() => {
+      translationUtils.createTranslationsForModel(modelName, toCreate);
+    })
+    .then(() => {
+      _.forEach(toUpdate, upd => {
+        translationUtils.updateTranslationsForModel(modelName, upd, { idFromSource: upd.idFromSource });
+      });
+    })
+    .then(() => {
+      _.forEach(toDelete, del => {
+        if (soft) {
+          updateModel({ idFromSource: del.idFromSource }, { deleted: true });
+        } else {
+          destroyModels({ idFromSource: del.idFromSource });
+        }
+      });
+    })
+    .then(() => {
+      resolve();
+    })
+    .catch(err => {
+      console.log('Error happened');
+      reject(err);
+    });
   });
 }
 
