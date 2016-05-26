@@ -119,7 +119,7 @@ function CRUDModels(modelName, newFixtures, soft) {
   const newIds = [];
 
   return new Promise((resolve, reject) => {
-    findModels() // get all current
+    findModels({ where: { deleted: false } }) // get all current
     .then(currentData => {
       _.forEach(currentData, currentInstance => {
         currentIds.push(currentInstance.idFromSource);
@@ -150,7 +150,7 @@ function CRUDModels(modelName, newFixtures, soft) {
     .then(() => {
       _.forEach(toDelete, del => {
         if (soft) {
-          updateModel({ idFromSource: del.idFromSource }, { deleted: true });
+          updateModel({ idFromSource: del.idFromSource }, { deleted: true, lastModified: Date.now() });
         } else {
           destroyModels({ idFromSource: del.idFromSource });
         }
