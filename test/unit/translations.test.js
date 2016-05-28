@@ -4,18 +4,14 @@ import chaiAsPromised from 'chai-as-promised';
 import * as translationUtils from '../../src/common/utils/translations';
 import * as testUtils from '../utils/testutils';
 import { resetDatabase } from '../../scripts/seed-database';
+import Promise from 'bluebird';
 
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
-function deleteModels(modelsToDelete) {
-  modelsToDelete.forEach(model => {
-    if (model.id && model.name) {
-      testUtils.deleteFixtureIfExists(model.name, model.id);
-    }
-  });
-}
+const LocationCategory = app.models.LocationCategory;
+const Location = app.models.Location;
 
 describe('Translations', () => {
   describe('create', () => {
@@ -45,14 +41,10 @@ describe('Translations', () => {
       }).nodeify(done);
     });
 
-    afterEach(() => {
-      deleteModels(modelsToDelete);
-    });
   });
 
   describe('find', () => {
     const modelsToDelete = [];
-    const LocationCategory = app.models.LocationCategory;
 
     beforeEach(done => {
       resetDatabase().asCallback(done);
@@ -80,8 +72,77 @@ describe('Translations', () => {
       }).nodeify(done);
     });
 
-    afterEach(() => {
-      deleteModels(modelsToDelete);
+  });
+
+  describe('update', () => {
+    beforeEach(done => {
+      resetDatabase()
+      .then(() => translationUtils.createTranslationsForModel('Location', {
+        name: {
+          FI: 'FI_LOC1',
+          SV: 'SV_LOC1',
+          EN: 'EN_LOC1',
+        },
+        description: {
+          FI: 'FI_DES1',
+          SV: 'SV_DES1',
+          EN: 'EN_DES1',
+        },
+        sortNo: 8888,
+        idFromSource: 8888,
+        categoryId: 10,
+        gpsLatitude: 62.343434,
+        gpsLongitude: 25.454545,
+        gridLatitude: 'H',
+        gridLongitude: '08',
+      })).nodeify(done);
+    });
+
+    it('should update translations', done => {
+      translationUtils.updateTranslationsForModel('Location', {
+        name: {
+          FI: 'FI_LOC2',
+          SV: 'SV_LOC2',
+          EN: 'EN_LOC2',
+        },
+        description: {
+          FI: 'FI_DES2',
+          SV: 'SV_DES2',
+          EN: 'EN_DES2',
+        },
+        gridLatitude: 'X',
+        gridLongitude: '10',
+      })
+      .then(() => {
+        const test_FI = translationUtils.getTranslationsForModel(Location, 'FI', { where: { idFromSource: 8888 } })
+        .then(location => {
+          location = location[0];
+          expect(location.name).to.equal('FI_LOC2');
+          expect(location.description).to.equal('FI_DES2');
+
+          expect(location.gridLatitude).to.equal('X');
+          expect(location.gridLongitude).to.equal('10');
+          return Promise.resolve();
+        });
+
+        const test_SV = translationUtils.getTranslationsForModel(Location, 'SV', { where: { idFromSource: 8888 } })
+        .then(location => {
+          location = location[0];
+          expect(location.name).to.equal('SV_LOC2');
+          expect(location.description).to.equal('SV_DES2');
+          return Promise.resolve();
+        });
+
+        const test_EN = translationUtils.getTranslationsForModel(Location, 'EN', { where: { idFromSource: 8888 } })
+        .then(location => {
+          location = location[0];
+          expect(location.name).to.equal('EN_LOC2');
+          expect(location.description).to.equal('EN_DES2');
+          return Promise.resolve();
+        });
+
+        return Promise.join(test_FI, test_SV, test_EN);
+      }).nodeify(done);
     });
   });
 });
