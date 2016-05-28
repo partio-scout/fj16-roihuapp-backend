@@ -201,6 +201,72 @@ export function updateTranslationsForModel(modelName, data, where) {
   });
 }
 
+/*
+  Update models data to match current state of "active" remote data (newFixtures).
+  Creates new if model is not found.
+  Updates existing models.
+  Deletes or marks as deleted models that no longer exist in remote data
+*/
+export function CRUDModels(modelName, newFixtures, soft) {
+  const findModels = Promise.promisify(app.models[modelName].find, { context: app.models[modelName] });
+  const updateModel = Promise.promisify(app.models[modelName].updateAll, { context: app.models[modelName] });
+  const destroyModels = Promise.promisify(app.models[modelName].destroyAll, { context: app.models[modelName] });
+
+  const toUpdate = [];
+  const toCreate = [];
+  const toDelete = [];
+
+  const currentIds = [];
+  const newIds = [];
+
+  return new Promise((resolve, reject) => {
+    findModels({ where: { deleted: false } }) // get all current
+    .then(currentData => {
+      _.forEach(currentData, currentInstance => {
+        currentIds.push(currentInstance.idFromSource);
+      });
+      _.forEach(newFixtures, newFixture => {
+        newIds.push(newFixture.idFromSource);
+        if (currentIds.indexOf(newFixture.idFromSource) == -1) {
+          toCreate.push(newFixture);
+        } else {
+          toUpdate.push(newFixture);
+        }
+      });
+
+      _.forEach(currentData, currentInstance => {
+        if (newIds.indexOf(currentInstance.idFromSource) == -1) {
+          toDelete.push(currentInstance);
+        }
+      });
+    })
+    .then(() => {
+      createTranslationsForModel(modelName, toCreate);
+    })
+    .then(() => {
+      _.forEach(toUpdate, upd => {
+        updateTranslationsForModel(modelName, upd, { idFromSource: upd.idFromSource });
+      });
+    })
+    .then(() => {
+      _.forEach(toDelete, del => {
+        if (soft) {
+          updateModel({ idFromSource: del.idFromSource }, { deleted: true, lastModified: Date.now() });
+        } else {
+          destroyModels({ idFromSource: del.idFromSource });
+        }
+      });
+    })
+    .then(() => {
+      resolve();
+    })
+    .catch(err => {
+      console.log('Error happened');
+      reject(err);
+    });
+  });
+}
+
 /* EI VAIKUTA TOIMIVALTA! */
 export function deleteTranslationsForModel(modelName, instanceId) {
   const TranslationModel = app.models.Translation;
