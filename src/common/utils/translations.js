@@ -173,6 +173,9 @@ export function updateTranslationsForModel(modelName, data, where) {
   const TranslationModel = app.models.Translation;
   const findTranslation = Promise.promisify(TranslationModel.find, { context: TranslationModel });
 
+  // Palauuttaa promisen väärään aikaan, eli siis silloin kun on vielä joitakin operaatioita kesken.
+  // Muuten toimii hyvin
+  const allFieldsDone = [];
   return new Promise((resolve, reject) => {
     findModel({ where: where })
     .then(models => {
@@ -182,13 +185,11 @@ export function updateTranslationsForModel(modelName, data, where) {
           // current field is uuid and data has possible translations for it
           if (isUUID(value) && ( typeof data[key] === 'object' )) {
             findTranslation({ where: { guId: value } })
-            .then(translations => {
-              _.forEach(translations, translationObj => {
-                if (data[key][translationObj.lang]) {
-                  translationObj.text = data[key][translationObj.lang];
-                  translationObj.save();
-                }
-              });
+            .each(translationObj => {
+              if (data[key][translationObj.lang]) {
+                translationObj.text = data[key][translationObj.lang];
+                translationObj.save();
+              }
             });
           } else if (data[key] && (data[key] !== instance[key])) {
             instance[key] = data[key];
@@ -197,7 +198,9 @@ export function updateTranslationsForModel(modelName, data, where) {
         });
       });
     })
-    .then(() => resolve());
+    .then(() => {
+      Promise.all(allFieldsDone).then(() => resolve());
+    });
   });
 }
 
