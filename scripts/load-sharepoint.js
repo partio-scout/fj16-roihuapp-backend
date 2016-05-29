@@ -42,7 +42,7 @@ export function locationsHandler(err, data, cb) {
         categoryIndex += 1;
         categorySortNo += 1;
       }
-      getGridCoordinates(item.Koordinaattiruutu);
+
       locations.push({
         'name': {
           'FI': item.Title,
