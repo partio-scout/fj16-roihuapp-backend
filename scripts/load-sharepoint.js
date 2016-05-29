@@ -42,7 +42,7 @@ export function locationsHandler(err, data, cb) {
         categoryIndex += 1;
         categorySortNo += 1;
       }
-
+      getGridCoordinates(item.Koordinaattiruutu);
       locations.push({
         'name': {
           'FI': item.Title,
@@ -59,8 +59,8 @@ export function locationsHandler(err, data, cb) {
         'categoryId': cIndexNum + 1,
         'gpsLatitude': selfOrEmpty(item.Latitude),
         'gpsLongitude': selfOrEmpty(item.Longitude),
-        'gridLatitude': selfOrEmpty(item.Koordinaattiruutu).substring(0,1),
-        'gridLongitude': selfOrEmpty(item.Koordinaattiruutu).substring(1,3),
+        'gridLatitude': getGridCoordinates(item.Koordinaattiruutu).lat,
+        'gridLongitude': getGridCoordinates(item.Koordinaattiruutu).lon,
         'lastModified': item.Modified,
       });
     });
@@ -96,6 +96,25 @@ function destroyAllByNameGuid(modelName, guIdList) {
 
 function selfOrEmpty(val) {
   return val || '';
+}
+
+function getGridCoordinates(gridValue) {
+  const coordinates = {
+    lat: '',
+    lon: '',
+  };
+
+  if (!gridValue) {
+    return coordinates;
+  }
+
+  gridValue = gridValue.toUpperCase();
+  const re = /^[A-Z]{1}[0-9]{2}$/;
+  if (re.test(gridValue)) {
+    coordinates.lat = gridValue.substring(0,1);
+    coordinates.lon = gridValue.substring(1,3);
+  }
+  return coordinates;
 }
 
 export function readSharepointList(listName, handler) {
