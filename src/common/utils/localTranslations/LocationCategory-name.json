@@ -1,35 +1,35 @@
 {
-    "Leirilippukunnat": {
+    "Leirilippukunta": {
         "SV": "Lägerkårer",
         "EN": "Camp Units",
         "FI": "Leirilippukunnat"
     },
-    "Kylät": {
+    "Kylä": {
         "SV": "Byar",
         "EN": "Villages",
         "FI": "Kylät"
     },
-    "Alaleirit": {
+    "Alaleiri": {
         "SV": "Underläger",
         "EN": "Subcamps",
         "FI": "Alaleirit"
     },
-    "Ruokalat": {
+    "Ruokala": {
         "SV": "Kök / Matsal",
         "EN": "Canteens",
         "FI": "Ruokalat"
     },
-    "Ohjelmat": {
+    "Ohjelma": {
         "SV": "Program",
         "EN": "Programmes",
         "FI": "Ohjelmat"
     },
-    "Myyntipaikat": {
+    "Myyntipaikka": {
         "SV": "Försäljning",
         "EN": "Shops",
         "FI": "Myyntipaikat"
     },
-    "Toimistot": {
+    "Toimisto": {
         "SV": "Kanslier",
         "EN": "Offices",
         "FI": "Toimistot"
@@ -39,7 +39,7 @@
         "EN": "Showers",
         "FI": "Peseytyminen"
     },
-    "WC:t": {
+    "WC": {
         "SV": "Toaletter",
         "EN": "Toilets",
         "FI": "WC:t"
@@ -59,12 +59,12 @@
         "EN": "Permanent Buildings",
         "FI": "Kiinteät rakennelmat"
     },
-    "Nuotiopaikat": {
+    "Nuotiopaikka": {
         "SV": "Eldplatser",
         "EN": "Campfire Areas",
         "FI": "Nuotiopaikat"
     },
-    "Muut": {
+    "Muu": {
         "SV": "Övrigt",
         "EN": "Other",
         "FI": "Muut"
