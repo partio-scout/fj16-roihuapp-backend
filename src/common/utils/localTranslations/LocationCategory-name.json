@@ -1,0 +1,72 @@
+{
+    "Leirilippukunnat": {
+        "SV": "Lägerkårer",
+        "EN": "Camp Units",
+        "FI": "Leirilippukunnat"
+    },
+    "Kylät": {
+        "SV": "Byar",
+        "EN": "Villages",
+        "FI": "Kylät"
+    },
+    "Alaleirit": {
+        "SV": "Underläger",
+        "EN": "Subcamps",
+        "FI": "Alaleirit"
+    },
+    "Ruokalat": {
+        "SV": "Kök / Matsal",
+        "EN": "Canteens",
+        "FI": "Ruokalat"
+    },
+    "Ohjelmat": {
+        "SV": "Program",
+        "EN": "Programmes",
+        "FI": "Ohjelmat"
+    },
+    "Myyntipaikat": {
+        "SV": "Försäljning",
+        "EN": "Shops",
+        "FI": "Myyntipaikat"
+    },
+    "Toimistot": {
+        "SV": "Kanslier",
+        "EN": "Offices",
+        "FI": "Toimistot"
+    },
+    "Peseytyminen": {
+        "SV": "Tvättning",
+        "EN": "Showers",
+        "FI": "Peseytyminen"
+    },
+    "WC:t": {
+        "SV": "Toaletter",
+        "EN": "Toilets",
+        "FI": "WC:t"
+    },
+    "Lääkintä ja pelastus": {
+        "SV": "Sjukvård och räddning",
+        "EN": "First Aid and Rescue",
+        "FI": "Lääkintä ja pelastus"
+    },
+    "Palvelu": {
+        "SV": "Service",
+        "EN": "Service",
+        "FI": "Palvelu"
+    },
+    "Kiinteät rakennelmat": {
+        "SV": "Fast bebyggelse",
+        "EN": "Permanent Buildings",
+        "FI": "Kiinteät rakennelmat"
+    },
+    "Nuotiopaikat": {
+        "SV": "Eldplatser",
+        "EN": "Campfire Areas",
+        "FI": "Nuotiopaikat"
+    },
+    "Muut": {
+        "SV": "Övrigt",
+        "EN": "Other",
+        "FI": "Muut"
+    }
+}
