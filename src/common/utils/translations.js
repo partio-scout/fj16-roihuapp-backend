@@ -163,28 +163,3 @@ export function createTranslationsForModel(modelName, jsonData) {
     Promise.all(modelsCreatedPromices).then(val => resolve(val));
   });
 }
-
-/* EI VAIKUTA TOIMIVALTA! */
-export function deleteTranslationsForModel(modelName, instanceId) {
-  const TranslationModel = app.models.Translation;
-  //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });
-  const model = app.models[modelName];
-  const findModelById = Promise.promisify(model.find, { context: model });
-
-/* EI VAIKUTA TOIMIVALTA! */
-  return new Promise((resolve, reject) => {
-    findModelById({ 'id': instanceId })
-    .then(modelInstance => {
-      _.forEach(modelInstance, (value, key) => {
-        if (isUUID(value)) {
-          TranslationModel.destroyAll({ 'guId': value });
-        }
-      });
-    })
-    .then(() => {
-      model.destroyById(instanceId);
-      resolve(true);
-    })
-    .catch(err => reject(err));
-  });
-}
