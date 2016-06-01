@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import validate_uuid from 'uuid-validate';
 import uuid from 'uuid';
+import path from 'path';
 
 /*
   FInd all models to match filter and translate them
@@ -161,5 +162,29 @@ export function createTranslationsForModel(modelName, jsonData) {
     });
 
     Promise.all(modelsCreatedPromices).then(val => resolve(val));
+  });
+}
+
+export function getLocalFieldTranslations(translationsFile, fieldValueKey, langs, defaultValue) {
+  return Promise.try(() => require(path.resolve(__dirname, `./localTranslations/${translationsFile}`)))
+  .then(translationData => {
+    const returnable = {};
+    if (translationData[fieldValueKey]) {
+      _.forEach(translationData[fieldValueKey], (text, lang) => {
+        if (langs.indexOf(lang) !== -1) {
+          returnable[langs[langs.indexOf(lang)]] = text;
+        } else {
+          returnable[lang] = defaultValue;
+        }
+      });
+    } else {
+      _.forEach(langs, lang => {
+        returnable[lang] = defaultValue;
+      });
+    }
+    return returnable;
+  })
+  .catch(err => {
+    console.error('Error while locally translating values:', err);
   });
 }
