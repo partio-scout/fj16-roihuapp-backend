@@ -8,6 +8,7 @@ export function locationsHandler(err, data, cb) {
   const categories = [];
   const catNames = [];
   const locations = [];
+  const localTranslationsDone = [];
 
   let categoryIndex = 1;
   let categorySortNo = 1;
@@ -23,60 +24,65 @@ export function locationsHandler(err, data, cb) {
         return;
       }
 
-      const categoryObj = {
-        'name': {
-          'FI': item.Kategoria,
-          'SV': item.Kategoria,
-          'EN': item.Kategoria,
-        },
-        'sortNo': categorySortNo,
-        'idFromSource': categoryIndex,
-        'lastModified': item.Modified,
-      };
-      // compare categories with their name instead of full object
-      let cIndexNum = catNames.indexOf(item.Kategoria);
-      if ( cIndexNum === -1) {
-        categories.push(categoryObj);
-        catNames.push(item.Kategoria);
-        cIndexNum = categoryIndex-1;
-        categoryIndex += 1;
-        categorySortNo += 1;
-      }
+      const lt = translationUtils.getLocalFieldTranslations('LocationCategory-name', item.Kategoria, ['FI', 'SV', 'EN'], item.Kategoria)
+      .then(catTranslation => {
+        const categoryObj = {
+          'name': {
+            'FI': catTranslation.FI,
+            'SV': catTranslation.SV,
+            'EN': catTranslation.EN,
+          },
+          'sortNo': categorySortNo,
+          'idFromSource': categoryIndex,
+          'lastModified': item.Modified,
+        };
+        // compare categories with their name instead of full object
+        let cIndexNum = catNames.indexOf(item.Kategoria);
+        if ( cIndexNum === -1) {
+          categories.push(categoryObj);
+          catNames.push(item.Kategoria);
+          cIndexNum = categoryIndex-1;
+          categoryIndex += 1;
+          categorySortNo += 1;
+        }
 
-      locations.push({
-        'name': {
-          'FI': item.Title,
-          'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
-          'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
-        },
-        'description': {
-          'FI': selfOrEmpty(item.Kuvaus),
-          'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
-          'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
-        },
-        'sortNo': item.Id,
-        'idFromSource': item.Id,
-        'categoryId': cIndexNum + 1,
-        'gpsLatitude': selfOrEmpty(item.Latitude),
-        'gpsLongitude': selfOrEmpty(item.Longitude),
-        'gridLatitude': getGridCoordinates(item.Koordinaattiruutu).lat,
-        'gridLongitude': getGridCoordinates(item.Koordinaattiruutu).lon,
-        'lastModified': item.Modified,
+        locations.push({
+          'name': {
+            'FI': item.Title,
+            'SV': selfOrEmpty(item.Otsikko_x0020_ruotsiksi),
+            'EN': selfOrEmpty(item.Otsikko_x0020_englanniksi),
+          },
+          'description': {
+            'FI': selfOrEmpty(item.Kuvaus),
+            'SV': selfOrEmpty(item.Kuvaus_x0020_ruotsiksi),
+            'EN': selfOrEmpty(item.Kuvaus_x0020_englanniksi),
+          },
+          'sortNo': item.Id,
+          'idFromSource': item.Id,
+          'categoryId': cIndexNum + 1,
+          'gpsLatitude': selfOrEmpty(item.Latitude),
+          'gpsLongitude': selfOrEmpty(item.Longitude),
+          'gridLatitude': getGridCoordinates(item.Koordinaattiruutu).lat,
+          'gridLongitude': getGridCoordinates(item.Koordinaattiruutu).lon,
+          'lastModified': item.Modified,
+        });
       });
+      localTranslationsDone.push(lt);
     });
 
-    Promise.join(
-      translationUtils.createTranslationsForModel('LocationCategory', categories),
-      translationUtils.createTranslationsForModel('Location', locations),
-      (cr, loc) => {
-        // delete all other model instances
-        destroyAllByNameGuid('LocationCategory', cr);
-        destroyAllByNameGuid('Location', loc);
-    })
-    .then(() => {
-      if (cb) cb();
-      else return 1;
-    });
+    Promise.all(localTranslationsDone)
+    .then(() => Promise.join(
+        translationUtils.createTranslationsForModel('LocationCategory', categories),
+        translationUtils.createTranslationsForModel('Location', locations),
+        (cr, loc) => {
+          // delete all other model instances
+          destroyAllByNameGuid('LocationCategory', cr);
+          destroyAllByNameGuid('Location', loc);
+      })
+      .then(() => {
+        if (cb) cb();
+        else return 1;
+      }));
   }
 }
 
