@@ -19,6 +19,7 @@ const modelList = [
   ['AchievementCategory', false],
   ['Achievement', false],
   ['AchievementRoihuUser', false],
+  ['CalendarEventRoihuUser', false],
 ];
 
 export function getModelCreationList() {
