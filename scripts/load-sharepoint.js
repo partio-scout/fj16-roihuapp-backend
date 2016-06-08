@@ -104,15 +104,19 @@ export function locationsHandler(err, data) {
 }
 
 export function eventsHandler(err, data) {
+  const Location = app.models.Location;
+  const findLocation = Promise.promisify(Location.findOne, { context: Location });
+
   return new Promise((resolve, reject) => {
     if (err) {
       reject(err);
     } else {
+      const events = [];
+      const promises = [];
       readSharepointList('Leiriaikataulu-app', (err, infodata) => {
-        console.log(infodata);
+        // infodata not working...
         return Promise.resolve(infodata);
       }).then(additionalInfoData => {
-        return;
         _.forEach(data, item => {
           // filter out events with invalid data
           if (isEmpty(item.Alkuaika)) return;
@@ -122,9 +126,58 @@ export function eventsHandler(err, data) {
           if (isEmpty(item.Lis_x00e4_tietolinkkiId)) return;
 
           // get additional information
-          console.log(item.Title);
-          getAdditionalInfo(additionalInfoData, item.Lis_x00e4_tietolinkkiId);
+          //getAdditionalInfo(additionalInfoData, item.Lis_x00e4_tietolinkkiId);
+          const locPromise = findLocation({ where: { idFromSource: item.PaikkaId } })
+          .then(location => {
+            Promise.join(
+            translationUtils.translateModel(location, 'FI'),
+            translationUtils.translateModel(location, 'SV'),
+            translationUtils.translateModel(location, 'EN'),
+            (locFI, locSV, locEN) => {
+              events.push({
+                name: {
+                  FI: item.Title,
+                  SV: item.Title,
+                  EN: item.Title,
+                },
+                description: {
+                  FI: item.description,
+                  SV: item.description,
+                  EN: item.description,
+                },
+                sharepointId: item.Id,
+                type: item.Kategoria,
+                locationName: {
+                  FI: locFI.name,
+                  SV: locSV.name,
+                  EN: locEN.name,
+                },
+                lastModified: item.Modified,
+                status: item.Yleisohjelmaan ? 'mandatory' : 'searchable',
+                startTime: item.Alkuaika,
+                endTime: item.Loppuaika,
+                gpsLongitude: locFI.gpsLongitude,
+                gpsLatitude: locFI.gpsLatitude,
+                gridLongitude: locFI.gridLongitude,
+                gridLatitude: locFI.gridLatitude,
+                subcamp: joinFieldArray(item.Alaleiri, '|'),
+                camptroop: '',
+                ageGroups: joinFieldArray(item.Ik_x00e4_kausi, '|'),
+                wave: joinFieldArray(item.Aalto, '|'),
+              });
+            });
+          })
+          .catch(() => {
+            // location does not exist
+            return;
+          });
+          promises.push(locPromise);
+        });
 
+        Promise.all(promises)
+        .then(() => translationUtils.createTranslationsForModel('CalendarEvent', events))
+        .then(createdEvents => {
+          // remove old data
         });
       });
     }
@@ -135,6 +188,13 @@ export function eventsHandler(err, data) {
     _.forEach(infodata, item => {
       console.log(item);
     });
+  }
+
+  function joinFieldArray(field, separator) {
+    if (field) {
+      return field.results.join(separator);
+    }
+    return '';
   }
 }
 

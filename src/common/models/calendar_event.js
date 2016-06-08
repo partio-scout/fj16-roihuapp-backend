@@ -29,6 +29,7 @@ module.exports = function(CalendarEvent) {
                 ageGroups: event.ageGroups,
                 participantCount: event.participantCount,
                 last_modified: event.lastModified,
+                wave: event.wave,
               });
             });
             return events;
