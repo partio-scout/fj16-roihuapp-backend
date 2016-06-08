@@ -40,6 +40,24 @@
       },
       "_selectable": false
     },
+    "source": {
+      "type": "Number",
+      "generated": false,
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "source",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "Data source; 1 = sharepoint, 2 = User"
+    },
     "type": {
       "type": "string",
       "required": true,

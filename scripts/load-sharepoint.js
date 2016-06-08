@@ -106,6 +106,8 @@ export function locationsHandler(err, data) {
 export function eventsHandler(err, data) {
   const Location = app.models.Location;
   const findLocation = Promise.promisify(Location.findOne, { context: Location });
+  const CalendarEvent = app.models.CalendarEvent;
+  const findCalendarEvents = Promise.promisify(CalendarEvent.find, { context: CalendarEvent });
 
   return new Promise((resolve, reject) => {
     if (err) {
@@ -113,10 +115,12 @@ export function eventsHandler(err, data) {
     } else {
       const events = [];
       const promises = [];
+
       readSharepointList('Leiriaikataulu-app', (err, infodata) => {
-        // infodata not working...
-        return Promise.resolve(infodata);
+        if (err) return Promise.reject(err);
+        else return Promise.resolve(infodata);
       }).then(additionalInfoData => {
+
         _.forEach(data, item => {
           // filter out events with invalid data
           if (isEmpty(item.Alkuaika)) return;
@@ -126,7 +130,7 @@ export function eventsHandler(err, data) {
           if (isEmpty(item.Lis_x00e4_tietolinkkiId)) return;
 
           // get additional information
-          //getAdditionalInfo(additionalInfoData, item.Lis_x00e4_tietolinkkiId);
+          const additionalInfo = getAdditionalInfo(additionalInfoData, item.Lis_x00e4_tietolinkkiId);
           const locPromise = findLocation({ where: { idFromSource: item.PaikkaId } })
           .then(location => {
             Promise.join(
@@ -136,14 +140,14 @@ export function eventsHandler(err, data) {
             (locFI, locSV, locEN) => {
               events.push({
                 name: {
-                  FI: item.Title,
-                  SV: item.Title,
-                  EN: item.Title,
+                  FI: selfOrEmpty(additionalInfo.Otsikko_x0020_suomeksi),
+                  SV: selfOrEmpty(additionalInfo.Otsikko_x0020_ruotsiksi),
+                  EN: selfOrEmpty(additionalInfo.Otsikko_x0020_englanniksi),
                 },
                 description: {
-                  FI: item.description,
-                  SV: item.description,
-                  EN: item.description,
+                  FI: selfOrEmpty(additionalInfo.Lis_x00e4_tiedot_x0020_suomeksi),
+                  SV: selfOrEmpty(additionalInfo.Lis_x00e4_tiedot_x0020_ruotsiksi),
+                  EN: selfOrEmpty(additionalInfo.Lis_x00e4_tiedot_x0020_englanniksi),
                 },
                 sharepointId: item.Id,
                 type: item.Kategoria,
@@ -164,6 +168,7 @@ export function eventsHandler(err, data) {
                 camptroop: '',
                 ageGroups: joinFieldArray(item.Ik_x00e4_kausi, '|'),
                 wave: joinFieldArray(item.Aalto, '|'),
+                source: 1,
               });
             });
           })
@@ -175,18 +180,29 @@ export function eventsHandler(err, data) {
         });
 
         Promise.all(promises)
-        .then(() => translationUtils.createTranslationsForModel('CalendarEvent', events))
-        .then(createdEvents => {
-          // remove old data
+        .then(() => {
+          // get current events from sharepoint to be deleted after creating the new ones
+          let currentEventIds;
+          findCalendarEvents({ where: { source: 1 }, fields: { eventId: true } })
+          .then(currentSPEvents => {
+            currentEventIds = currentSPEvents.map(evt => {
+              return evt.eventId;
+            });
+            // create new events
+            return translationUtils.createTranslationsForModel('CalendarEvent', events);
+          })
+          .then(() => {
+            app.models.CalendarEvent.destroyAll({ eventId: { inq: currentEventIds } });
+          });
+
         });
       });
     }
   });
 
   function getAdditionalInfo(infodata, infoId) {
-    console.log(infodata);
-    _.forEach(infodata, item => {
-      console.log(item);
+    return infodata.find(element => {
+      return (element.Id == infoId) ? true : false;
     });
   }
 
@@ -238,7 +254,7 @@ export function readSharepointList(listName, handler) {
         } else {
 
           sharepoint.listItems.list(listName, (err, data) => {
-            handler(err, data).then(() => resolve());
+            handler(err, data).then(x => resolve(x));
           });
 
           /*
