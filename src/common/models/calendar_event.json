@@ -264,12 +264,12 @@
       }
     },
     "participantCount": {
-      "type": "int",
+      "type": "Number",
       "required": true,
       "default": 0,
       "postgresql": {
         "columnName": "participant_count",
-        "dataType": "int",
+        "dataType": "integer",
         "dataLength": null,
         "dataPrecision": 32,
         "dataScale": null,
