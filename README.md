@@ -62,6 +62,14 @@ All GET requests should use lang parameter like `LocationCategories/translations
 * All instructions -> GET api/InstructionCategories/translations
     * use param `afterDate` with javascript ISO formatted date to get articles after that date. There is five minute "safezone" before that. (Date format: `2016-05-23T13:10:08.553Z`)
 
+#### Calendar and events
+
+* Events search -> GET api/CalendarEvents/translations
+* Users calendar -> GET api/RoihuUsers/{id}/calendar
+* Add event to calendar -> PUT api/RoihuUsers/{id}/calendarEvents/rel/{fk}
+* remove event from calendar -> DELETE api/RoihuUsers/{id}/calendarEvents/rel/{fk}
+* Submit new event -> POST api/CalendarEvents
+
 #### Users
 
 * Login -> POST api/RoihuUsers/login
