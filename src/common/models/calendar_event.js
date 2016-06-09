@@ -63,7 +63,6 @@ module.exports = function(CalendarEvent) {
     return findEvent({
       where: { eventId: eventId },
     }).then(event => {
-      console.log(amount);
       event.updateAttribute('participantCount', event.participantCount + amount);
     });
   };
