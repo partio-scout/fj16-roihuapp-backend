@@ -283,7 +283,24 @@
         "nullable": "YES"
       },
       "_selectable": false,
-      "comments": "pesti"
+      "comments": ""
+    },
+    "wave": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "wave",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "aalto"
     }
   },
   "validations": [],
