@@ -18,7 +18,7 @@ describe('Sharepoint loading', () => {
     before(done => {
       // handle sharepoint data without actually getting it from sharepoint
       // resetDatabase() ???
-      sharepointLoader.locationsHandler(null, locationsData, done);
+      sharepointLoader.locationsHandler(null, locationsData).then(done);
     });
 
     it('translations should exitst after loading', done => {

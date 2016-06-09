@@ -291,6 +291,10 @@
     "achievements": {
       "type": "hasAndBelongsToMany",
       "model": "Achievement"
+    },
+    "calendar": {
+      "type": "hasAndBelongsToMany",
+      "model": "CalendarEvent"
     }
   },
   "acls": [

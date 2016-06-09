@@ -1,6 +1,6 @@
 {
   "name": "CalendarEvent",
-  "base": "PersistedModel",
+  "base": "TranslateableModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true,
@@ -23,11 +23,46 @@
         "nullable": "NO"
       }
     },
-    "eventType": {
+    "sharepointId": {
+      "type": "Number",
+      "generated": false,
+      "required": false,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "sharepoint_id",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "YES"
+      },
+      "_selectable": false
+    },
+    "source": {
+      "type": "Number",
+      "generated": false,
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "source",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "Data source; 1 = sharepoint, 2 = User"
+    },
+    "type": {
       "type": "string",
       "required": true,
       "postgresql": {
-        "columnName": "event_type",
+        "columnName": "type",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,
@@ -35,11 +70,11 @@
         "nullable": "NO"
       }
     },
-    "eventTitle": {
+    "name": {
       "type": "string",
       "required": true,
       "postgresql": {
-        "columnName": "event_title",
+        "columnName": "name",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,
@@ -47,11 +82,11 @@
         "nullable": "NO"
       }
     },
-    "eventDescription": {
+    "description": {
       "type": "string",
       "required": false,
       "postgresql": {
-        "columnName": "event_description",
+        "columnName": "description",
         "dataType": "character varying",
         "dataPrecision": null,
         "dataScale": null,
@@ -72,52 +107,69 @@
     "lastModified": {
       "type": "Date",
       "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
       "postgresql": {
         "columnName": "last_modified",
         "dataType": "timestamp",
-        "dataLength": 255,
+        "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "NO"
-      }
+      },
+      "_selectable": false,
+      "comments": "muokattu"
     },
-    "rsvpStatus": {
+    "status": {
       "type": "string",
+      "required": false,
       "postgresql": {
-        "columnName": "rsvp_status",
+        "columnName": "status",
         "dataType": "character varying",
         "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
+        "nullable": "YES"
       }
     },
     "startTime": {
-      "type": "string",
-      "required": true,
+      "type": "Date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
       "postgresql": {
         "columnName": "start_time",
-        "dataType": "character varying",
-        "dataLength": 255,
+        "dataType": "timestamp",
+        "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
-      }
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "alkamisaika"
     },
     "endTime": {
-      "type": "string",
-      "required": true,
+      "type": "Date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
       "postgresql": {
         "columnName": "end_time",
-        "dataType": "character varying",
-        "dataLength": 255,
+        "dataType": "timestamp",
+        "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "NO"
-      }
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "päättymisaika"
     },
     "gpsLatitude": {
       "type": "string",
+      "required": false,
       "postgresql": {
         "columnName": "gps_latitude",
         "dataType": "character varying",
@@ -129,6 +181,7 @@
     },
     "gpsLongitude": {
       "type": "string",
+      "required": false,
       "postgresql": {
         "columnName": "gps_longitude",
         "dataType": "character varying",
@@ -140,6 +193,7 @@
     },
     "gridLatitude": {
       "type": "string",
+      "required": false,
       "postgresql": {
         "columnName": "grid_latitude",
         "dataType": "character varying",
@@ -151,6 +205,7 @@
     },
     "gridLongitude": {
       "type": "string",
+      "required": false,
       "postgresql": {
         "columnName": "grid_location",
         "dataType": "character varying",
@@ -162,6 +217,7 @@
     },
     "subcamp": {
       "type": "string",
+      "required": false,
       "postgresql": {
         "columnName": "subcamp",
         "dataType": "character varying",
@@ -173,6 +229,7 @@
     },
     "camptroop": {
       "type": "string",
+      "required": false,
       "postgresql": {
         "columnName": "camptroop",
         "dataType": "character varying",
@@ -182,8 +239,34 @@
         "nullable": "YES"
       }
     },
+    "ageGroups": {
+      "type": "string",
+      "required": false,
+      "postgresql": {
+        "columnName": "age_groups",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "wave": {
+      "type": "string",
+      "required": false,
+      "postgresql": {
+        "columnName": "wave",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
     "participantCount": {
       "type": "int",
+      "required": true,
+      "default": 0,
       "postgresql": {
         "columnName": "participant_count",
         "dataType": "int",
@@ -192,21 +275,34 @@
         "dataScale": null,
         "nullable": "YES"
       }
-    },
-    "photo": {
-      "type": "string",
-      "postgresql": {
-        "columnName": "photo",
-        "dataType": "character varying",
-        "dataLength": 255,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "YES"
-      }
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "usersInEvent": {
+      "type": "hasAndBelongsToMany",
+      "model": "RoihuUser"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }
