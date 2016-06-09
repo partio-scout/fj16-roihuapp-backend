@@ -1,6 +1,7 @@
 import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
 import * as errorUtils from '../utils/errors';
+import Promise from 'bluebird';
 
 module.exports = function(CalendarEvent) {
 
@@ -54,6 +55,17 @@ module.exports = function(CalendarEvent) {
             return;
           });
       });
+  };
+
+  CalendarEvent.addOrReduceParticipants = function(amount, eventId) {
+    const findEvent = Promise.promisify(CalendarEvent.findOne, { context: CalendarEvent });
+
+    return findEvent({
+      where: { eventId: eventId },
+    }).then(event => {
+      console.log(amount);
+      event.updateAttribute('participantCount', event.participantCount + amount);
+    });
   };
 
   CalendarEvent.remoteMethod(

@@ -31,6 +31,30 @@ export default function(RoihuUser) {
     }).asCallback(next);
   });
 
+  RoihuUser.beforeRemote('prototype.__link__calendarEvents', (ctx, modelInstance, next) => {
+    const CalendarEvent = app.models.CalendarEvent;
+
+    RoihuUser.getAttendingEventIds(ctx.req.params.id)
+    .then(eventIds => {
+      if (_.indexOf(eventIds, parseInt(ctx.req.params.fk)) === -1) {
+
+        CalendarEvent.addOrReduceParticipants(1, ctx.req.params.fk);
+      }
+    }).asCallback(next);
+  });
+
+  RoihuUser.beforeRemote('prototype.__unlink__calendarEvents', (ctx, modelInstance, next) => {
+    const CalendarEvent = app.models.CalendarEvent;
+
+    RoihuUser.getAttendingEventIds(ctx.req.params.id)
+    .then(eventIds => {
+      if (_.indexOf(eventIds, parseInt(ctx.req.params.fk)) !== -1) {
+
+        CalendarEvent.addOrReduceParticipants(-1, ctx.req.params.fk);
+      }
+    }).asCallback(next);
+  });
+
   RoihuUser.addOrReduceAchievementScores = function(amount, achievementId) {
     const findAchievement = Promise.promisify(app.models.Achievement.findOne, { context: app.models.Achievement });
     const findAchievementCategory = Promise.promisify(app.models.AchievementCategory.findOne, { context: app.models.AchievementCategory });
@@ -177,6 +201,37 @@ export default function(RoihuUser) {
     });
   };
 
+  RoihuUser.getAttendingEventIds = function(userId) {
+    return new Promise((resolve, reject) => {
+      const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+
+      if (userId) {
+        findUser({
+          where: { id: userId },
+          include: {
+            relation: 'calendarEvents',
+            scope: {
+              fields: ['eventId'],
+            },
+          },
+        })
+        .then(user => {
+          user = user.toJSON();
+
+          const events = [];
+          _.forEach(user.calendarEvents, event => {
+            events.push(event.eventId);
+          });
+          return events;
+        })
+        .then(evt => resolve(evt))
+        .catch(() => resolve([]));
+      } else {
+        resolve([]);
+      }
+    });
+  };
+
   RoihuUser.calendar = function(userId, lang, cb) {
     const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
     const CalendarEvent = app.models.CalendarEvent;
@@ -205,45 +260,45 @@ export default function(RoihuUser) {
             and: [
               { status: 'mandatory' },
               { or: [
-                { subcamp: { like: '%' + User.subcamp + '%' } },
+                { subcamp: { like: `%${User.subcamp}%` } },
                 { subcamp: '' },
               ] },
               { or: [
-                { ageGroups: { like: '%' + getFirstBeforeSeparator(User.ageGroup, '/') + '%' } },
+                { ageGroups: { like: `%${getFirstBeforeSeparator(User.ageGroup, '/')}%` } },
                 { ageGroups: '' },
-              ] }
+              ] },
             ],
           },
           fields: {
             sharepointId: false,
             source: false,
-          }
-        })
+          },
+        });
       })
       .then(mandatoryEvents => {
-          const response = {
-            selected: [],
-            mandatory: [],
-          };
-          const promises = [];
+        const response = {
+          selected: [],
+          mandatory: [],
+        };
+        const promises = [];
 
-          // User own events
-          _.forEach(User.calendarEvents, event => {
-            const p = translationUtils.translateModel(event, language)
-            .then(evt => response.selected.push(evt));
-            promises.push(p);
-          });
+        // User own events
+        _.forEach(User.calendarEvents, event => {
+          const p = translationUtils.translateModel(event, language)
+          .then(evt => response.selected.push(evt));
+          promises.push(p);
+        });
 
-          // Mandatory events
-          _.forEach(mandatoryEvents, event => {
-            // filter out unnecessary fields if needed
-            response.mandatory.push(event);
-          });
+        // Mandatory events
+        _.forEach(mandatoryEvents, event => {
+          // filter out unnecessary fields if needed
+          response.mandatory.push(event);
+        });
 
-          Promise.all(promises)
-          .then(() => {
-            cb(null, response);
-          });
+        Promise.all(promises)
+        .then(() => {
+          cb(null, response);
+        });
       })
       .catch(err => cb(err, null));
     });
