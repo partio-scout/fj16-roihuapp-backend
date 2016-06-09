@@ -260,12 +260,16 @@ export default function(RoihuUser) {
             and: [
               { status: 'mandatory' },
               { or: [
-                { subcamp: { like: `%${User.subcamp}%` } },
+                { subcamp: { like: `\%${User.subcamp}\%` } },
                 { subcamp: '' },
               ] },
               { or: [
-                { ageGroups: { like: `%${getFirstBeforeSeparator(User.ageGroup, '/')}%` } },
+                { ageGroups: { like: `\%${getFirstBeforeSeparator(User.ageGroup, '/')}\%` } },
                 { ageGroups: '' },
+              ] },
+              { or: [
+                { wave: { like: `\%${User.wave}\%` } },
+                { wave: '' },
               ] },
             ],
           },
