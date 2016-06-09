@@ -292,7 +292,7 @@
       "type": "hasAndBelongsToMany",
       "model": "Achievement"
     },
-    "calendar": {
+    "calendarEvents": {
       "type": "hasAndBelongsToMany",
       "model": "CalendarEvent"
     }
@@ -338,6 +338,34 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "completedAchievements"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__calendarEvents"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__link__calendarEvents"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__unlink__calendarEvents"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "calendar"
     }
   ],
   "methods": {}

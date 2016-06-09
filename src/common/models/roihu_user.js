@@ -177,6 +177,82 @@ export default function(RoihuUser) {
     });
   };
 
+  RoihuUser.calendar = function(userId, lang, cb) {
+    const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+    const CalendarEvent = app.models.CalendarEvent;
+
+    translationUtils.getLangIfNotExists(lang)
+    .then(language => {
+      let User;
+      findUser({
+        where: { id: userId },
+        include: {
+          relation: 'calendarEvents',
+          scope: {
+            fields: [
+              'eventId', 'type', 'name', 'description', 'locationName', 'lastModified',
+              'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
+              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
+            ],
+          },
+        },
+      })
+      .then(u => {
+        User = u.toJSON();
+
+        return translationUtils.getTranslationsForModel(CalendarEvent, language, {
+          where: {
+            and: [
+              { status: 'mandatory' },
+              { or: [
+                { subcamp: { like: '%' + User.subcamp + '%' } },
+                { subcamp: '' },
+              ] },
+              { or: [
+                { ageGroups: { like: '%' + getFirstBeforeSeparator(User.ageGroup, '/') + '%' } },
+                { ageGroups: '' },
+              ] }
+            ],
+          },
+          fields: {
+            sharepointId: false,
+            source: false,
+          }
+        })
+      })
+      .then(mandatoryEvents => {
+          const response = {
+            selected: [],
+            mandatory: [],
+          };
+          const promises = [];
+
+          // User own events
+          _.forEach(User.calendarEvents, event => {
+            const p = translationUtils.translateModel(event, language)
+            .then(evt => response.selected.push(evt));
+            promises.push(p);
+          });
+
+          // Mandatory events
+          _.forEach(mandatoryEvents, event => {
+            // filter out unnecessary fields if needed
+            response.mandatory.push(event);
+          });
+
+          Promise.all(promises)
+          .then(() => {
+            cb(null, response);
+          });
+      })
+      .catch(err => cb(err, null));
+    });
+  };
+
+  function getFirstBeforeSeparator(stringValue, sep) {
+    return _.split(stringValue, sep, 1)[0];
+  }
+
   RoihuUser.remoteMethod(
     'emailLogin',
     {
@@ -197,6 +273,19 @@ export default function(RoihuUser) {
         { arg: 'lang', type: 'string' },
       ],
       returns: { arg: 'completedAchievements', type: 'array' },
+    }
+  );
+
+  RoihuUser.remoteMethod(
+    'calendar',
+    {
+      http: { path: '/:id/calendar', verb: 'get' },
+      accepts: [
+        { arg: 'id', type: 'number', required: 'true', http: { source: 'path' } },
+        { arg: 'lang', type: 'string' },
+      ],
+      returns: { arg: 'calendar', type: 'array' },
+      description: 'Get user calendar including mandatory events',
     }
   );
 }
