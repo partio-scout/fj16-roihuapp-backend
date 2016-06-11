@@ -9,6 +9,20 @@ import app from '../../server/server';
 
 export default function(RoihuUser) {
 
+  RoihuUser.observe('before save', (ctx, next) => {
+    // create random password if needed
+    if (ctx.instance) {
+      if (!ctx.instance.password) {
+        ctx.instance.password = crypto.randomBytes(24).toString('hex');
+      }
+    } else {
+      if (!ctx.data.password) {
+        ctx.data.password = crypto.randomBytes(24).toString('hex');
+      }
+    }
+    next();
+  });
+
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
     // check if user already has achieved this achievement
     RoihuUser.getCompletedAchievementIds(ctx.req.params.id)

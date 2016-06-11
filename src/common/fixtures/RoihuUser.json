@@ -17,5 +17,39 @@
     "memberNumber": "9999669",
     "password": "villeNiemi2016",
     "wave": "A"
+  },
+  {
+    "lastModified": "2016-03-22T10:14:25.631Z",
+    "lastname": "Turunen",
+    "firstname": "Matias",
+    "nickname": "Matias",
+    "email": "mt95@windowslive.com",
+    "primaryTroopAndCity": "Saimaan Vartiot ry (Lappeenranta)",
+    "scoutDistrict": "Etelä-karjalan partiolaiset",
+    "country": "Suomi/Finland/Finland",
+    "ageGroup": "Vaeltajat",
+    "subcamp": "Unity",
+    "wave": "A"
+  },
+  {
+    "lastModified": "2016-03-22T10:14:25.631Z",
+    "lastname": "Pohjanmaa",
+    "firstname": "Atte",
+    "nickname": "Atte",
+    "email": "atte.pohjanmaa@gmail.com",
+    "country": "Suomi/Finland/Finland",
+    "ageGroup": "Samoajat",
+    "subcamp": "Syke",
+    "wave": "A"
+  },
+  {
+    "lastModified": "2016-03-22T10:14:25.631Z",
+    "lastname": "Koskinen",
+    "firstname": "Kimmo",
+    "nickname": "Kimmo",
+    "email": "kimmo.m.koskinen@gmail.com",
+    "ageGroup": "Aikuiset",
+    "subcamp": "Syke",
+    "wave": "A"
   }
 ]
