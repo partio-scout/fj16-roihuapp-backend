@@ -70,19 +70,17 @@ export function locationsHandler(err, data) {
         localTranslationsDone.push(lt);
       });
 
+    Promise.all(localTranslationsDone)
+    .then(() => Promise.join(
+        //translationUtils.CRUDModels('LocationCategory', categories,  true),
+        translationUtils.createTranslationsForModel('LocationCategory', categories),
+        translationUtils.CRUDModels('Location', locations, 'idFromSource', false),
+        (cr, loc) => {
+          destroyAllByNameGuid('LocationCategory', cr);
+      })
+      .then(() => resolve()));
+
 /*
-Promise.join(
-      //translationUtils.CRUDModels('LocationCategory', categories,  true),
-      translationUtils.createTranslationsForModel('LocationCategory', categories),
-      translationUtils.CRUDModels('Location', locations, true),
-      (cr, loc) => {
-        destroyAllByNameGuid('LocationCategory', cr);
-    })
-    .then(() => {
-      if (cb) cb();
-      else return 1;
-    });
-*/
       Promise.all(localTranslationsDone)
       .then(() => Promise.join(
           translationUtils.createTranslationsForModel('LocationCategory', categories),
@@ -93,7 +91,7 @@ Promise.join(
             destroyAllByNameGuid('Location', loc);
         })
         .then(() => resolve()));
-    
+  */  
     }
   });
 
