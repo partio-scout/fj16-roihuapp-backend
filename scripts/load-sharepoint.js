@@ -70,6 +70,17 @@ export function locationsHandler(err, data) {
         localTranslationsDone.push(lt);
       });
 
+    Promise.all(localTranslationsDone)
+    .then(() => Promise.join(
+        //translationUtils.CRUDModels('LocationCategory', categories,  true),
+        translationUtils.createTranslationsForModel('LocationCategory', categories),
+        translationUtils.CRUDModels('Location', locations, 'idFromSource', false),
+        (cr, loc) => {
+          destroyAllByNameGuid('LocationCategory', cr);
+      })
+      .then(() => resolve()));
+
+/*
       Promise.all(localTranslationsDone)
       .then(() => Promise.join(
           translationUtils.createTranslationsForModel('LocationCategory', categories),
@@ -80,6 +91,7 @@ export function locationsHandler(err, data) {
             destroyAllByNameGuid('Location', loc);
         })
         .then(() => resolve()));
+  */  
     }
   });
 
@@ -188,11 +200,16 @@ export function eventsHandler(err, data) {
             currentEventIds = currentSPEvents.map(evt => {
               return evt.eventId;
             });
-            // create new events
-            return translationUtils.createTranslationsForModel('CalendarEvent', events);
+            // update events
+            return translationUtils.CRUDModels('CalendarEvent', events, 'sharepointId', false, { where: {
+              and: [
+                { deleted: false },
+                { source: 1 },
+              ]
+            } });
           })
           .then(() => {
-            app.models.CalendarEvent.destroyAll({ eventId: { inq: currentEventIds } });
+            //app.models.CalendarEvent.destroyAll({ eventId: { inq: currentEventIds } });
           });
 
         });

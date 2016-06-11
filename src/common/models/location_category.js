@@ -27,7 +27,12 @@ module.exports = function(LocationCategory) {
             const promises = [];
             _.forEach(categoryTranslations, category => {
               const articles = [];
-              let articleFilter = { where: { categoryId: category.idFromSource } };
+              let articleFilter = { where: {
+                and: [
+                  /*{ deleted: false },*/
+                  { categoryId: category.idFromSource },
+                ],
+              } };
 
               if (afterDate) {
                 // Five minustes "safezone" for filtering
@@ -56,6 +61,7 @@ module.exports = function(LocationCategory) {
                       'gps_longitude': loc.gpsLongitude,
                       'grid_latitude': loc.gridLatitude,
                       'grid_longitude': loc.gridLongitude,
+                      'deleted': loc.deleted,
                     });
                   });
                 })

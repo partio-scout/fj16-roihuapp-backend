@@ -10,7 +10,16 @@
     "table": "location_category"
   },
   "properties": {
-
+    "deleted": {
+      "type": "Boolean",
+      "required": true,
+      "default": false,
+      "postgresql": {
+        "columnName": "deleted",
+        "dataType": "boolean",
+        "nullable": "YES"
+      }
+    }
   },
   "validations": [],
   "relations": {
