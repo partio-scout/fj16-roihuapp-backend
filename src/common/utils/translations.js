@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import validate_uuid from 'uuid-validate';
 import uuid from 'uuid';
+import path from 'path';
 
 /*
   FInd all models to match filter and translate them
@@ -270,27 +271,26 @@ export function CRUDModels(modelName, newFixtures, soft) {
   });
 }
 
-/* EI VAIKUTA TOIMIVALTA! */
-export function deleteTranslationsForModel(modelName, instanceId) {
-  const TranslationModel = app.models.Translation;
-  //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });
-  const model = app.models[modelName];
-  const findModelById = Promise.promisify(model.find, { context: model });
-
-/* EI VAIKUTA TOIMIVALTA! */
-  return new Promise((resolve, reject) => {
-    findModelById({ 'id': instanceId })
-    .then(modelInstance => {
-      _.forEach(modelInstance, (value, key) => {
-        if (isUUID(value)) {
-          TranslationModel.destroyAll({ 'guId': value });
+export function getLocalFieldTranslations(translationsFile, fieldValueKey, langs, defaultValue) {
+  return Promise.try(() => require(path.resolve(__dirname, `./localTranslations/${translationsFile}`)))
+  .then(translationData => {
+    const returnable = {};
+    if (translationData[fieldValueKey]) {
+      _.forEach(translationData[fieldValueKey], (text, lang) => {
+        if (langs.indexOf(lang) !== -1) {
+          returnable[langs[langs.indexOf(lang)]] = text;
+        } else {
+          returnable[lang] = defaultValue;
         }
       });
-    })
-    .then(() => {
-      model.destroyById(instanceId);
-      resolve(true);
-    })
-    .catch(err => reject(err));
+    } else {
+      _.forEach(langs, lang => {
+        returnable[lang] = defaultValue;
+      });
+    }
+    return returnable;
+  })
+  .catch(err => {
+    console.error('Error while locally translating values:', err);
   });
 }

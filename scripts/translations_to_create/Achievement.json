@@ -1,50 +1,1298 @@
 [
 	{
 		"name": {
-			"FI": "Yömelonta",
-			"SV": "SV Yömelonta",
-			"EN": "EN Yömelonta"
+			"FI": "Lukumäärä",
+			"SV": "Antal",
+			"EN": "Amount"
 		},
 		"description": {
-			"FI": "Melonta on jännempää yöllä",
-			"SV": "SV Melonta on jännempää yöllä",
-			"EN": "EN Melonta on jännempää yöllä"
+			"FI": "Arvioin, montako sudenpentua mahtuu kirkkoveneeseen. En kuitenkaan testaa asiaa ilman lupaa ja asianmukaista vesiturvallisuutta.",
+			"SV": "Jag uppskattar hur många vargungar det ryms i en kyrkbåt. Jag provar dock inte utan lov och rätt utrustning.",
+			"EN": "Estimating how many Cubs can fit in a \"church boat\". I will only test it with a permission and by taking into account water safety."
 		},
 		"sortNo": 10010,
 		"idFromSource": 10010,
 		"categoryId": 10,
-		"achievementCount": 454
+		"achievementCount": 0
 	},
 	{
 		"name": {
-			"FI": "Kävin tulilaaksossa",
-			"SV": "SV Kävin tulilaaksossa",
-			"EN": "EN Kävin tulilaaksossa"
+			"FI": "Pomppimaan!",
+			"SV": "Studsa!",
+			"EN": "Let's bounce!"
 		},
 		"description": {
-			"FI": "Olen käynyt tulilaaksossa oman ohjelmani mukaisesti",
-			"SV": "SV Olen käynyt tulilaaksossa oman ohjelmani mukaisesti",
-			"EN": "EN Olen käynyt tulilaaksossa oman ohjelmani mukaisesti"
+			"FI": "Pompin pomppulinnassa.",
+			"SV": "Jag studsar i hoppslottet.",
+			"EN": "Bouncing in a bouncy castle."
 		},
 		"sortNo": 10020,
 		"idFromSource": 10020,
 		"categoryId": 10,
-		"achievementCount": 123
+		"achievementCount": 0
 	},
 	{
 		"name": {
-			"FI": "Pystytin teltan",
-			"SV": "SV Pystytin teltan",
-			"EN": "EN Pystytin teltan"
+			"FI": "Satuja",
+			"SV": "Sagor",
+			"EN": "Fairytales"
 		},
 		"description": {
-			"FI": "Teltta kasassa ja kangas suorana",
-			"SV": "SV Teltta kasassa ja kangas suorana",
-			"EN": "EN Teltta kasassa ja kangas suorana"
+			"FI": "Luen kirjaa Kaisan Kamarissa eli Riehun kirjastossa.",
+			"SV": "Jag läser sagor i Kajsas kammare alltså i Riehus bibliotek.",
+			"EN": "Reading a book in Kaisan Kamari, Riehu's library."
 		},
 		"sortNo": 10030,
 		"idFromSource": 10030,
 		"categoryId": 10,
-		"achievementCount": 100
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Päiväkävely",
+			"SV": "Dagspromenad",
+			"EN": "Stroll"
+		},
+		"description": {
+			"FI": "Kävelen Tutkijan taipaleella.",
+			"SV": "Jag promenerar längs Tutkijan taival (=Forskarstråket) ",
+			"EN": "Walking along Tutkijan taival (the investigator's path)."
+		},
+		"sortNo": 10040,
+		"idFromSource": 10040,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Uusia ystäviä",
+			"SV": "Nya vänner",
+			"EN": "New friends"
+		},
+		"description": {
+			"FI": "Tutustun ainakin viiteen uuteen ihmiseen.",
+			"SV": "Jag bekantar mig med åtminstone fem nya personer.",
+			"EN": "Getting to know at least five new people."
+		},
+		"sortNo": 10050,
+		"idFromSource": 10050,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Käsipäivää",
+			"SV": "Goddag!",
+			"EN": "Shake hands"
+		},
+		"description": {
+			"FI": "Kättelen perheleirin johtajaa. Riehun johtaja on Kirsi Lehto.",
+			"SV": "Jag hälsar på familjelägrets chef Kirsi Lehto.",
+			"EN": "Shaking hands with the leader of the family camp. Riehu's leader is Kirsi Lehto."
+		},
+		"sortNo": 10060,
+		"idFromSource": 10060,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Temppuillen",
+			"SV": "Konster och trick",
+			"EN": "Play"
+		},
+		"description": {
+			"FI": "Käyn päiväkodin temppuradalla.",
+			"SV": "Jag besöker daghemmets lekbana där jag tränar fina tricks.",
+			"EN": "Visiting the daycare's trick track."
+		},
+		"sortNo": 10070,
+		"idFromSource": 10070,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Leirijäynä",
+			"SV": "Lägerbus",
+			"EN": "Camp prank"
+		},
+		"description": {
+			"FI": "Jekutan äitiä/isää/mummia tai muuta aikuista.",
+			"SV": "Jag gör ett bus för mamma/pappa/mormor eller annan vuxen.",
+			"EN": "Playing a practical joke on mum/dad/grandparent or another adult."
+		},
+		"sortNo": 10080,
+		"idFromSource": 10080,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Pelataan!",
+			"SV": "Jag spelar!",
+			"EN": "Let's play!"
+		},
+		"description": {
+			"FI": "Pelaan pihapelejä.",
+			"SV": "Jag spelar gårdsspel.",
+			"EN": "Playing outdoor games."
+		},
+		"sortNo": 10090,
+		"idFromSource": 10090,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Kilinä",
+			"SV": "Kling",
+			"EN": "Jingle"
+		},
+		"description": {
+			"FI": "Kilisytän kulkusta.",
+			"SV": "Jag klingar i bjällran.",
+			"EN": "Jingling a bell."
+		},
+		"sortNo": 10100,
+		"idFromSource": 10100,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Aamuvirkku",
+			"SV": "Morgonpigg",
+			"EN": "Early bird"
+		},
+		"description": {
+			"FI": "Teen aamutoimet reippaasti.",
+			"SV": "Jag är snabb med morgonbestyren.",
+			"EN": "Finishing my mourning routine quickly."
+		},
+		"sortNo": 10110,
+		"idFromSource": 10110,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Iltarauha",
+			"SV": "Kvällsro",
+			"EN": "Quiet evening"
+		},
+		"description": {
+			"FI": "Teen kiltisti iltatoimet ja menen ajoissa nukkumaan.",
+			"SV": "Jag sköter snällt mina kvällssysslor och lägger mig i tid. ",
+			"EN": "Finishing my evening routine and going to sleep early."
+		},
+		"sortNo": 10120,
+		"idFromSource": 10120,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Tärkeä tapaaminen",
+			"SV": "Viktigt möte",
+			"EN": "Important meeting"
+		},
+		"description": {
+			"FI": "Tapaan Riehun.",
+			"SV": "Jag träffar Riehu.",
+			"EN": "Meeting Riehu."
+		},
+		"sortNo": 10130,
+		"idFromSource": 10130,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Terve!",
+			"SV": "Hejsan!",
+			"EN": "Hello!"
+		},
+		"description": {
+			"FI": "Tervehdin ulkomaalaista partiolaista.",
+			"SV": "Jag hälsar på en scout från ett annat land.",
+			"EN": "Greeting a scout/guide from another country."
+		},
+		"sortNo": 10140,
+		"idFromSource": 10140,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Aarre",
+			"SV": "Skatt",
+			"EN": "Treasure"
+		},
+		"description": {
+			"FI": "Löydän aarteen.",
+			"SV": "Jag hittar en skatt.",
+			"EN": "Finding a treasure."
+		},
+		"sortNo": 10150,
+		"idFromSource": 10150,
+		"categoryId": 10,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Auttavat kädet",
+			"SV": "En hjälpande hand",
+			"EN": "Helping hand"
+		},
+		"description": {
+			"FI": "Olen ruuanjakajana. Jotta meidät kaikki 16 000 saadaan ruokituksi, tarvitaan apukäsiä keittiöille. Saat tarkemmat ohjeet leirilippukunnastasi. ",
+			"SV": "Jag ställer upp som matutdelare. För att  alla 16 000 lägerdeltagare ska få mat behövs det hjälp i köket. Jag får närmare instruktioner av min lägerkår eller i familjelägret. ",
+			"EN": "Handing out food. In order for all of us 16 000 to be fed, plenty of helping hands are needed in the kitchen. Ask your camp unit leader for more details. "
+		},
+		"sortNo": 20010,
+		"idFromSource": 20010,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Henkeviä",
+			"SV": "Själsligt",
+			"EN": "Deep talk"
+		},
+		"description": {
+			"FI": "Keskustelen luotsini kanssa esimerkiksi siitä, mikä Roihulla on ollut hienoa ja mikä vaikeaa.",
+			"SV": "Jag diskuterar med min lots  om vad som varit fint med Roihu, och vad som varit svårt. ",
+			"EN": "Having a conversation with my pilot about what has been great at Roihu, what has been hard."
+		},
+		"sortNo": 20020,
+		"idFromSource": 20020,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Selfie",
+			"SV": "Selfie",
+			"EN": "Selfie"
+		},
+		"description": {
+			"FI": "Otan selfien leirinjohtajan, oman alaleirinjohtajan tai oman kyläpäällikön kanssa. Leirinjohtajia on kaksi, Heikki ja Piitu, kumpi tahansa käy.",
+			"SV": "Jag tar en selfie med lägerchefen, min egen underlägerchef eller min bychef. Det finns två lägerchefer, Heikki och Piitu, och det går lika bra med båda.",
+			"EN": "Taking a selfie with the camp leader, my subcamp leader or my village leader. There are two camp leaders, Heikki and Piitu, either one will do."
+		},
+		"sortNo": 20030,
+		"idFromSource": 20030,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Huomentapäivää",
+			"SV": "Godmorgon",
+			"EN": "Good mornin'"
+		},
+		"description": {
+			"FI": "Toivotan hyvää huomenta tuntemattomalle esimerkiksi aamupalajonossa.",
+			"SV": "Jag önskar en främmande scout godmorgon till exempel i morgonmålskön.",
+			"EN": "Wishing good morning to a stranger, for example, in the breakfast queue."
+		},
+		"sortNo": 20040,
+		"idFromSource": 20040,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Kätisyys",
+			"SV": "Händighet",
+			"EN": "Hands"
+		},
+		"description": {
+			"FI": "Syön sillä kädellä, jota en normaalisti käytä.",
+			"SV": "Jag äter med den hand jag vanligen inte använder.",
+			"EN": "Eating with the hand I normally do not use."
+		},
+		"sortNo": 20050,
+		"idFromSource": 20050,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Leikitään!",
+			"SV": "Kom ska vi leka!",
+			"EN": "Let's play!"
+		},
+		"description": {
+			"FI": "Opetan partioleikin ulkomaalaiselle partiolaiselle. ",
+			"SV": "Jag lär en scout från ett annat land en scoutlek vi leker i min kår.",
+			"EN": "Teaching a game or play to a scout/guide from another country."
+		},
+		"sortNo": 20060,
+		"idFromSource": 20060,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Museokamaa",
+			"SV": "Museiföremål",
+			"EN": "Museum stuff"
+		},
+		"description": {
+			"FI": "Tutustun partiomuseoon, joka sijaitsee Solmussa.",
+			"SV": "Jag bekantar mig med Scoutmuséet, som finns längs lägerrakan.",
+			"EN": "Getting to know the scouting museum in Solmu."
+		},
+		"sortNo": 20070,
+		"idFromSource": 20070,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Varpaat likoon",
+			"SV": "Tårna i blöt",
+			"EN": "Tip your toes"
+		},
+		"description": {
+			"FI": "Uitan varpaitani vedessä, kun olemme vesilaaksossa.",
+			"SV": "Jag doppar tårna i vattnet, då vi är i vattendalen.",
+			"EN": "Tipping my toes in the water when we're at Vesilaakso (the water valley)."
+		},
+		"sortNo": 20080,
+		"idFromSource": 20080,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Puhdasta tuli!",
+			"SV": "Rent blev det!",
+			"EN": "All clean!"
+		},
+		"description": {
+			"FI": "Käyn suihkussa ja raportoin kavereilleni kokemuksesta.",
+			"SV": "Jag går i duschen och berättar om hur det var för mina kompisar.",
+			"EN": "Showering and reporting to my friends about the experience."
+		},
+		"sortNo": 20090,
+		"idFromSource": 20090,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Pullakahvit tai -limut",
+			"SV": "Saft och bulle",
+			"EN": "Buns and drinks"
+		},
+		"description": {
+			"FI": "Käyn leirikahvilassa toisessa alaleirissä.  Roihulla on neljä express-kahvilaa ja pääkahvila Live.",
+			"SV": "Jag går till något av lägercaféerna. På Roihu finns det fyra express-caféer samt huvudcaféet Live.",
+			"EN": "Visiting a camp cafe at another subcamp. There are four express cafes and the main cafe Live at Roihu."
+		},
+		"sortNo": 20100,
+		"idFromSource": 20100,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Naapurit",
+			"SV": "Grannarna",
+			"EN": "Neigbours"
+		},
+		"description": {
+			"FI": "Tutustun viereisen leirilippukunnan tarpojiin ja vaihdan heidän kanssaan yhteystietoja, jotta voimme jatkaa yhteydenpitoa.",
+			"SV": "Jag bekantar mig med spejarscouterna i grannlägerkåren och vi utbyter kontaktuppgifter så att vi kan hålla kontakt också i fortsättningen.",
+			"EN": "Getting to know Trackers in the neighbouring camp unit and exchanging contact information with them, so that we can keep in touch."
+		},
+		"sortNo": 20110,
+		"idFromSource": 20110,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Siivouspäivä",
+			"SV": "Städdag",
+			"EN": "Cleaning day"
+		},
+		"description": {
+			"FI": "Siivoan telttani yhdessä kavereiden kanssa, jotta kaikkien varusteet pysyvät tallessa ja teltta hyvässä kunnossa.",
+			"SV": "Jag städar tältet tillsammans med mina kompisar så att vi hittar vår utrustning och tältet hålls i bra skick.",
+			"EN": "Cleaning the tent together with my friends, so that all of our belongings stay safe and the tent is in a good condition."
+		},
+		"sortNo": 20120,
+		"idFromSource": 20120,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Alkeet",
+			"SV": "Grunderna",
+			"EN": "Basics"
+		},
+		"description": {
+			"FI": "Opetan omaa äidinkieltäni toisesta maasta olevalle partiolaiselle. Opetan hänelle vähintään 5 sanaa, esimerkiksi kyllä, ei, kiitos, ole hyvä ja anteeksi.",
+			"SV": "Jag lär ut mitt eget modersmål till en scout från ett annat land. Jag lär hen minst fem ord, till exempel ja, nej, tack, varsågod och förlåt. ",
+			"EN": "Teaching my mother tongue to a scout/guide from another country. I will teach him or her at least 5 words, such as 'yes', 'no', 'thank you', 'you are welcome' and 'sorry'."
+		},
+		"sortNo": 20130,
+		"idFromSource": 20130,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Swop!",
+			"SV": "Swop!",
+			"EN": "Swop!"
+		},
+		"description": {
+			"FI": "Swoppaan eli vaihtelen partiomerkkejä ulkomaalaisten leiriläisten kanssa.",
+			"SV": "Jag swoppar, d.v.s. byter scoutmärken med lägerdeltagare från andra länder.  ",
+			"EN": "Swopping scouting badges with campers from other countries."
+		},
+		"sortNo": 20140,
+		"idFromSource": 20140,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Seuraus",
+			"SV": "Följa",
+			"EN": "Follow"
+		},
+		"description": {
+			"FI": "Alan seurata Instagramissa ulkomaalaista partiolaista.",
+			"SV": "Jag börjar följa en scout från ett annat land på Instagram.",
+			"EN": "Starting to follow a scout/guide from another country on Instagram."
+		},
+		"sortNo": 20150,
+		"idFromSource": 20150,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Tägit kunnossa",
+			"SV": "Taggarna i skick",
+			"EN": "Tags in check"
+		},
+		"description": {
+			"FI": "Päivitän Instagrammiin kuvan leiriltä, tägään sen #meollaanliekeissä ja #roihu2016.",
+			"SV": "Jag postar en lägerbild på Instagram och taggar den med #eldochlågor och #roihu2016.",
+			"EN": "Updating my Instagram with a picture from the camp, using hastags #firedup and #roihu2016."
+		},
+		"sortNo": 20160,
+		"idFromSource": 20160,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Posti kulkee",
+			"SV": "Post",
+			"EN": "Snail mail"
+		},
+		"description": {
+			"FI": "Lähetän postikortin kotiin. Kortteja ja merkkejä saa ostaa esimerkiksi leirin kaupasta.",
+			"SV": "Jag skickar ett kort till dem där hemma. Postkort och frimärken finns till salu till exempel i lägerbutiken. ",
+			"EN": "Sending a post card home. Cards and stamps can be bought at the camp store."
+		},
+		"sortNo": 20170,
+		"idFromSource": 20170,
+		"categoryId": 20,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Auttavat kädet",
+			"SV": "En hjälpande hand",
+			"EN": "Helping hand"
+		},
+		"description": {
+			"FI": "Olen ruuanjakajana. Jotta meidät kaikki 16 000 saadaan ruokituksi, tarvitaan apukäsiä keittiöille. Saat tarkemmat ohjeet leirilippukunnastasi. ",
+			"SV": "Jag ställer upp som matutdelare. För att  alla 16 000 lägerdeltagare ska få mat behövs det hjälp i köket. Jag får närmare instruktioner av min lägerkår eller i familjelägret. ",
+			"EN": "Handing out food. In order for all of us 16 000 to be fed, plenty of helping hands are needed in the kitchen. Ask your camp unit leader for more details. "
+		},
+		"sortNo": 30010,
+		"idFromSource": 30010,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Henkeviä",
+			"SV": "Själsligt",
+			"EN": "Deep talk"
+		},
+		"description": {
+			"FI": "Keskustelen luotsini kanssa esimerkiksi siitä, mitä Roihulla olo on minulle antanut.",
+			"SV": "Jag diskuterar med min lots om vad deltagandet i Roihu har gett mig.",
+			"EN": "Having a conversation with my pilot about what being at Roihu has given me."
+		},
+		"sortNo": 30020,
+		"idFromSource": 30020,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Corneri",
+			"SV": "Cornern",
+			"EN": "Corner"
+		},
+		"description": {
+			"FI": "Käyn hengaamassa Samoajacornerissa. Corneri sijaitsee Leirisuoralla ja siellä on mahdollista mm. pelailla lautapelejä.",
+			"SV": "Jag hänger i Explorerscoutcornern, alltså i  explorerscoutområdet på lägerrakan. Där kan man bl.a. spela olika brädspel.",
+			"EN": "Chilling at Samoajacorner (the Explorer's corner). It is located in Leirisuora (the main street) and there you can for example play board games."
+		},
+		"sortNo": 30030,
+		"idFromSource": 30030,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Käyntsärit jakoon",
+			"SV": "Visitkort",
+			"EN": "Business cards"
+		},
+		"description": {
+			"FI": "Teen itselleni käyntikortteja ja jaan niitä uusille ystäville. Voin käyttää myös RoihuAppin yhteystietonäkymää - uusi ystävä voi ottaa siitä kuvan tai voin lähettää hänelle tiedot ruutukaappauksena.",
+			"SV": "Jag gör egna visitkort och delar ut dem åt mina nya vänner. Jag kan också använda RoihuAppens kontaktuppgiftsview - min nya vän kan ta en bild av den, eller så kan jag skicka en skärmdump åt hen. ",
+			"EN": "Making business cards and handing them out to new friends. I can also use the contact info view on the RoihuApp - a new friend can take a picture of it or I can take a screenshot and send it to them."
+		},
+		"sortNo": 30040,
+		"idFromSource": 30040,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Salaviesti I",
+			"SV": "Hemligt meddelande I",
+			"EN": "Secret message I"
+		},
+		"description": {
+			"FI": "Kirjoitan kirjeen ja piilotan sen puuhun.",
+			"SV": "Jag skriver ett meddelande och gömmer det i ett träd.",
+			"EN": "Writing a letter and hiding it in a tree."
+		},
+		"sortNo": 30050,
+		"idFromSource": 30050,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Salaviesti II",
+			"SV": "Hemligt meddelande II",
+			"EN": "Secret message II"
+		},
+		"description": {
+			"FI": "Löydän toisen kirjoittaman puupostin.",
+			"SV": "Jag hittar ett meddelande som någon annan skrivit och gömt på lägerområdet.",
+			"EN": "Finding a tree letter written by someone else."
+		},
+		"sortNo": 30060,
+		"idFromSource": 30060,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "The Ring",
+			"SV": "The Ring",
+			"EN": "The Ring"
+		},
+		"description": {
+			"FI": "Teen tuohisormuksen ja annan sen uudelle ystävälle.",
+			"SV": "Jag gör en näverring och ger den åt en ny vän",
+			"EN": "Making a ring out of birch bark and giving it to a new friend."
+		},
+		"sortNo": 30070,
+		"idFromSource": 30070,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Palvelus",
+			"SV": "Väntjänst",
+			"EN": "Favour"
+		},
+		"description": {
+			"FI": "Tiskaan kaverini astiat.",
+			"SV": "Jag diskar en kompis matkärl.",
+			"EN": "Doing my friend's dishes."
+		},
+		"sortNo": 30080,
+		"idFromSource": 30080,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Lapsetus",
+			"SV": "Barnslighet",
+			"EN": "Childlikeness"
+		},
+		"description": {
+			"FI": "Pistän huivin \"sudariksi\" ja leikin ponileikkiä. Jos en tiedä, millaisesta leikistä on kyse, selvitän sen ensin.",
+			"SV": "Jag svänger min scouthalsduk till en \"VU-halsduk\" och leker ponny-leken. Ifall jag inte känner till vad det är frågan om, tar jag först reda på.  ",
+			"EN": "Getting all Cub-like and playing the Ride That Pony game. In case the game is new to me, I will find out what it is."
+		},
+		"sortNo": 30090,
+		"idFromSource": 30090,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Partytime",
+			"SV": "Partytime",
+			"EN": "Partytime"
+		},
+		"description": {
+			"FI": "Bileet Promenadilla! Järjestän kavereitteni kanssa pop up -bileet ja houkuttelen ohikulkijat mukaan.",
+			"SV": "Fest på lägerrakan!  Jag ordnar tillsammans med mina kompisar en pop up fest och lurar med folk som går förbi.",
+			"EN": "Partytime in Leirisuora (the main street)! Arranging a pop-up party together with my friends and getting passers-by to join."
+		},
+		"sortNo": 30100,
+		"idFromSource": 30100,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Löylyä!",
+			"SV": "Kasta bad!",
+			"EN": "Löylyä!"
+		},
+		"description": {
+			"FI": "Käyn saunassa eri maasta olevan leiriläisen kanssa. Jos olen suomalainen, opetan saunakulttuuria. Muistan olla hienotunteinen ja kunnioittaa toisen kulttuuria.",
+			"SV": "Jag går i bastun med lägerdeltagare från något annat land. Om jag är finländare lär jag ut bastubadskultur till de andra. Jag kommer ihåg att vara finkänslig och respektera de andra badarnas kulturer.",
+			"EN": "Visiting a sauna with a camper from a different country. If I am Finnish, I will teach something about the sauna culture. Remember to be courteous and respect other cultures."
+		},
+		"sortNo": 30110,
+		"idFromSource": 30110,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Swop!",
+			"SV": "Swop!",
+			"EN": "Swop!"
+		},
+		"description": {
+			"FI": "Swoppaan eli vaihtelen partiomerkkejä ulkomaalaisten leiriläisten kanssa.",
+			"SV": "Jag swoppar, d.v.s. byter scoutmärken med lägerdeltagarer från andra länder.",
+			"EN": "Swopping scouting badges with campers from other countries."
+		},
+		"sortNo": 30120,
+		"idFromSource": 30120,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Vitsivitsi",
+			"SV": "Skämt åsido",
+			"EN": "Just joking"
+		},
+		"description": {
+			"FI": "Kerron puujalkavitsin tuntemattomalle missä vain tai vaikkapa vessa-, ruoka- tai tiskijonossa.",
+			"SV": "Jag drar en träbensvits för en främling var som helst, t.ex.  i WC-, mat- eller diskkön. ",
+			"EN": "Telling a joke to a stranger at any time, for example whilst queueing for the toilet, food or dishwashing."
+		},
+		"sortNo": 30130,
+		"idFromSource": 30130,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Nami!",
+			"SV": "Mums!",
+			"EN": "Yummy!"
+		},
+		"description": {
+			"FI": "Käyn hakemassa Kehittämöstä karkkia. Kehittämö on samoajien infopiste ja sijaitsee Solmussa.",
+			"SV": "Jag hämtar godis från Uppdragskiosken (=Kehittämö). Uppdragskiosken är explorerscouternas infopunkt och finns i Knutpunkten.",
+			"EN": "Getting something sweet from Kehittämö. Kehittämö is the info centre for Explorers and it locates in Solmu."
+		},
+		"sortNo": 30140,
+		"idFromSource": 30150,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Kiristys",
+			"SV": "Spänning",
+			"EN": "Tightening"
+		},
+		"description": {
+			"FI": "Kiristän telttani narut, jopa ennen kuin kukaan pyytää sitä.",
+			"SV": "Jag spänner mina tältlinor innan någon ens bett mig göra det.",
+			"EN": "Tightening up the tent ropes, even before being asked to do so."
+		},
+		"sortNo": 30150,
+		"idFromSource": 30150,
+		"categoryId": 30,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Auttavat kädet",
+			"SV": "En hjälpande hand",
+			"EN": "Helping hand"
+		},
+		"description": {
+			"FI": "Olen ruuanjakajana. Jotta meidät kaikki 16 000 saadaan ruokituksi, tarvitaan apukäsiä keittiöille. Saat tarkemmat ohjeet leirilippukunnastasi. ",
+			"SV": "Jag ställer upp som matutdelare. För att  alla 16 000 lägerdeltagare ska få mat behövs det hjälp i köket. Jag får närmare instruktioner av min lägerkår eller i familjelägret. ",
+			"EN": "Handing out food. In order for all of us 16 000 to be fed, plenty of helping hands are needed in the kitchen. Ask your camp unit leader for more details. "
+		},
+		"sortNo": 40010,
+		"idFromSource": 40010,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Henkeviä",
+			"SV": "Själsligt",
+			"EN": "Deep talk"
+		},
+		"description": {
+			"FI": "Keskustelen luotsini kanssa esimerkiksi siitä, miten Roihulla olo on kehittänyt minua ihmisena.",
+			"SV": "Jag diskuterar med min lots om hur mitt deltagarnde i Roihu har utvecklat mig som människa. ",
+			"EN": "Having a conversation with my pilot about how being at Roihu has developed me as a person."
+		},
+		"sortNo": 40020,
+		"idFromSource": 40020,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Ciao! Tere! Hola!",
+			"SV": "Ciao! Tere! Hola!",
+			"EN": "Ciao! Tere! Hola!"
+		},
+		"description": {
+			"FI": "Tervehdin toisenmaalaista partiolaista hänen äidinkielellään. Roihulle on tulossa noin 3000 kansainvälistä osallistujaa, joten mahdollisuuksia on paljon.",
+			"SV": "Jag lär mig hälsningsfraser på andra språk. På Roihu finns det ca 3 000 internationella deltagare, alltså finns det många tillfällen att säga hej på andra språk.",
+			"EN": "Greeting a scout/quide from another country with his or her mother tongue. Roughly 3 000 international participants are taking part, so there will be plenty of chances."
+		},
+		"sortNo": 40030,
+		"idFromSource": 40030,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Järjestötoimintaa",
+			"SV": "Föreningsverksamhet",
+			"EN": "Organizational"
+		},
+		"description": {
+			"FI": "Tutustun jonkin kansalaisjärjestön toimintaan Global Development Villagessa (GDV). GDV järjestetään leirin vierailupäivänä eli sunnuntaina 24. heinäkuuta.",
+			"SV": "Jag bekantar mig med någon medborgarorganisations verksamhet i Global Development Village (GDV). GDV anordnas på lägrets besöksdag söndagen den 24 juli. ",
+			"EN": "Getting to know how a civic organization runs at the Global Development Village (GDV). GDV is held during the visiting day, Sunday the 24th of July."
+		},
+		"sortNo": 40040,
+		"idFromSource": 40040,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Hiki pintaan!",
+			"SV": "Svett i pannan!",
+			"EN": "Let's sweat!"
+		},
+		"description": {
+			"FI": "Juoksen Trail run -radan läpi. Kysyn tarkemmat ohjeet vaeltajien ohjelmalaaksosta (Majavanpesä) tai vaeltajien infopisteestä Leirisuoralla.",
+			"SV": "Jag springer runt Trail run -banan. Jag ber om noggrannare anvisningar i roverscouternas programdal eller vid roverscouternas infopunkt på lägerrakan.",
+			"EN": "Running through the Trail Run track. Ask for more details at Majavanpesä (Rover's valley) or the Rover info centre in Leirisuora (the main street)."
+		},
+		"sortNo": 40050,
+		"idFromSource": 40050,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Aurinkotervehdys",
+			"SV": "Solhälsning",
+			"EN": "Sun salutation"
+		},
+		"description": {
+			"FI": "Osallistun aamujoogaan. Aamujooga on osa vaeltajaohjelmaa.",
+			"SV": "Jag deltar i morgonyogan, som är en del av det program som erbjuds för roverscouterna. ",
+			"EN": "Taking part in the morning yoga session. Morning yoga is a part of the Rover programme."
+		},
+		"sortNo": 40060,
+		"idFromSource": 40060,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Älyluuri reppuun",
+			"SV": "Smartluren i ryggsäcken",
+			"EN": "Hide your smartphone"
+		},
+		"description": {
+			"FI": "Vietän somettoman leiripäivän.",
+			"SV": "Jag tillbringar dagen utan sociala medier.",
+			"EN": "Having a social media free day."
+		},
+		"sortNo": 40070,
+		"idFromSource": 50030,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Nappaa mukaan!",
+			"SV": "Take away!",
+			"EN": "Take away!"
+		},
+		"description": {
+			"FI": "Teen take away -aktiviteetin kaverin kanssa. Katson vaeltajan oppaasta tarkemmat tiedot tai kysyn lisää vaeltajalaaksosta (Majanvanpesä) tai vaeltajien infopisteestä Leirisuoralla.",
+			"SV": "Jag gör en take away -aktivitet med en kompis. Jag frågar mer i roverscoutdalen eller vid roverscouternas  infopunkt på lägerrakan.",
+			"EN": "Completing a take away activity with a friend.  More information can be found in the Rover's guide, Majavanpesä (Rover valley) or the Rover info centre in Leirisuora (the main street)."
+		},
+		"sortNo": 40080,
+		"idFromSource": 40080,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Hali",
+			"SV": "Kramis",
+			"EN": "Hug"
+		},
+		"description": {
+			"FI": "Halaan leirifeissaria. Feissareita löytää todennäköisesti esimerkiksi Leirisuoralta.",
+			"SV": "Jag kramar en lägerfeissare. Jag hittar förmodligen feissare längs lägerrakan. ",
+			"EN": "Hugging a street fundraiser. Fundraisers are most likely found at Leirisuora (the main street)."
+		},
+		"sortNo": 40090,
+		"idFromSource": 40090,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "High5",
+			"SV": "High5",
+			"EN": "High5"
+		},
+		"description": {
+			"FI": "Heitän ylävitoset vaeltajien infopisteellä. Infopiste sijaitsee Leirisuoralla.",
+			"SV": "Jag gör en high5 vid roverscouternas infopunkt på lägerrakan. ",
+			"EN": "High-fiving at the Rover info centre, in Leirisuora (the main street)."
+		},
+		"sortNo": 40100,
+		"idFromSource": 40100,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Ein espresso, bitte",
+			"SV": "Ein espresso, bitte",
+			"EN": "Ein espresso, bitte"
+		},
+		"description": {
+			"FI": "Juon espressoa saksalaisten kanssa. Tehtävän voi toteuttaa vaeltajien ohjelma-alueella.",
+			"SV": "Jag dricker en espresso med en tysk lägerdeltagare. Aktiviteten kan göras i roverscoutdalen. ",
+			"EN": "Having an espresso with Germans. You may complete this task at the Rover programme area."
+		},
+		"sortNo": 40110,
+		"idFromSource": 40110,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Toiset kengät",
+			"SV": "Andra skor",
+			"EN": "Someone else's shoes"
+		},
+		"description": {
+			"FI": "Kuljen päivän toisen kengissä. Muistan pyytää luvan, ennen kuin lainaan toisen kenkiä.",
+			"SV": "Jag går en dag i någon annans skor. Jag kommer ihåg att be om lov innan jag lånar någon annans skor. ",
+			"EN": "Walking a day in someone else's shoes. I wil remember to ask for a permission before borrowing them."
+		},
+		"sortNo": 40120,
+		"idFromSource": 40120,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Turhaan emme kehu!",
+			"SV": "Inget beröm i onödan!",
+			"EN": "We don't compliment for nothing!"
+		},
+		"description": {
+			"FI": "Kehun kaveria. Tämän tehtävän voi suorittaa vaikka joka päivä ja useamman kerran päivässä. Kehua saa muitakin kuin kavereita.",
+			"SV": "Jag berömmer en vän. Denna aktivitet kan man göra varje dag och flera gånger om dagen! Man kan gärna berömma också andra än sina egna vänner.",
+			"EN": "Complimenting a friend. This task can be completed every day and multiple times a day. You can also compliment other people, not just your friends."
+		},
+		"sortNo": 40130,
+		"idFromSource": 40130,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Tsemppaus",
+			"SV": "Uppmuntran",
+			"EN": "You can do it!"
+		},
+		"description": {
+			"FI": "Rohkaisen tarpojaa. Tarpojat ovat ensimmäisellä suurella leirillään, ja muutama kannustava sana ja pieni apu tekevät heille hyvää.",
+			"SV": "Jag uppmuntrar en spejarscout. Spejarrscouterna är för första gången på ett storläger och några uppmuntrande ord och lite hjälp på vägen kan göra gott.",
+			"EN": "Cheering a Tracker. The Trackers are at their first big camp, so a few encouraging words and a little help will do them good."
+		},
+		"sortNo": 40140,
+		"idFromSource": 40140,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Risut ja ruusut",
+			"SV": "Ris och ros",
+			"EN": "Feedback"
+		},
+		"description": {
+			"FI": "Annan palautetta leiripestistäni pestiesimiehelleni. Koitan keksiä sekä kehuttavaa että kehitettävää.",
+			"SV": "Jag ger min förman feedback om mitt serviceuppdrag. Jag försöker komma på både något bra och något som kunde utvecklas. ",
+			"EN": "Giving feedback about my assignment to my assignment supervisor. I will try to mention something good and something they can work on."
+		},
+		"sortNo": 40150,
+		"idFromSource": 40150,
+		"categoryId": 40,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Keitaan lumoissa",
+			"SV": "Underbara Oasen",
+			"EN": "Charmed by the Oasis"
+		},
+		"description": {
+			"FI": "Vierailen Keitaassa. Keidas on mahdollistajien eli leirin tekijöiden taukotila, jossa mm. Old Scouter Cafe ja Kylpylä",
+			"SV": "Jag besöker Oasen. Oasen är en tillflyktsort för dem som jobbar med serviceuppdrag, här finns även Old Scouters Café och Spa.",
+			"EN": "Visiting Keidas. It is a green room for the camp staff, where you can find for example the Old Scouter Cafe and the Spa."
+		},
+		"sortNo": 50010,
+		"idFromSource": 50010,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Auttavat kädet",
+			"SV": "En hjälpande hand",
+			"EN": "Helping hand"
+		},
+		"description": {
+			"FI": "Olen ruuanjakajana. Jotta meidät kaikki 16 000 saadaan ruokituksi, tarvitaan apukäsiä keittiöille. Saat tarkemmat ohjeet leirilippukunnastasi. ",
+			"SV": "Jag ställer upp som matutdelare. För att  alla 16 000 lägerdeltagare ska få mat behövs det hjälp i köket. Jag får närmare instruktioner av min lägerkår eller i familjelägret. ",
+			"EN": "Handing out food. In order for all of us 16 000 to be fed, plenty of helping hands are needed in the kitchen. Ask your camp unit leader for more details. "
+		},
+		"sortNo": 50020,
+		"idFromSource": 50020,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Ko-Gi?",
+			"SV": "TG?",
+			"EN": "Wood Badge?"
+		},
+		"description": {
+			"FI": "Kysyn partiojohtajajatkokurssin suorittaneelta nappulakaulalta, kanntaisiko minunkin lähteä Ko-Gille. Jos olen jo Ko-Gin käynyt, kerron kurssista jollekulle nappulattomalle.",
+			"SV": "Jag frågar scoutledare med TG-knappar runt halsen om jag också borde gå fortsättningskursen för scoutledare, d.v.s. Treklöver- Gilwellutbildningen. Om jag redan gått denna, berättar jag om kursen för någon som inte ännu gått den.",
+			"EN": "Asking someone, who has completed the advanced scout leader course (wearing the wooden beads around their scarf), if I should get the Wood Badge as well. If I have a Wood Badge, I will tell about it to someone who hasn't."
+		},
+		"sortNo": 50030,
+		"idFromSource": 50030,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Turvanaru",
+			"SV": "Paracord",
+			"EN": "Safety rope"
+		},
+		"description": {
+			"FI": "Käyn tekemässä paracord-leirimuiston Keitaan käsityöloungessa. Keidas on mahdollistajien taukotila, jossa on mm. Old Scouter Cafe ja Kylpylä. ",
+			"SV": "Jag gör ett lägerminne, ett paracord-överlevnadsarmband, i Oasens handarbetslounge. ",
+			"EN": "Making a camp token with paracord at the Keidas crafts lounge. Keidas is a green room for the camp staff, where you can find for example the Old Scouter Cafe and the Spa."
+		},
+		"sortNo": 50040,
+		"idFromSource": 50040,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Jatkis",
+			"SV": "Fortsättning följer",
+			"EN": "Continuing story"
+		},
+		"description": {
+			"FI": "Käyn seuraamassa Keitaan Old Scouter Cafeessa kaikki Puumavartion jatkokertomuksen jaksot.",
+			"SV": "Jag besöker Oasens Old Scouters Café och följer med alla delar av serien om Puma-patrullen.",
+			"EN": "Checking out all the episodes of Puumavartio in the Old Scouter Cafe, Keidas."
+		},
+		"sortNo": 50050,
+		"idFromSource": 50050,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Tikkupulla",
+			"SV": "Pinnbröd",
+			"EN": "Bun on a stick"
+		},
+		"description": {
+			"FI": "Käyn Keitaassa paistamassa tikkupullaa. Keidas on mahdollistajien taukotila, jossa on mm. Old Scouter Cafe ja Kylpylä. ",
+			"SV": "Jag besöker Oasen och grillar pinnbröd.",
+			"EN": "Visiting Keidas to bake a bun on a stick. Keidas is a green room for the camp staff, where you can find for example the Old Scouter Cafe and the Spa."
+		},
+		"sortNo": 50060,
+		"idFromSource": 50060,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Hemmottelu",
+			"SV": "Avkoppling",
+			"EN": "Pampering"
+		},
+		"description": {
+			"FI": "Käyn rentoutumassa Keitaan hemmotteluhoidoissa. Keitaan Kylpylä tarjoaa myös saunan, paljuja ja kuntosalin.",
+			"SV": "Jag kopplar av i Oasens Spa, här finns bastu, badtunna och gym.",
+			"EN": "Getting relaxing treatments at the Keidas Spa. The spa also includes a sauna, hot tubs and a gym."
+		},
+		"sortNo": 50070,
+		"idFromSource": 50070,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Liikuttava liikuttaja",
+			"SV": "Träning med tränare",
+			"EN": "Training with the trainer"
+		},
+		"description": {
+			"FI": "Liikutan itseäni työkykyäni ylläpitäen Liikuttajan johdolla. Liikuttajan toimipiste eli kuntosali löytyy Keitaasta.",
+			"SV": "Jag håller mig i form under ledning av en tränare. Gymet och tränaren finns i Oasen.",
+			"EN": "Keeping myself in shape for my camp assingment under the instructions of a trainer. You can find the gym at Keidas."
+		},
+		"sortNo": 50080,
+		"idFromSource": 50080,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Kahvilaturnee",
+			"SV": "Caférunda",
+			"EN": "Cafe round"
+		},
+		"description": {
+			"FI": "Käyn kaikissa leirin kahviloissa. Kahviloiden sijainti selviää Lastun kartasta.",
+			"SV": "Jag besöker lägrets caféer. Caféerna finns utmärkta på kartan i Spånan.",
+			"EN": "Visiting all the camp cafes. You find their locations on the map in the campers guidebook."
+		},
+		"sortNo": 50090,
+		"idFromSource": 50090,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Aamukaffet",
+			"SV": "Morgonkaffe",
+			"EN": "Morning coffee"
+		},
+		"description": {
+			"FI": "Käyn Keitaassa Old Scouters Cafeessa aikuisten aamukahvilla.",
+			"SV": "Jag går på morgonkaffet för äldre ledare på Old Scouters Café.",
+			"EN": "Joining the Adult's morning coffee session at the Old Scouter Cafe, Keidas."
+		},
+		"sortNo": 50100,
+		"idFromSource": 50100,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Punttis",
+			"SV": "Hanteln",
+			"EN": "Gym"
+		},
+		"description": {
+			"FI": "Käyn Keitaan kuntosalilla liikuttamassa kroppaa leirikuntoon.",
+			"SV": "Jag besöker gymmet för att hålla mig i lägerform.",
+			"EN": "Keeping myself in camp shape by visiting the Keidas gym."
+		},
+		"sortNo": 50110,
+		"idFromSource": 50110,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Risut ja ruusut",
+			"SV": "Ris och ros",
+			"EN": "Feedback"
+		},
+		"description": {
+			"FI": "Annan palautetta leiripestistäni pestiesimiehelleni. Koitan keksiä sekä kehuttavaa että kehitettävää.",
+			"SV": "Jag ger min förman feedback om mitt serviceuppdrag. Jag försöker komma på både något bra och något som kunde utvecklas. ",
+			"EN": "Giving feedback about my assignment to my assignment supervisor. I will try to mention something good and something they can work on."
+		},
+		"sortNo": 50120,
+		"idFromSource": 50120,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Muuvit haltuun",
+			"SV": "Move it!",
+			"EN": "Bust a move"
+		},
+		"description": {
+			"FI": "Liikutan lantiota Keitaan Old Scoutersin tanssikurssilla.",
+			"SV": "Jag vickar på höfterna på Old Scouters danskurs i Oasen.",
+			"EN": "Moving my hips at the dance course held at the Old Scouters Cafe, Keidas. "
+		},
+		"sortNo": 50130,
+		"idFromSource": 50130,
+		"categoryId": 50,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Partiosanat",
+			"SV": "Scoutord",
+			"EN": "Scout Words"
+		},
+		"description": {
+			"FI": "Pyydä ulkomaalaiselta apua kymmenen partiosanan kääntämiseen. Kerää sanat omaan vihkoon.  Kun olet suorittanut kaikki kuusi tehtävää, hae KV-toimistolta (sijaitsee Solmu-alueella) hieno Friendship Challenge -merkki! Sieltä löytyy myös malli merkistä.",
+			"SV": "Översätt tio scoutord tillsammans med en scout från ett annat land. Samla orden i ditt häfte. När du har utfört alla sex uppgifter, kan du hämta det fina Friendship Challenge-märket från Internationella kansliet (beläget i Knuten)! Där finns också en modell av märket.",
+			"EN": "Learn ten scout words from another language. Write them down in your notebook. When you have done all six tasks, get your Friendship Challenge badge from the International Office (located at the Solmu area)! There you can also find a model of the badge."
+		},
+		"sortNo": 60010,
+		"idFromSource": 60010,
+		"categoryId": 60,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Yhteystiedot",
+			"SV": "Kontaktuppgifter",
+			"EN": "Contact Details"
+		},
+		"description": {
+			"FI": "Vaihda yhteystietoja vähintään kolmen tuntemattoman partiolaisen kanssa. Kerää yhteystiedot omaan vihkoon. Kun olet suorittanut kaikki kuusi tehtävää, hae KV-toimistolta (sijaitsee Solmu-alueella) hieno Friendship Challenge -merkki! Sieltä löytyy myös malli merkistä.",
+			"SV": "Byt kontaktuppgifter med minst tre okända scouter. Samla kontaktuppgifterna i ditt häfte. När du har utfört alla sex uppgifter, kan du hämta det fina Friendship Challenge-märket från Internationella kansliet (beläget i Knuten)! Där finns också en modell av märket.",
+			"EN": "Exchange contact details with at least three new scout friends. Make sure to write them down in your notebook. When you have done all six tasks, get your Friendship Challenge badge from the International Office (located at the Solmu area)! There you can also find a model of the badge."
+		},
+		"sortNo": 60020,
+		"idFromSource": 60020,
+		"categoryId": 60,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Laulu tai leikki",
+			"SV": "Sång och lek",
+			"EN": "Song or Game"
+		},
+		"description": {
+			"FI": "Pyydä ulkomaalaista partiolaista opettamaan sinulle oman maansa laulu tai leikki. Leikkikää leikkiä tai laulakaa laulua yhdessä! Kirjoita leikki/laulu omaan vihkoon että muistat sen myöhemmin :)  Kun olet suorittanut kaikki kuusi tehtävää, hae KV-toimistolta (sijaitsee Solmu-alueella) hieno Friendship Challenge -merkki! Sieltä löytyy myös malli merkistä.",
+			"SV": "Be en scout från ett annat land att lära dig en lek eller sång från deras land. Lek leken eller sjung sången tillsammans! Skriv ner idéerna så att du kan leka senare också :) När du har utfört alla sex uppgifter, kan du hämta det fina Friendship Challenge-märket från Internationella kansliet (beläget i Knuten)! Där finns också en modell av märket.",
+			"EN": "Ask a scout from another country to teach you a song or a game and sing/play it together! Write it down in your notebook, so that you remember it later :) When you have done all six tasks, get your Friendship Challenge badge from the International Office (located at the Solmu area)! There you can also find a model of the badge."
+		},
+		"sortNo": 60030,
+		"idFromSource": 60030,
+		"categoryId": 60,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Ystäväiski-hattu",
+			"SV": "Vänskaps-väiski",
+			"EN": "Friendship Väiski"
+		},
+		"description": {
+			"FI": "Suunnitelkaa ulkomaalaisen partiolaisen kanssa oma \"Ystäväiskinne\" (ystävien väiski-hattu). Piirrä Ystäväiski omaan vihkoon, äläkä unohda laittaa siihen taiteilijoiden nimiä! Kun olet suorittanut kaikki kuusi tehtävää, hae KV-toimistolta (sijaitsee Solmu-alueella) hieno Friendship Challenge -merkki! Sieltä löytyy myös malli merkistä.",
+			"SV": "Designa en vänskaps-väiski hatt tillsammans med en scout från ett annat land. Rita vänskaps-väiskin i ditt häfte. Glöm inte konstnärernas namn! När du har utfört alla sex uppgifter, kan du hämta det fina Friendship Challenge-märket från Internationella kansliet (beläget i Knuten)! Där finns också en modell av märket.",
+			"EN": "Design a Friendship Väiski hat with a friend from another country. Draw it in your notebook and don't forget to add the artists' names! When you have done all six tasks, get your Friendship Challenge badge from the International Office (located at the Solmu area)! There you can also find a model of the badge."
+		},
+		"sortNo": 60040,
+		"idFromSource": 60040,
+		"categoryId": 60,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "KV-markkinat",
+			"SV": "Internationell marknad",
+			"EN": "International Expo"
+		},
+		"description": {
+			"FI": "Käy vierailupäivänä KV-markkinoilla tutustumassa 3-5 ohjelmapisteeseen ja pyydä pisteiltä leimat/allekirjoitukset.  Kun olet suorittanut kaikki kuusi tehtävää, hae KV-toimistolta (sijaitsee Solmu-alueella) hieno Friendship Challenge -merkki! Sieltä löytyy myös malli merkistä.",
+			"SV": "Gå på besöksdagen till Internationella marknaden och besök 3-5 programpunkter och be om stämpel eller underskrift från dem. När du har utfört alla sex uppgifter, kan du hämta det fina Friendship Challenge-märket från Internationella kansliet (beläget i Knuten)! Där finns också en modell av märket.",
+			"EN": "Visit 3-5 stands at the International Expo on Visitor's Day. Gather either stamps or signatures of your visits in your notebook. When you have done all six tasks, get your Friendship Challenge badge from the International Office (located at the Solmu area)! There you can also find a model of the badge."
+		},
+		"sortNo": 60050,
+		"idFromSource": 60050,
+		"categoryId": 60,
+		"achievementCount": 0
+	},
+	{
+		"name": {
+			"FI": "Aktiviteetti",
+			"SV": "Aktivitet",
+			"EN": "Activity"
+		},
+		"description": {
+			"FI": "Käy suorittamassa jokin hauska aktiviteetti ulkomaalaisen partiolaisen kanssa. Voitte käydä esim. melomassa, kahvilla, kiipeilemässä, jäätelöllä, jne. Kirjoita omaan vihkoon kenen kanssa olit ja mitä teitte.  Kun olet suorittanut kaikki kuusi tehtävää, hae KV-toimistolta (sijaitsee Solmu-alueella) hieno Friendship Challenge -merkki! Sieltä löytyy myös malli merkistä.",
+			"SV": "Utför någon rolig aktivitet tillsammans med en utländsk scout. Ni kan t.ex. gå på kaffe, paddla, klättra eller äta en glass tillsammans. Skriv ner i ditt häfte med vem du var och vad ni gjorde. När du har utfört alla sex uppgifter, kan du hämta det fina Friendship Challenge-märket från Internationella kansliet (beläget i Knuten)! Där finns också en modell av märket.",
+			"EN": "Do some fun activity with a new scout friend. Examples of activities are paddling, go for a coffee or an ice cream, climbing or anything else. Write down who you were with and what you did. When you have done all six tasks, get your Friendship Challenge badge from the International Office (located at the Solmu area)! There you can also find a model of the badge."
+		},
+		"sortNo": 60060,
+		"idFromSource": 60060,
+		"categoryId": 60,
+		"achievementCount": 0
 	}
 ]
