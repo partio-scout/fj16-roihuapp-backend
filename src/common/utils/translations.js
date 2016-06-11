@@ -211,7 +211,7 @@ export function updateTranslationsForModel(modelName, data, where) {
   Updates existing models.
   Deletes or marks as deleted models that no longer exist in remote data
 */
-export function CRUDModels(modelName, newFixtures, soft) {
+export function CRUDModels(modelName, newFixtures, linkingKey, soft) {
   const findModels = Promise.promisify(app.models[modelName].find, { context: app.models[modelName] });
   const updateModel = Promise.promisify(app.models[modelName].updateAll, { context: app.models[modelName] });
   const destroyModels = Promise.promisify(app.models[modelName].destroyAll, { context: app.models[modelName] });
@@ -227,11 +227,11 @@ export function CRUDModels(modelName, newFixtures, soft) {
     findModels({ where: { deleted: false } }) // get all current
     .then(currentData => {
       _.forEach(currentData, currentInstance => {
-        currentIds.push(currentInstance.idFromSource);
+        currentIds.push(currentInstance[linkingKey]);
       });
       _.forEach(newFixtures, newFixture => {
-        newIds.push(newFixture.idFromSource);
-        if (currentIds.indexOf(newFixture.idFromSource) == -1) {
+        newIds.push(newFixture[linkingKey]);
+        if (currentIds.indexOf(newFixture[linkingKey]) == -1) {
           toCreate.push(newFixture);
         } else {
           toUpdate.push(newFixture);
@@ -239,7 +239,7 @@ export function CRUDModels(modelName, newFixtures, soft) {
       });
 
       _.forEach(currentData, currentInstance => {
-        if (newIds.indexOf(currentInstance.idFromSource) == -1) {
+        if (newIds.indexOf(currentInstance[linkingKey]) == -1) {
           toDelete.push(currentInstance);
         }
       });
@@ -249,15 +249,16 @@ export function CRUDModels(modelName, newFixtures, soft) {
     })
     .then(() => {
       _.forEach(toUpdate, upd => {
-        updateTranslationsForModel(modelName, upd, { idFromSource: upd.idFromSource });
+        updateTranslationsForModel(modelName, upd, { [linkingKey]: upd[linkingKey] });
       });
     })
     .then(() => {
       _.forEach(toDelete, del => {
         if (soft) {
-          updateModel({ idFromSource: del.idFromSource }, { deleted: true, lastModified: Date.now() });
+          console.log('Warning! using soft delete may not work properly!');
+          updateModel({ [linkingKey]: del[linkingKey] }, { deleted: true, lastModified: Date.now() });
         } else {
-          destroyModels({ idFromSource: del.idFromSource });
+          destroyModels({ [linkingKey]: del[linkingKey] });
         }
       });
     })
