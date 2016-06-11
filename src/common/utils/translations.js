@@ -211,7 +211,7 @@ export function updateTranslationsForModel(modelName, data, where) {
   Updates existing models.
   Deletes or marks as deleted models that no longer exist in remote data
 */
-export function CRUDModels(modelName, newFixtures, linkingKey, soft) {
+export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter) {
   const findModels = Promise.promisify(app.models[modelName].find, { context: app.models[modelName] });
   const updateModel = Promise.promisify(app.models[modelName].updateAll, { context: app.models[modelName] });
   const destroyModels = Promise.promisify(app.models[modelName].destroyAll, { context: app.models[modelName] });
@@ -224,7 +224,11 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft) {
   const newIds = [];
 
   return new Promise((resolve, reject) => {
-    findModels({ where: { deleted: false } }) // get all current
+    let where = { where: { deleted: false } };
+    if (whereFilter) {
+      where = whereFilter;
+    }
+    findModels(where) // get all current
     .then(currentData => {
       _.forEach(currentData, currentInstance => {
         currentIds.push(currentInstance[linkingKey]);
@@ -267,6 +271,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft) {
     })
     .catch(err => {
       console.log('Error happened');
+      console.log('Please make sure your model has "deleted" field even if softdelete is not used');
       reject(err);
     });
   });

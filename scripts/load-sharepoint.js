@@ -200,11 +200,16 @@ export function eventsHandler(err, data) {
             currentEventIds = currentSPEvents.map(evt => {
               return evt.eventId;
             });
-            // create new events
-            return translationUtils.createTranslationsForModel('CalendarEvent', events);
+            // update events
+            return translationUtils.CRUDModels('CalendarEvent', events, 'sharepointId', false, { where: {
+              and: [
+                { deleted: false },
+                { source: 1 },
+              ]
+            } });
           })
           .then(() => {
-            app.models.CalendarEvent.destroyAll({ eventId: { inq: currentEventIds } });
+            //app.models.CalendarEvent.destroyAll({ eventId: { inq: currentEventIds } });
           });
 
         });

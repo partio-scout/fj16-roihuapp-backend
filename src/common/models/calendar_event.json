@@ -275,6 +275,16 @@
         "dataScale": null,
         "nullable": "YES"
       }
+    },
+    "deleted": {
+      "type": "Boolean",
+      "required": true,
+      "default": false,
+      "postgresql": {
+        "columnName": "deleted",
+        "dataType": "boolean",
+        "nullable": "YES"
+      }
     }
   },
   "validations": [],
@@ -299,6 +309,12 @@
     },
     {
       "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW"
