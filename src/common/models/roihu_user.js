@@ -261,7 +261,7 @@ export default function(RoihuUser) {
             fields: [
               'eventId', 'type', 'name', 'description', 'locationName', 'lastModified',
               'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
-              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
+              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'participantCount',
             ],
           },
         },
