@@ -17,44 +17,42 @@ module.exports = function(CalendarEvent) {
       currentUserId = ctx.active.accessToken.userId;
     }
 
+    if (filter) {
+      filter.fields = {
+        sharepointId: false,
+        source: false,
+        wave: false,
+        deleted: false,
+        type: false,
+      };
+
+      if (!filter.order) {
+        filter['order'] = 'startTime ASC';
+      }
+
+    } else {
+      filter = {
+        fields: {
+          sharepointId: false,
+          source: false,
+          wave: false,
+          deleted: false,
+          type: false,
+        },
+        order: 'startTime ASC',
+      };
+    }
+
     Promise.join(
       translationUtils.getLangIfNotExists(language),
       findUser(currentUserId),
       (lang, user) => {
-        translationUtils.getTranslationsForModel(CalendarEvent, lang, {
-          where: filter.where,
-          fields: {
-            sharepointId: false,
-            source: false,
-            wave: false,
-            deleted: false,
-            status: false,
-            type: false,
-          },
-        })
+        translationUtils.getTranslationsForModel(CalendarEvent, lang, filter)
         .then(translatedEvents => {
           const events = [];
           _.forEach(translatedEvents, event => {
-            if (event.status !== 'searchable') return;  // skip everything not searchable
-            events.push({
-              id: event.eventId,
-              title: event.name,
-              bodytext: event.description,
-              type: event.type,
-              gps_latitude: event.gpsLatitude,
-              gps_longitude: event.gpsLongitude,
-              grid_latitude: event.gridLatitude,
-              grid_longitude: event.gridLongitude,
-              locationName: event.locationName,
-              status: event.status,
-              startTime: event.startTime,
-              endTime: event.endTime,
-              subcamp: event.subcamp,
-              ageGroups: event.ageGroups,
-              participantCount: event.participantCount,
-              last_modified: event.lastModified,
-              wave: event.wave,
-            });
+            if (event.status != 'searchable') return;  // skip everything not searchable
+            events.push(event);
           });
           return events;
         })
