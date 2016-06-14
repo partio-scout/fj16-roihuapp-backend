@@ -261,7 +261,7 @@ export default function(RoihuUser) {
             fields: [
               'eventId', 'type', 'name', 'description', 'locationName', 'lastModified',
               'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
-              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
+              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'participantCount',
             ],
           },
         },
@@ -290,11 +290,20 @@ export default function(RoihuUser) {
           fields: {
             sharepointId: false,
             source: false,
+            wave: false,
+            deleted: false,
           },
         });
       })
       .then(mandatoryEvents => {
+        const timeNow = new Date();
+        const timeNext = new Date(timeNow);
+        timeNext.setHours(timeNow.getHours() + 1);
+
         const response = {
+          timestamp: timeNow.toISOString(),
+          next_check: timeNext.toISOString(),
+          language: language,
           selected: [],
           mandatory: [],
         };
