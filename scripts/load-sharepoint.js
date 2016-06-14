@@ -80,18 +80,6 @@ export function locationsHandler(err, data) {
       })
       .then(() => resolve()));
 
-/*
-      Promise.all(localTranslationsDone)
-      .then(() => Promise.join(
-          translationUtils.createTranslationsForModel('LocationCategory', categories),
-          translationUtils.createTranslationsForModel('Location', locations),
-          (cr, loc) => {
-            // delete all other model instances
-            destroyAllByNameGuid('LocationCategory', cr);
-            destroyAllByNameGuid('Location', loc);
-        })
-        .then(() => resolve()));
-  */  
     }
   });
 
@@ -141,6 +129,9 @@ export function eventsHandler(err, data) {
           if (isEmpty(item.Title)) return;
           if (isEmpty(item.Lis_x00e4_tietolinkkiId)) return;
 
+          // skip events which category is not for app
+          if (!categoryIsForApp(item.Kategoria)) return;
+
           // get additional information
           const additionalInfo = getAdditionalInfo(additionalInfoData, item.Lis_x00e4_tietolinkkiId);
           const locPromise = findLocation({ where: { idFromSource: item.PaikkaId } })
@@ -169,7 +160,7 @@ export function eventsHandler(err, data) {
                   EN: locEN.name,
                 },
                 lastModified: item.Modified,
-                status: item.Yleisohjelmaan ? 'mandatory' : 'searchable',
+                status: isMandatory(item.Kategoria) ? 'mandatory' : 'searchable',
                 startTime: item.Alkuaika,
                 endTime: item.Loppuaika,
                 gpsLongitude: locFI.gpsLongitude,
@@ -207,11 +198,7 @@ export function eventsHandler(err, data) {
                 { source: 1 },
               ]
             } });
-          })
-          .then(() => {
-            //app.models.CalendarEvent.destroyAll({ eventId: { inq: currentEventIds } });
           });
-
         });
       });
     }
@@ -228,6 +215,26 @@ export function eventsHandler(err, data) {
       return field.results.join(separator);
     }
     return '';
+  }
+
+  function isMandatory(category) {
+    const mandatoryCategories = [
+      'Ruokailu',
+      'Päiväohjelma',
+      'Iltaohjelma',
+    ];
+    return (mandatoryCategories.indexOf(category) !== -1) ? true : false;
+  }
+
+  function categoryIsForApp(category) {
+    const validCategories = [
+      'Ruokailu',
+      'Päiväohjelma',
+      'Iltaohjelma',
+      'Tapaaminen',
+      'Valinnainen ohjelma',
+    ];
+    return (validCategories.indexOf(category) !== -1) ? true : false;
   }
 }
 

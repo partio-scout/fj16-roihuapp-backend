@@ -17,14 +17,15 @@ module.exports = function(CalendarEvent) {
       currentUserId = ctx.active.accessToken.userId;
     }
 
+    const fields = {
+      sharepointId: false,
+      source: false,
+      wave: false,
+      deleted: false,
+    };
+
     if (filter) {
-      filter.fields = {
-        sharepointId: false,
-        source: false,
-        wave: false,
-        deleted: false,
-        type: false,
-      };
+      filter.fields = fields;
 
       if (!filter.order) {
         filter['order'] = 'startTime ASC';
@@ -32,13 +33,7 @@ module.exports = function(CalendarEvent) {
 
     } else {
       filter = {
-        fields: {
-          sharepointId: false,
-          source: false,
-          wave: false,
-          deleted: false,
-          type: false,
-        },
+        fields: fields,
         order: 'startTime ASC',
       };
     }
