@@ -261,7 +261,7 @@ export default function(RoihuUser) {
             fields: [
               'eventId', 'type', 'name', 'description', 'locationName', 'lastModified',
               'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
-              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'participantCount',
+              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
             ],
           },
         },
@@ -290,8 +290,6 @@ export default function(RoihuUser) {
           fields: {
             sharepointId: false,
             source: false,
-            wave: false,
-            deleted: false,
           },
         });
       })
@@ -304,22 +302,21 @@ export default function(RoihuUser) {
           timestamp: timeNow.toISOString(),
           next_check: timeNext.toISOString(),
           language: language,
-          selected: [],
-          mandatory: [],
+          events: [],
         };
         const promises = [];
 
         // User own events
         _.forEach(User.calendarEvents, event => {
           const p = translationUtils.translateModel(event, language)
-          .then(evt => response.selected.push(evt));
+          .then(evt => response.events.push(evt));
           promises.push(p);
         });
 
         // Mandatory events
         _.forEach(mandatoryEvents, event => {
           // filter out unnecessary fields if needed
-          response.mandatory.push(event);
+          response.events.push(event);
         });
 
         Promise.all(promises)
