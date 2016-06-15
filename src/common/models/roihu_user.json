@@ -283,7 +283,24 @@
         "nullable": "YES"
       },
       "_selectable": false,
-      "comments": "pesti"
+      "comments": ""
+    },
+    "wave": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "wave",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "aalto"
     }
   },
   "validations": [],
@@ -291,6 +308,10 @@
     "achievements": {
       "type": "hasAndBelongsToMany",
       "model": "Achievement"
+    },
+    "calendarEvents": {
+      "type": "hasAndBelongsToMany",
+      "model": "CalendarEvent"
     }
   },
   "acls": [
@@ -334,6 +355,34 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "completedAchievements"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__calendarEvents"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__link__calendarEvents"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__unlink__calendarEvents"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "calendar"
     }
   ],
   "methods": {}

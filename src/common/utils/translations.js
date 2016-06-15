@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import validate_uuid from 'uuid-validate';
 import uuid from 'uuid';
+import path from 'path';
 
 /*
   FInd all models to match filter and translate them
@@ -37,7 +38,7 @@ export function getTranslationsForModel(model, lang, filter) {
 
           return Promise.all(promises)
             .then(() => {
-              // push single translated instace to completed list
+              // push single translated instance to completed list
               allTranslated.push(translatedInstance);
             });
         });
@@ -164,27 +165,138 @@ export function createTranslationsForModel(modelName, jsonData) {
   });
 }
 
-/* EI VAIKUTA TOIMIVALTA! */
-export function deleteTranslationsForModel(modelName, instanceId) {
-  const TranslationModel = app.models.Translation;
-  //const findTranslations = Promise.promisify(TranslationModel.find, { context: TranslationModel });
+/*
+  Update all fields for single model instance
+*/
+export function updateTranslationsForModel(modelName, data, where) {
   const model = app.models[modelName];
-  const findModelById = Promise.promisify(model.find, { context: model });
+  const findModel = Promise.promisify(model.find, { context: model });
+  const TranslationModel = app.models.Translation;
+  const findTranslation = Promise.promisify(TranslationModel.find, { context: TranslationModel });
 
-/* EI VAIKUTA TOIMIVALTA! */
+  // Palauuttaa promisen väärään aikaan, eli siis silloin kun on vielä joitakin operaatioita kesken.
+  // Muuten toimii hyvin
+  const allFieldsDone = [];
   return new Promise((resolve, reject) => {
-    findModelById({ 'id': instanceId })
-    .then(modelInstance => {
-      _.forEach(modelInstance, (value, key) => {
-        if (isUUID(value)) {
-          TranslationModel.destroyAll({ 'guId': value });
+    findModel({ where: where })
+    .then(models => {
+      // should be only one instance, but use foreach just-in-case
+      _.forEach(models, instance => {
+        _.forEach(instance.__data, (value, key) => {
+          // current field is uuid and data has possible translations for it
+          if (isUUID(value) && ( typeof data[key] === 'object' )) {
+            findTranslation({ where: { guId: value } })
+            .each(translationObj => {
+              if (data[key][translationObj.lang]) {
+                translationObj.text = data[key][translationObj.lang];
+                translationObj.save();
+              }
+            });
+          } else if (data[key] && (data[key] !== instance[key])) {
+            instance[key] = data[key];
+            instance.save();  // saving here is propably not the best for DB performance
+          }
+        });
+      });
+    })
+    .then(() => {
+      Promise.all(allFieldsDone).then(() => resolve());
+    });
+  });
+}
+
+/*
+  Update models data to match current state of "active" remote data (newFixtures).
+  Creates new if model is not found.
+  Updates existing models.
+  Deletes or marks as deleted models that no longer exist in remote data
+*/
+export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter) {
+  const findModels = Promise.promisify(app.models[modelName].find, { context: app.models[modelName] });
+  const updateModel = Promise.promisify(app.models[modelName].updateAll, { context: app.models[modelName] });
+  const destroyModels = Promise.promisify(app.models[modelName].destroyAll, { context: app.models[modelName] });
+
+  const toUpdate = [];
+  const toCreate = [];
+  const toDelete = [];
+
+  const currentIds = [];
+  const newIds = [];
+
+  return new Promise((resolve, reject) => {
+    let where = { where: { deleted: false } };
+    if (whereFilter) {
+      where = whereFilter;
+    }
+    findModels(where) // get all current
+    .then(currentData => {
+      _.forEach(currentData, currentInstance => {
+        currentIds.push(currentInstance[linkingKey]);
+      });
+      _.forEach(newFixtures, newFixture => {
+        newIds.push(newFixture[linkingKey]);
+        if (currentIds.indexOf(newFixture[linkingKey]) == -1) {
+          toCreate.push(newFixture);
+        } else {
+          toUpdate.push(newFixture);
+        }
+      });
+
+      _.forEach(currentData, currentInstance => {
+        if (newIds.indexOf(currentInstance[linkingKey]) == -1) {
+          toDelete.push(currentInstance);
         }
       });
     })
     .then(() => {
-      model.destroyById(instanceId);
-      resolve(true);
+      createTranslationsForModel(modelName, toCreate);
     })
-    .catch(err => reject(err));
+    .then(() => {
+      _.forEach(toUpdate, upd => {
+        updateTranslationsForModel(modelName, upd, { [linkingKey]: upd[linkingKey] });
+      });
+    })
+    .then(() => {
+      _.forEach(toDelete, del => {
+        if (soft) {
+          console.log('Warning! using soft delete may not work properly!');
+          updateModel({ [linkingKey]: del[linkingKey] }, { deleted: true, lastModified: Date.now() });
+        } else {
+          destroyModels({ [linkingKey]: del[linkingKey] });
+        }
+      });
+    })
+    .then(() => {
+      resolve();
+    })
+    .catch(err => {
+      console.log('Error happened');
+      console.log('Please make sure your model has "deleted" field even if softdelete is not used');
+      reject(err);
+    });
+  });
+}
+
+export function getLocalFieldTranslations(translationsFile, fieldValueKey, langs, defaultValue) {
+  return Promise.try(() => require(path.resolve(__dirname, `./localTranslations/${translationsFile}`)))
+  .then(translationData => {
+    const returnable = {};
+    if (translationData[fieldValueKey]) {
+      _.forEach(translationData[fieldValueKey], (text, lang) => {
+        if (langs.indexOf(lang) !== -1) {
+          returnable[langs[langs.indexOf(lang)]] = text;
+        } else {
+          returnable[lang] = defaultValue;
+        }
+      });
+    } else {
+      _.forEach(langs, lang => {
+        returnable[lang] = defaultValue;
+      });
+    }
+    return returnable;
+  })
+  .catch(err => {
+    console.error('Error while locally translating values:', err);
   });
 }

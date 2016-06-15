@@ -9,6 +9,20 @@ import app from '../../server/server';
 
 export default function(RoihuUser) {
 
+  RoihuUser.observe('before save', (ctx, next) => {
+    // create random password if needed
+    if (ctx.instance) {
+      if (!ctx.instance.password) {
+        ctx.instance.password = crypto.randomBytes(24).toString('hex');
+      }
+    } else {
+      if (!ctx.data.password) {
+        ctx.data.password = crypto.randomBytes(24).toString('hex');
+      }
+    }
+    next();
+  });
+
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
     // check if user already has achieved this achievement
     RoihuUser.getCompletedAchievementIds(ctx.req.params.id)
@@ -27,6 +41,30 @@ export default function(RoihuUser) {
       if (_.indexOf(completed, parseInt(ctx.req.params.fk)) !== -1) {
         // decreace achievement counts for achievement and category
         RoihuUser.addOrReduceAchievementScores(-1, ctx.req.params.fk);
+      }
+    }).asCallback(next);
+  });
+
+  RoihuUser.beforeRemote('prototype.__link__calendarEvents', (ctx, modelInstance, next) => {
+    const CalendarEvent = app.models.CalendarEvent;
+
+    RoihuUser.getAttendingEventIds(ctx.req.params.id)
+    .then(eventIds => {
+      if (_.indexOf(eventIds, parseInt(ctx.req.params.fk)) === -1) {
+
+        CalendarEvent.addOrReduceParticipants(1, ctx.req.params.fk);
+      }
+    }).asCallback(next);
+  });
+
+  RoihuUser.beforeRemote('prototype.__unlink__calendarEvents', (ctx, modelInstance, next) => {
+    const CalendarEvent = app.models.CalendarEvent;
+
+    RoihuUser.getAttendingEventIds(ctx.req.params.id)
+    .then(eventIds => {
+      if (_.indexOf(eventIds, parseInt(ctx.req.params.fk)) !== -1) {
+
+        CalendarEvent.addOrReduceParticipants(-1, ctx.req.params.fk);
       }
     }).asCallback(next);
   });
@@ -177,6 +215,123 @@ export default function(RoihuUser) {
     });
   };
 
+  RoihuUser.getAttendingEventIds = function(userId) {
+    return new Promise((resolve, reject) => {
+      const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+
+      if (userId) {
+        findUser({
+          where: { id: userId },
+          include: {
+            relation: 'calendarEvents',
+            scope: {
+              fields: ['eventId'],
+            },
+          },
+        })
+        .then(user => {
+          user = user.toJSON();
+
+          const events = [];
+          _.forEach(user.calendarEvents, event => {
+            events.push(event.eventId);
+          });
+          return events;
+        })
+        .then(evt => resolve(evt))
+        .catch(() => resolve([]));
+      } else {
+        resolve([]);
+      }
+    });
+  };
+
+  RoihuUser.calendar = function(userId, lang, cb) {
+    const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+    const CalendarEvent = app.models.CalendarEvent;
+
+    translationUtils.getLangIfNotExists(lang)
+    .then(language => {
+      let User;
+      findUser({
+        where: { id: userId },
+        include: {
+          relation: 'calendarEvents',
+          scope: {
+            fields: [
+              'eventId', 'type', 'name', 'description', 'locationName', 'lastModified',
+              'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
+              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
+            ],
+          },
+        },
+      })
+      .then(u => {
+        User = u.toJSON();
+
+        return translationUtils.getTranslationsForModel(CalendarEvent, language, {
+          where: {
+            and: [
+              { status: 'mandatory' },
+              { or: [
+                { subcamp: { like: `\%${User.subcamp}\%` } },
+                { subcamp: '' },
+              ] },
+              { or: [
+                { ageGroups: { like: `\%${getFirstBeforeSeparator(User.ageGroup, '/')}\%` } },
+                { ageGroups: '' },
+              ] },
+              { or: [
+                { wave: { like: `\%${User.wave}\%` } },
+                { wave: '' },
+              ] },
+            ],
+          },
+          fields: {
+            sharepointId: false,
+            source: false,
+          },
+        });
+      })
+      .then(mandatoryEvents => {
+        const timeNow = new Date();
+        const timeNext = new Date(timeNow);
+        timeNext.setHours(timeNow.getHours() + 1);
+
+        const response = {
+          timestamp: timeNow.toISOString(),
+          next_check: timeNext.toISOString(),
+          language: language,
+          events: [],
+        };
+        const promises = [];
+
+        // User own events
+        _.forEach(User.calendarEvents, event => {
+          const p = translationUtils.translateModel(event, language)
+          .then(evt => response.events.push(evt));
+          promises.push(p);
+        });
+
+        // Mandatory events
+        _.forEach(mandatoryEvents, event => {
+          // filter out unnecessary fields if needed
+          response.events.push(event);
+        });
+
+        Promise.all(promises)
+        .then(() => {
+          cb(null, response);
+        });
+      })
+      .catch(err => cb(err, null));
+    });
+  };
+
+  function getFirstBeforeSeparator(stringValue, sep) {
+    return _.split(stringValue, sep, 1)[0];
+  }
+
   RoihuUser.remoteMethod(
     'emailLogin',
     {
@@ -197,6 +352,19 @@ export default function(RoihuUser) {
         { arg: 'lang', type: 'string' },
       ],
       returns: { arg: 'completedAchievements', type: 'array' },
+    }
+  );
+
+  RoihuUser.remoteMethod(
+    'calendar',
+    {
+      http: { path: '/:id/calendar', verb: 'get' },
+      accepts: [
+        { arg: 'id', type: 'number', required: 'true', http: { source: 'path' } },
+        { arg: 'lang', type: 'string' },
+      ],
+      returns: { arg: 'calendar', type: 'array' },
+      description: 'Get user calendar including mandatory events',
     }
   );
 }

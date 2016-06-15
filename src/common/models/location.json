@@ -183,6 +183,16 @@
       },
       "_selectable": false,
       "comments": "nimi"
+    },
+    "deleted": {
+      "type": "Boolean",
+      "required": true,
+      "default": false,
+      "postgresql": {
+        "columnName": "deleted",
+        "dataType": "boolean",
+        "nullable": "YES"
+      }
     }
   },
   "validations": [],
