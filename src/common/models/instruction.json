@@ -1,6 +1,6 @@
 {
   "name": "Instruction",
-  "base": "TranslateableModel",
+  "base": "PersistedModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true
@@ -46,23 +46,6 @@
       },
       "_selectable": false,
       "comments": "kategorian id"
-    },
-    "idFromSource": {
-      "type": "Number",
-      "required": true,
-      "length": null,
-      "precision": 32,
-      "scale": 0,
-      "postgresql": {
-        "columnName": "id_from_source",
-        "dataType": "integer",
-        "dataLength": null,
-        "dataPrecision": 32,
-        "dataScale": 0,
-        "nullable": "NO"
-      },
-      "_selectable": false,
-      "comments": "datan syottajan kasin kayttama id, eli dataa muuttaessa tunnistetaan aiempi tietue"
     },
     "description": {
       "type": "String",
@@ -128,6 +111,23 @@
       },
       "_selectable": false,
       "comments": "nimi guid"
+    },
+    "lang": {
+      "type": "String",
+      "required": true,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "lang",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "kielikoodi"
     }
   },
   "validations": [],
