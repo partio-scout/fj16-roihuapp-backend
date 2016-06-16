@@ -23,7 +23,7 @@ Set database settings as environment variable:
 Install all dependencies:
     `npm install`
 
-## Environment variaples to be able to use all features of the app:
+## Environment variables to be able to use all features of the app:
 
 ### User login with only email
 
