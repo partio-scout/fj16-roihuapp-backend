@@ -12,7 +12,7 @@ module.exports = function(InstructionCategory) {
       timestamp: timeNow.toISOString(),
       next_check: timeNext.toISOString(),
       language: language,
-      articles: [],
+      categories: [],
     };
 
     let andFilter = [
@@ -42,7 +42,7 @@ module.exports = function(InstructionCategory) {
         },
       },
     }).then(categories => {
-      response.articles.push(categories);
+      response.categories.push(categories);
       cb(null, response);
     });
 

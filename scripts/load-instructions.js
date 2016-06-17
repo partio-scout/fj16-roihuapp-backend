@@ -16,6 +16,10 @@ export function instructionsHandler(articles, categories) {
     const instructionCategories = [];
 
     _.forEach(articles, article => {
+      if (!article.field_category_in_participant_in.tid) return;
+      if (!article.title) return;
+      if (!article.language) return;
+
       instructions.push({
         instructionId: parseInt(article.nid),
         categoryId: parseInt(article.field_category_in_participant_in.tid),
@@ -28,6 +32,9 @@ export function instructionsHandler(articles, categories) {
     });
 
     _.forEach(categories, category => {
+      if (!category.name) return;
+      if (!category.field_language) return;
+
       instructionCategories.push({
         categoryId: parseInt(category.tid),
         name: category.name,
