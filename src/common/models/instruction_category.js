@@ -5,6 +5,8 @@ module.exports = function(InstructionCategory) {
   InstructionCategory.FindTranslations = function(language, afterDate, cb) {
     const findCategory = Promise.promisify(InstructionCategory.find, { context: InstructionCategory });
 
+    if (!language) language = 'EN';
+
     const timeNow = new Date();
     const timeNext = new Date(timeNow);
     timeNext.setHours(timeNow.getHours() + 1);
@@ -33,12 +35,17 @@ module.exports = function(InstructionCategory) {
       where: {
         lang: language,
       },
+      order: 'sortNo DESC',
+      fields: {
+        lang: false,
+      },
       include: {
         relation: 'instructions',
         scope: {
           where: {
             and: andFilter,
           },
+          fields: ['instructionId', 'categoryId', 'description', 'lastModified', 'sortNo', 'name'],
         },
       },
     }).then(categories => {

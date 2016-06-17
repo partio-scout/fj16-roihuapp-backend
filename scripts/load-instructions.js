@@ -4,14 +4,14 @@ import _ from 'lodash';
 import request from 'superagent';
 
 export function instructionsHandler(articles, categories) {
-  const createInstuction = Promise.promisify(app.models.Instruction.create, { context: app.models.Instruction });
-  const createInstuctionCategory = Promise.promisify(app.models.InstructionCategory.create, { context: app.models.InstructionCategory });
-  return new Promise((resolve, reject) => {
-    console.log('----- ARTICLES --------');
-    console.log(articles);
-    console.log('----- CATEGORIES ------');
-    console.log(categories);
+  const Instruction = app.models.Instruction;
+  const InstructionCategory = app.models.InstructionCategory;
+  const createInstuction = Promise.promisify(Instruction.create, { context: Instruction });
+  const createInstuctionCategory = Promise.promisify(InstructionCategory.create, { context: InstructionCategory });
+  const deleteInstruction = Promise.promisify(Instruction.destroyAll, { context: Instruction });
+  const deleteInstructionCategory = Promise.promisify(InstructionCategory.destroyAll, { context: InstructionCategory });
 
+  return new Promise((resolve, reject) => {
     const instructions = [];
     const instructionCategories = [];
 
@@ -44,21 +44,17 @@ export function instructionsHandler(articles, categories) {
       });
     });
 
-    console.log('-----------------');
-    console.log(instructions);
-    console.log('-----------------');
-    console.log(instructionCategories);
+    Promise.join(deleteInstruction(), deleteInstructionCategory(), () => {
 
-    Promise.join(
-      createInstuctionCategory(instructionCategories),
-      createInstuction(instructions),
-      (inst, cat) => {
-        resolve();
-      }).catch(err => {
-        console.log(err);
-        reject(err);
-      });
-
+      Promise.join(
+        createInstuctionCategory(instructionCategories),
+        createInstuction(instructions),
+        (inst, cat) => {
+          resolve();
+        }).catch(err => {
+          reject(err);
+        });
+    });
   });
 
   function getLangCode(langText) {
@@ -70,19 +66,19 @@ export function instructionsHandler(articles, categories) {
       englanti: 'EN',
       English: 'EN',
     };
-    console.log('LANGTEXT',langText);
+
     return langs[langText] || '';
   }
 }
 
 export function loadInstructions(handler) {
-  const baseurl = 'http://fj16-qa.jelastic.planeetta.net/api/infoarticles';
+  const baseurl = process.env.INSTRUCTIONS_SOURCE;
   return new Promise((resolve, reject) => {
-    request.get(`${baseurl}/participant`)
+    request.get(`${baseurl}/api/infoarticles/participant`)
     .end((err, articles) => {
       if (err) reject(err);
       else {
-        request.get(`${baseurl}/categories`)
+        request.get(`${baseurl}/api/infoarticles/categories`)
         .end((err, categories) => {
           if (err) reject(err);
           else {
