@@ -50,10 +50,9 @@
     "description": {
       "type": "String",
       "required": false,
-      "length": 255,
+      "length": null,
       "precision": null,
       "scale": null,
-      "defaultFn": "uuid",
       "postgresql": {
         "columnName": "description",
         "dataType": "character varying",
@@ -97,7 +96,6 @@
     "name": {
       "type": "String",
       "required": true,
-      "index": true,
       "length": 255,
       "precision": null,
       "scale": null,
