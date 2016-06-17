@@ -11,8 +11,6 @@ const createTranslation = Promise.promisify(TranslationModel.create, {context: T
  * Order of models matters!!!
  */
 const translateableList = [
-  'InstructionCategory',
-  'Instruction',
   'AchievementCategory',
   'Achievement',
   'LocationCategory',

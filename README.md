@@ -35,6 +35,10 @@ AWS_SES_PASS - aws-ses password
 SHAREPOINT_USER - sharepoint username
 SHAREPOINT_PSW  - sharepoint password
 
+### Instructions source endpoint
+
+INSTRUCTIONS_SOURCE - http://myurl.com
+
 ## Running the app
 
 Start server with `npm start`
