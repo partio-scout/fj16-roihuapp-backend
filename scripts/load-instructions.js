@@ -19,6 +19,7 @@ export function instructionsHandler(articles, categories) {
       if (!article.field_category_in_participant_in.tid) return;
       if (!article.title) return;
       if (!article.language) return;
+      if (article.body.format !== 'fj16_markdown') return;
 
       instructions.push({
         instructionId: parseInt(article.nid),
