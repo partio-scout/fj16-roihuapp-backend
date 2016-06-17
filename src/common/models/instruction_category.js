@@ -49,7 +49,7 @@ module.exports = function(InstructionCategory) {
         },
       },
     }).then(categories => {
-      response.categories.push(categories);
+      response.categories = categories;
       cb(null, response);
     });
 
