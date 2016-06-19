@@ -43,9 +43,9 @@ function testForLanguage(url, code, lang, done) {
   .query({ lang: lang })
   .expect(code)
   .expect(res => {
-    expect(res.body).to.deep.have.property('categories.[0].name', `${lang} TESTIKATEGORIA`);
-    expect(res.body).to.deep.have.property('categories.[0].instructions.[0].name', `${lang} TESTIOHJE`);
-    expect(res.body).to.deep.have.property('categories.[0].instructions.[0].description', `${lang} TESTIOHJEEN TEKSTI`);
+    expect(res.body).to.deep.have.property('categories.[0].title', `${lang} TESTIKATEGORIA`);
+    expect(res.body).to.deep.have.property('categories.[0].articles.[0].title', `${lang} TESTIOHJE`);
+    expect(res.body).to.deep.have.property('categories.[0].articles.[0].bodytext', `${lang} TESTIOHJEEN TEKSTI`);
   }).end(done);
 }
 

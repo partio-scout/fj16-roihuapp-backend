@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import _ from 'lodash';
 
 module.exports = function(InstructionCategory) {
 
@@ -49,7 +50,31 @@ module.exports = function(InstructionCategory) {
         },
       },
     }).then(categories => {
-      response.categories = categories;
+      // remap field names
+      let currentCategory;
+      _.forEach(categories, category => {
+        currentCategory = category.toJSON();
+        const instr = [];
+        _.forEach(currentCategory.instructions, instruction => {
+
+          instr.push({
+            id: instruction.instructionId,
+            title: instruction.name,
+            bodytext: instruction.description,
+            sort_no: instruction.sortNo,
+            last_modified: instruction.lastModified,
+          });
+        });
+
+        response.categories.push({
+          title: currentCategory.name,
+          id: currentCategory.categoryId,
+          sort_no: currentCategory.sortNo,
+          last_modified: currentCategory.lastModified,
+          articles: instr,
+        });
+      });
+
       cb(null, response);
     });
 
