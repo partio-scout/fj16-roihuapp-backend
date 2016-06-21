@@ -72,7 +72,10 @@ export function instructionsHandler(articles, categories) {
   }
 
   function replaceInvalidNewLines(text) {
-    return text.replace('\u2028', '\\u2028').replace('\u2029', '\\u2029');
+    return text.replace('\u2028', '')
+      .replace('\u2029', '')
+      .replace('\u000A', '')
+      .replace('\u000D', '');
   }
 }
 
