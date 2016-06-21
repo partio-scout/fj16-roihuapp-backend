@@ -27,7 +27,7 @@ export function instructionsHandler(articles, categories) {
         sortNo: parseInt(article['Sort number'].value),
         lastModified: article['Päivitetty'],
         name: article.title,
-        description: article.body.value,
+        description: replaceInvalidNewLines(article.body.value),
         lang: getLangCode(article.language),
       });
     });
@@ -69,6 +69,13 @@ export function instructionsHandler(articles, categories) {
     };
 
     return langs[langText] || '';
+  }
+
+  function replaceInvalidNewLines(text) {
+    return text.replace('\u2028', '')
+      .replace('\u2029', '')
+      .replace('\u000A', '')
+      .replace('\u000D', '');
   }
 }
 
