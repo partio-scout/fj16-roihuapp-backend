@@ -11,6 +11,7 @@ export function instructionsHandler(articles, categories) {
   const deleteInstruction = Promise.promisify(Instruction.destroyAll, { context: Instruction });
   const deleteInstructionCategory = Promise.promisify(InstructionCategory.destroyAll, { context: InstructionCategory });
 
+  const chars = [];
   return new Promise((resolve, reject) => {
     const instructions = [];
     const instructionCategories = [];
@@ -51,6 +52,7 @@ export function instructionsHandler(articles, categories) {
         createInstuctionCategory(instructionCategories),
         createInstuction(instructions),
         (inst, cat) => {
+          console.log(chars);
           resolve();
         }).catch(err => {
           reject(err);
@@ -72,10 +74,10 @@ export function instructionsHandler(articles, categories) {
   }
 
   function replaceInvalidNewLines(text) {
-    return text.replace('\u2028', '')
-      .replace('\u2029', '')
-      .replace('\u000A', '')
-      .replace('\u000D', '');
+    return text.replace(/\u2028/, '')
+      .replace(/\u2029/, '')
+      .replace(/\u000A/, '')
+      .replace(/\u000D/, '');
   }
 }
 
