@@ -74,10 +74,10 @@ export function instructionsHandler(articles, categories) {
   }
 
   function replaceInvalidNewLines(text) {
-    return text.replace(/\u2028/, '')
-      .replace(/\u2029/, '')
-      .replace(/\u000A/, '')
-      .replace(/\u000D/, '');
+    return text.replace(/\u2028/g, '')
+      .replace(/\u2029/g, '')
+      .replace(/\u000A/g, '')
+      .replace(/\u000D/g, '');
   }
 }
 
