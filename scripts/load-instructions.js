@@ -75,9 +75,7 @@ export function instructionsHandler(articles, categories) {
 
   function replaceInvalidNewLines(text) {
     return text.replace(/\u2028/g, '')
-      .replace(/\u2029/g, '')
-      .replace(/\u000A/g, '')
-      .replace(/\u000D/g, '');
+      .replace(/\u2029/g, '');
   }
 }
 
