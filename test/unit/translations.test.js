@@ -75,79 +75,100 @@ describe('Translations', () => {
   });
 
   describe('update', () => {
+    const updateFixture = {
+      name: {
+        FI: 'FI_LOC2',
+        SV: 'SV_LOC2',
+        EN: 'EN_LOC2',
+      },
+      description: {
+        FI: 'FI_DES2',
+        SV: 'SV_DES2',
+        EN: 'EN_DES2',
+      },
+      gridLatitude: 'X',
+      gridLongitude: '10',
+    };
+
     beforeEach(done => {
       resetDatabase()
-      .then(() => translationUtils.createTranslationsForModel('Location', {
-        name: {
-          FI: 'FI_LOC1',
-          SV: 'SV_LOC1',
-          EN: 'EN_LOC1',
+      .then(() => translationUtils.createTranslationsForModel('Location', [
+        {
+          name: {
+            FI: 'FI_LOC1',
+            SV: 'SV_LOC1',
+            EN: 'EN_LOC1',
+          },
+          description: {
+            FI: 'FI_DES1',
+            SV: 'SV_DES1',
+            EN: 'EN_DES1',
+          },
+          sortNo: 8888,
+          idFromSource: 8888,
+          categoryId: 10,
+          gpsLatitude: 62.343434,
+          gpsLongitude: 25.454545,
+          gridLatitude: 'H',
+          gridLongitude: '08',
         },
-        description: {
-          FI: 'FI_DES1',
-          SV: 'SV_DES1',
-          EN: 'EN_DES1',
+        {
+          name: {
+            FI: 'FI_LOC11',
+            SV: 'SV_LOC11',
+            EN: 'EN_LOC11',
+          },
+          description: {
+            FI: 'FI_DES11',
+            SV: 'SV_DES11',
+            EN: 'EN_DES11',
+          },
+          sortNo: 1234,
+          idFromSource: 1234,
+          categoryId: 11,
+          gpsLatitude: 1,
+          gpsLongitude: 1,
+          gridLatitude: 'x',
+          gridLongitude: '11',
         },
-        sortNo: 8888,
-        idFromSource: 8888,
-        categoryId: 10,
-        gpsLatitude: 62.343434,
-        gpsLongitude: 25.454545,
-        gridLatitude: 'H',
-        gridLongitude: '08',
-      })).nodeify(done);
+      ])).nodeify(done);
     });
 
     it('should update translations', done => {
-      translationUtils.updateTranslationsForModel('Location', {
-        name: {
-          FI: 'FI_LOC2',
-          SV: 'SV_LOC2',
-          EN: 'EN_LOC2',
-        },
-        description: {
-          FI: 'FI_DES2',
-          SV: 'SV_DES2',
-          EN: 'EN_DES2',
-        },
-        gridLatitude: 'X',
-        gridLongitude: '10',
-      })
+      translationUtils.updateTranslationsForModel('Location', updateFixture, { idFromSource: 8888 })
       .then(() => {
-        setTimeout(() => { // needs timeout because updateTranslationForModel function gives promise at wrong time
 
-          const test_FI = translationUtils.getTranslationsForModel(Location, 'FI', { where: { idFromSource: 8888 } })
-          .then(location => {
-            location = location[0];
-            console.log('testFI');
-            expect(location.name).to.equal('FI_LOC2');
-            expect(location.description).to.equal('FI_DES2');
+        const test_FI = translationUtils.getTranslationsForModel(Location, 'FI', { where: { idFromSource: 8888 } })
+        .then(location => {
+          location = location[0];
+          console.log('testFI');
+          expect(location.name).to.equal('FI_LOC2');
+          expect(location.description).to.equal('FI_DES2');
 
-            expect(location.gridLatitude).to.equal('X');
-            expect(location.gridLongitude).to.equal('10');
-            return Promise.resolve();
-          });
+          expect(location.gridLatitude).to.equal('X');
+          expect(location.gridLongitude).to.equal('10');
+          //return Promise.resolve();
+        });
 
-          const test_SV = translationUtils.getTranslationsForModel(Location, 'SV', { where: { idFromSource: 8888 } })
-          .then(location => {
-            location = location[0];
-            console.log('testSV');
-            expect(location.name).to.equal('SV_LOC2');
-            expect(location.description).to.equal('SV_DES2');
-            return Promise.resolve();
-          });
+        const test_SV = translationUtils.getTranslationsForModel(Location, 'SV', { where: { idFromSource: 8888 } })
+        .then(location => {
+          location = location[0];
+          console.log('testSV');
+          expect(location.name).to.equal('SV_LOC2');
+          expect(location.description).to.equal('SV_DES2');
+          //return Promise.resolve();
+        });
 
-          const test_EN = translationUtils.getTranslationsForModel(Location, 'EN', { where: { idFromSource: 8888 } })
-          .then(location => {
-            location = location[0];
-            console.log('testEN');
-            expect(location.name).to.equal('EN_LOC2');
-            expect(location.description).to.equal('EN_DES2');
-            return Promise.resolve();
-          });
+        const test_EN = translationUtils.getTranslationsForModel(Location, 'EN', { where: { idFromSource: 8888 } })
+        .then(location => {
+          location = location[0];
+          console.log('testEN');
+          expect(location.name).to.equal('EN_LOC2');
+          expect(location.description).to.equal('EN_DES2');
+          //return Promise.resolve();
+        });
 
-          return Promise.join(test_FI, test_SV, test_EN);
-        }, 500);
+        return Promise.join(test_FI, test_SV, test_EN);
       }).nodeify(done);
     });
   });
