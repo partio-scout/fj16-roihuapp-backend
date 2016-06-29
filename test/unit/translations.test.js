@@ -78,8 +78,8 @@ describe('Translations', () => {
     const updateFixture = {
       name: {
         FI: 'FI_LOC2',
-        SV: 'SV_LOC2',
         EN: 'EN_LOC2',
+        SV: 'SV_LOC2',
       },
       description: {
         FI: 'FI_DES2',
@@ -136,7 +136,11 @@ describe('Translations', () => {
 
     it('should update translations', done => {
       translationUtils.updateTranslationsForModel('Location', updateFixture, { idFromSource: 8888 })
-      .then(() => {
+      .then(x => {
+
+        translationUtils.getTranslation('FI', x[0].name).then(y => console.log('XT_FI:', y, 'guid:', x[0].name));
+        translationUtils.getTranslation('SV', x[0].name).then(y => console.log('XT_SV:', y, 'guid:', x[0].name));
+        translationUtils.getTranslation('EN', x[0].name).then(y => console.log('XT_EN:', y, 'guid:', x[0].name));
 
         const test_FI = translationUtils.getTranslationsForModel(Location, 'FI', { where: { idFromSource: 8888 } })
         .then(location => {

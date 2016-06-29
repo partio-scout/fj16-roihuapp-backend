@@ -174,35 +174,37 @@ export function updateTranslationsForModel(modelName, data, where) {
   const TranslationModel = app.models.Translation;
   const findTranslation = Promise.promisify(TranslationModel.find, { context: TranslationModel });
 
-  // Palauuttaa promisen väärään aikaan, eli siis silloin kun on vielä joitakin operaatioita kesken.
-  // Muuten toimii hyvin
-  const allFieldsDone = [];
-  return new Promise((resolve, reject) => {
-    findModel({ where: where })
-    .then(models => {
-      // should be only one instance, but use foreach just-in-case
-      _.forEach(models, instance => {
-        _.forEach(instance.__data, (value, key) => {
-          // current field is uuid and data has possible translations for it
-          if (isUUID(value) && ( typeof data[key] === 'object' )) {
-            findTranslation({ where: { guId: value } })
-            .each(translationObj => {
-              if (data[key][translationObj.lang]) {
-                translationObj.text = data[key][translationObj.lang];
-                translationObj.save();
-              }
-            });
-          } else if (data[key] && (data[key] !== instance[key])) {
-            instance[key] = data[key];
-            instance.save();  // saving here is propably not the best for DB performance
-          }
-        });
+  return findModel({ where: where })
+    .each(instance => {
+      const translatedFields = _.pickBy(instance.__data, (value, key) => isUUID(value) && isTranslation(data[key]));
+      const nonTranslatedFields = _.pickBy(instance.__data, (value, key) => !isUUID(value));
+
+      const translationSavePromise = Promise.all(_.map(translatedFields, (value, key) =>
+        findTranslation({ where: { guId: value } })
+          .map(translationObj => Promise.fromCallback(callback => {
+            const translatedValue = data[key][translationObj.lang];
+
+            if (translatedValue) {
+              const tt = translationObj.text;
+              translationObj.text = translatedValue;
+              translationObj.save(callback);
+              console.log('TOBJ:', translationObj, 'TVAL:', tt);
+            } else {
+              callback();
+            }
+          }))
+      ));
+      const nonTranslatedFieldsSavePromise = Promise.fromCallback(callback => {
+        _.forEach(nonTranslatedFields, (value, key) => instance[key] = data[key] || instance[key]);
+        instance.save(callback);
       });
-    })
-    .then(() => {
-      Promise.all(allFieldsDone).then(() => resolve());
+
+      return Promise.join(translationSavePromise, nonTranslatedFieldsSavePromise);
     });
-  });
+}
+
+function isTranslation(value) {
+  return typeof(value) === 'object';
 }
 
 /*
