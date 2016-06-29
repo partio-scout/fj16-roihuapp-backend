@@ -71,7 +71,7 @@ module.exports = function(InstructionCategory) {
           id: currentCategory.categoryId,
           sort_no: currentCategory.sortNo,
           last_modified: currentCategory.lastModified,
-          articles: instr,
+          articles: [instr],
         });
       });
 
