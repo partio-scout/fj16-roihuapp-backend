@@ -136,40 +136,33 @@ describe('Translations', () => {
 
     it('should update translations', done => {
       translationUtils.updateTranslationsForModel('Location', updateFixture, { idFromSource: 8888 })
-      .then(x => {
-
-        translationUtils.getTranslation('FI', x[0].name).then(y => console.log('XT_FI:', y, 'guid:', x[0].name));
-        translationUtils.getTranslation('SV', x[0].name).then(y => console.log('XT_SV:', y, 'guid:', x[0].name));
-        translationUtils.getTranslation('EN', x[0].name).then(y => console.log('XT_EN:', y, 'guid:', x[0].name));
+      .then(() => {
 
         const test_FI = translationUtils.getTranslationsForModel(Location, 'FI', { where: { idFromSource: 8888 } })
         .then(location => {
           location = location[0];
-          console.log('testFI');
           expect(location.name).to.equal('FI_LOC2');
           expect(location.description).to.equal('FI_DES2');
 
           expect(location.gridLatitude).to.equal('X');
           expect(location.gridLongitude).to.equal('10');
-          //return Promise.resolve();
+          return Promise.resolve();
         });
 
         const test_SV = translationUtils.getTranslationsForModel(Location, 'SV', { where: { idFromSource: 8888 } })
         .then(location => {
           location = location[0];
-          console.log('testSV');
           expect(location.name).to.equal('SV_LOC2');
           expect(location.description).to.equal('SV_DES2');
-          //return Promise.resolve();
+          return Promise.resolve();
         });
 
         const test_EN = translationUtils.getTranslationsForModel(Location, 'EN', { where: { idFromSource: 8888 } })
         .then(location => {
           location = location[0];
-          console.log('testEN');
           expect(location.name).to.equal('EN_LOC2');
           expect(location.description).to.equal('EN_DES2');
-          //return Promise.resolve();
+          return Promise.resolve();
         });
 
         return Promise.join(test_FI, test_SV, test_EN);
