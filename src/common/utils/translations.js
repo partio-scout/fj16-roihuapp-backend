@@ -166,34 +166,46 @@ export function createTranslationsForModel(modelName, jsonData) {
 }
 
 /*
+  Update text of single translation
+*/
+export function updateTranslation(lang, guId, newText) {
+  return getTranslation(lang, guId)
+    .then(translation => Promise.fromCallback(callback => {
+      translation.text = newText;
+      translation.save(callback);
+    }));
+}
+
+/*
+  Update text of multiple translations of single field
+*/
+function updateTranslationsForSingleField(fieldGuid, newValues) {
+  return Promise.all(_.map(newValues, (newText, lang) => updateTranslation(lang, fieldGuid, newText)));
+}
+
+/*
   Update all fields for single model instance
 */
 export function updateTranslationsForModel(modelName, data, where) {
   const model = app.models[modelName];
   const findModel = Promise.promisify(model.find, { context: model });
-  const TranslationModel = app.models.Translation;
-  const findTranslation = Promise.promisify(TranslationModel.find, { context: TranslationModel });
 
   return findModel({ where: where })
     .each(instance => {
       const translatedFields = _.pickBy(instance.__data, (value, key) => isUUID(value) && isTranslation(data[key]));
       const nonTranslatedFields = _.pickBy(instance.__data, (value, key) => !isUUID(value));
 
-      const translationSavePromise = Promise.all(_.map(translatedFields, (value, key) =>
-        findTranslation({ where: { guId: value } })
-          .map(translationObj => Promise.fromCallback(callback => {
-            const translatedValue = data[key][translationObj.lang];
+      // Promise updates for translated fields
+      const translationSavePromise = Promise.all(_.map(translatedFields, (guId, fieldName) => {
+        const newValues = data[fieldName];
+        if (newValues) {
+          return updateTranslationsForSingleField(guId, newValues);
+        } else {
+          return Promise.resolve();
+        }
+      }));
 
-            if (translatedValue) {
-              const tt = translationObj.text;
-              translationObj.text = translatedValue;
-              translationObj.save(callback);
-              console.log('TOBJ:', translationObj, 'TVAL:', tt);
-            } else {
-              callback();
-            }
-          }))
-      ));
+      // Promise updates for nontranslated fields
       const nonTranslatedFieldsSavePromise = Promise.fromCallback(callback => {
         _.forEach(nonTranslatedFields, (value, key) => instance[key] = data[key] || instance[key]);
         instance.save(callback);
