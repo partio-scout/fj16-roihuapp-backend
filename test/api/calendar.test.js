@@ -123,6 +123,22 @@ describe('Calendar', () => {
         .expect(401);
       });
     });
+
+    it('should not allow to get all users in event', () => {
+      testUtils.withLoggedInUser('letmein', 'letmein', token => {
+        request(app).get(`/api/CalendarEvents/${evtId}/usersInEvent`)
+        .query({ access_token: token.id })
+        .expect(401);
+      });
+    });
+
+    it('should not allow to get single user in event', () => {
+      testUtils.withLoggedInUser('letmein', 'letmein', token => {
+        request(app).get(`/api/CalendarEvents/${evtId}/usersInEvent/${User2Id}`)
+        .query({ access_token: token.id })
+        .expect(401);
+      });
+    });
   });
 
   describe('search calendarEvents', () => {
