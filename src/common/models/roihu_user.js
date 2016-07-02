@@ -268,30 +268,33 @@ export default function(RoihuUser) {
       })
       .then(u => {
         User = u.toJSON();
+        if (!User.subcamp || !User.ageGroup || !User.wave) return [];
+        else {
 
-        return translationUtils.getTranslationsForModel(CalendarEvent, language, {
-          where: {
-            and: [
-              { status: 'mandatory' },
-              { or: [
-                { subcamp: { like: `\%${User.subcamp}\%` } },
-                { subcamp: '' },
-              ] },
-              { or: [
-                { ageGroups: { like: `\%${getFirstBeforeSeparator(User.ageGroup, '/')}\%` } },
-                { ageGroups: '' },
-              ] },
-              { or: [
-                { wave: { like: `\%${User.wave}\%` } },
-                { wave: '' },
-              ] },
-            ],
-          },
-          fields: {
-            sharepointId: false,
-            source: false,
-          },
-        });
+          return translationUtils.getTranslationsForModel(CalendarEvent, language, {
+            where: {
+              and: [
+                { status: 'mandatory' },
+                { or: [
+                  { subcamp: { like: `\%${User.subcamp}\%` } },
+                  { subcamp: '' },
+                ] },
+                { or: [
+                  { ageGroups: { like: `\%${getFirstBeforeSeparator(User.ageGroup, '/')}\%` } },
+                  { ageGroups: '' },
+                ] },
+                { or: [
+                  { wave: { like: `\%${User.wave}\%` } },
+                  { wave: '' },
+                ] },
+              ],
+            },
+            fields: {
+              sharepointId: false,
+              source: false,
+            },
+          });
+        }
       })
       .then(mandatoryEvents => {
         const timeNow = new Date();
