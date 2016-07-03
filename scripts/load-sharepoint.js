@@ -2,6 +2,7 @@ import app from '../src/server/server';
 import Promise from 'bluebird';
 import _ from 'lodash';
 import * as translationUtils from '../src/common/utils/translations';
+import request from 'superagent';
 
 export function locationsHandler(err, data) {
   // callback is used for running this in tests
@@ -247,41 +248,14 @@ function selfOrEmpty(val) {
 }
 
 export function readSharepointList(listName, handler) {
-  return new Promise((resolve, reject) => {
-    try {
-      const sharepoint = require('sharepointconnector')({
-        username : process.env.SHAREPOINT_USER,
-        password : process.env.SHAREPOINT_PSW,
-        // Authentication type - current valid values: ntlm, basic, online,onlinesaml
-        type : 'online',
-        url : 'https://partio.sharepoint.com',
-        context : 'roihu/tyokalut',
-      });
+  const SPProxyUrl = process.env.SP_PROXY_URL;
 
-      sharepoint.login(err => {
-        if (err) {
-          handler(err, null);
-        } else {
-
-          sharepoint.listItems.list(listName, (err, data) => {
-            handler(err, data).then(x => resolve(x));
-          });
-
-          /*
-          // list all lists
-          sharepoint.lists.list((err, res) => {
-            _.forEach(res, x => {
-              console.log(x.Title);
-              console.log(x.Description);
-              console.log('-------------');
-            });
-          });*/
-        }
-      });
-    } catch (e) {
-      // missing credentials will throw catchable error
-      handler(e, null);
-    }
+  return new Promise(resolve => {
+    request.post(`${SPProxyUrl}/readsharepointlist/${listName}`)
+    .send({ authToken: process.env.ROIHUAPP_SP_TOKEN })
+    .end((err, data) => {
+      handler(err, data.body).then(() => resolve());
+    });
   });
 }
 
