@@ -8,12 +8,10 @@ module.exports = function(InstructionCategory) {
 
     if (!language) language = 'EN';
 
-    const timeNow = new Date();
-    const timeNext = new Date(timeNow);
-    timeNext.setHours(timeNow.getHours() + 1);
     const response = {
-      timestamp: timeNow.toISOString(),
-      next_check: timeNext.toISOString(),
+      timestamp: '2016-07-03T06:00:00.000Z',
+      next_check: '2016-07-03T06:00:00.000Z',
+      ttl: 3600,
       language: language,
       categories: [],
     };
