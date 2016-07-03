@@ -249,12 +249,13 @@ function selfOrEmpty(val) {
 
 export function readSharepointList(listName, handler) {
   const SPProxyUrl = process.env.SP_PROXY_URL;
+  return new Promise((resolve, reject) => {
 
-  return new Promise(resolve => {
     request.post(`${SPProxyUrl}/readsharepointlist/${listName}`)
     .send({ authToken: process.env.ROIHUAPP_SP_TOKEN })
     .end((err, data) => {
-      handler(err, data.body).then(() => resolve());
+      console.log(data.body);
+      handler(err, data.body);
     });
   });
 }
