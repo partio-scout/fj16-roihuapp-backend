@@ -259,11 +259,11 @@ export function readSharepointList(listName, handler) {
     .end((err, data) => {
       if (err) {
         handler(err, null)
-          .then(() => resolve())
+          .then(x => resolve(x))
           .catch(err => reject(err));
       } else {
         handler(err, data.body)
-          .then(() => resolve())
+          .then(x => resolve(x))
           .catch(err => reject(err));
       }
     });
