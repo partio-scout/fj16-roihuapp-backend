@@ -252,10 +252,20 @@ export function readSharepointList(listName, handler) {
   return new Promise((resolve, reject) => {
 
     request.post(`${SPProxyUrl}/readsharepointlist/${listName}`)
-    .send({ authToken: process.env.ROIHUAPP_SP_TOKEN })
+    .send({
+      username: process.env.SHAREPOINT_USER,
+      password: process.env.SHAREPOINT_PSW,
+    })
     .end((err, data) => {
-      console.log(data.body);
-      handler(err, data.body);
+      if (err) {
+        handler(err, null)
+          .then(() => resolve())
+          .catch(err => reject(err));
+      } else {
+        handler(err, data.body)
+          .then(() => resolve())
+          .catch(err => reject(err));
+      }
     });
   });
 }
@@ -270,8 +280,10 @@ if (require.main === module) {
   } else {
     // events depend on locations data
     readSharepointList('Paikat', locationsHandler)
-    .then(() => {
-      readSharepointList('Leiriaikataulu', eventsHandler);
+    .then(() => readSharepointList('Leiriaikataulu', eventsHandler))
+    .catch(err => {
+      console.log('Sharepoint loader error');
+      console.error(err);
     });
   }
 }
