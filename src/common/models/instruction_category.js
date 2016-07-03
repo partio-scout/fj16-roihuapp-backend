@@ -9,8 +9,8 @@ module.exports = function(InstructionCategory) {
     if (!language) language = 'EN';
 
     const response = {
-      timestamp: "2016-07-03T06:00:00.000Z",
-      next_check: "2016-07-03T06:00:00.000Z",
+      timestamp: '2016-07-03T06:00:00.000Z',
+      next_check: '2016-07-03T06:00:00.000Z',
       ttl: 3600,
       language: language,
       categories: [],
