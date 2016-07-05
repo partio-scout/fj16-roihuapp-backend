@@ -13,8 +13,7 @@
     "seed-database": "babel-node scripts/seed-database.js",
     "create-translations": "babel-node scripts/create-translations.js",
     "load-sharepoint": "babel-node scripts/load-sharepoint.js",
-    "load-instructions": "babel-node scripts/load-instructions.js",
-    "postinstall": "npm run seed-database && npm run create-translations && npm run load-sharepoint && npm run load-instructions"
+    "load-instructions": "babel-node scripts/load-instructions.js"
   },
   "dependencies": {
     "babel-cli": "^6.6.5",
