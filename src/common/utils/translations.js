@@ -166,43 +166,57 @@ export function createTranslationsForModel(modelName, jsonData) {
 }
 
 /*
+  Update text of single translation
+*/
+export function updateTranslation(lang, guId, newText) {
+  return getTranslation(lang, guId)
+    .then(translation => Promise.fromCallback(callback => {
+      translation.text = newText;
+      translation.save(callback);
+    }));
+}
+
+/*
+  Update text of multiple translations of single field
+*/
+function updateTranslationsForSingleField(fieldGuid, newValues) {
+  return Promise.all(_.map(newValues, (newText, lang) => updateTranslation(lang, fieldGuid, newText)));
+}
+
+/*
   Update all fields for single model instance
 */
 export function updateTranslationsForModel(modelName, data, where) {
   const model = app.models[modelName];
   const findModel = Promise.promisify(model.find, { context: model });
-  const TranslationModel = app.models.Translation;
-  const findTranslation = Promise.promisify(TranslationModel.find, { context: TranslationModel });
 
-  // Palauuttaa promisen väärään aikaan, eli siis silloin kun on vielä joitakin operaatioita kesken.
-  // Muuten toimii hyvin
-  const allFieldsDone = [];
-  return new Promise((resolve, reject) => {
-    findModel({ where: where })
-    .then(models => {
-      // should be only one instance, but use foreach just-in-case
-      _.forEach(models, instance => {
-        _.forEach(instance.__data, (value, key) => {
-          // current field is uuid and data has possible translations for it
-          if (isUUID(value) && ( typeof data[key] === 'object' )) {
-            findTranslation({ where: { guId: value } })
-            .each(translationObj => {
-              if (data[key][translationObj.lang]) {
-                translationObj.text = data[key][translationObj.lang];
-                translationObj.save();
-              }
-            });
-          } else if (data[key] && (data[key] !== instance[key])) {
-            instance[key] = data[key];
-            instance.save();  // saving here is propably not the best for DB performance
-          }
-        });
+  return findModel({ where: where })
+    .each(instance => {
+      const translatedFields = _.pickBy(instance.__data, (value, key) => isUUID(value) && isTranslation(data[key]));
+      const nonTranslatedFields = _.pickBy(instance.__data, (value, key) => !isUUID(value));
+
+      // Promise updates for translated fields
+      const translationSavePromise = Promise.all(_.map(translatedFields, (guId, fieldName) => {
+        const newValues = data[fieldName];
+        if (newValues) {
+          return updateTranslationsForSingleField(guId, newValues);
+        } else {
+          return Promise.resolve();
+        }
+      }));
+
+      // Promise updates for nontranslated fields
+      const nonTranslatedFieldsSavePromise = Promise.fromCallback(callback => {
+        _.forEach(nonTranslatedFields, (value, key) => instance[key] = data[key] || instance[key]);
+        instance.save(callback);
       });
-    })
-    .then(() => {
-      Promise.all(allFieldsDone).then(() => resolve());
+
+      return Promise.join(translationSavePromise, nonTranslatedFieldsSavePromise);
     });
-  });
+}
+
+function isTranslation(value) {
+  return typeof(value) === 'object';
 }
 
 /*

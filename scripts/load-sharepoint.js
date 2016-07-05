@@ -2,6 +2,7 @@ import app from '../src/server/server';
 import Promise from 'bluebird';
 import _ from 'lodash';
 import * as translationUtils from '../src/common/utils/translations';
+import request from 'superagent';
 
 export function locationsHandler(err, data) {
   // callback is used for running this in tests
@@ -70,15 +71,15 @@ export function locationsHandler(err, data) {
         localTranslationsDone.push(lt);
       });
 
-    Promise.all(localTranslationsDone)
-    .then(() => Promise.join(
+      Promise.all(localTranslationsDone)
+      .then(() => Promise.join(
         //translationUtils.CRUDModels('LocationCategory', categories,  true),
         translationUtils.createTranslationsForModel('LocationCategory', categories),
         translationUtils.CRUDModels('Location', locations, 'idFromSource', false),
         (cr, loc) => {
           destroyAllByNameGuid('LocationCategory', cr);
-      })
-      .then(() => resolve()));
+        })
+        .then(() => resolve()));
 
     }
   });
@@ -106,8 +107,6 @@ export function locationsHandler(err, data) {
 export function eventsHandler(err, data) {
   const Location = app.models.Location;
   const findLocation = Promise.promisify(Location.findOne, { context: Location });
-  const CalendarEvent = app.models.CalendarEvent;
-  const findCalendarEvents = Promise.promisify(CalendarEvent.find, { context: CalendarEvent });
 
   return new Promise((resolve, reject) => {
     if (err) {
@@ -176,38 +175,26 @@ export function eventsHandler(err, data) {
             });
           })
           .catch(() => {
-            // location does not exist
-            return;
+            // just catch the error
           });
           promises.push(locPromise);
         });
 
         Promise.all(promises)
-        .then(() => {
-          // get current events from sharepoint to be deleted after creating the new ones
-          let currentEventIds;
-          findCalendarEvents({ where: { source: 1 }, fields: { eventId: true } })
-          .then(currentSPEvents => {
-            currentEventIds = currentSPEvents.map(evt => {
-              return evt.eventId;
-            });
-            // update events
-            return translationUtils.CRUDModels('CalendarEvent', events, 'sharepointId', false, { where: {
-              and: [
-                { deleted: false },
-                { source: 1 },
-              ]
-            } });
-          });
-        });
+        .then(() =>
+          translationUtils.CRUDModels('CalendarEvent', events, 'sharepointId', false, { where: {
+            and: [
+              { deleted: false },
+              { source: 1 },
+            ],
+          } })
+        );
       });
     }
   });
 
   function getAdditionalInfo(infodata, infoId) {
-    return infodata.find(element => {
-      return (element.Id == infoId) ? true : false;
-    });
+    return infodata.find(element => (element.Id == infoId) ? true : false);
   }
 
   function joinFieldArray(field, separator) {
@@ -261,41 +248,25 @@ function selfOrEmpty(val) {
 }
 
 export function readSharepointList(listName, handler) {
+  const SPProxyUrl = process.env.SP_PROXY_URL;
   return new Promise((resolve, reject) => {
-    try {
-      const sharepoint = require('sharepointconnector')({
-        username : process.env.SHAREPOINT_USER,
-        password : process.env.SHAREPOINT_PSW,
-        // Authentication type - current valid values: ntlm, basic, online,onlinesaml 
-        type : 'online',
-        url : 'https://partio.sharepoint.com',
-        context : 'roihu/tyokalut',
-      });
 
-      sharepoint.login(function(err){
-        if (err) {
-          handler(err, null);
-        } else {
-
-          sharepoint.listItems.list(listName, (err, data) => {
-            handler(err, data).then(x => resolve(x));
-          });
-
-          /*
-          // list all lists
-          sharepoint.lists.list((err, res) => {
-            _.forEach(res, x => {
-              console.log(x.Title);
-              console.log(x.Description);
-              console.log('-------------');
-            });
-          });*/
-        }
-      });
-    } catch (e) {
-      // missing credentials will throw catchable error
-      handler(e, null);
-    }
+    request.post(`${SPProxyUrl}/readsharepointlist/${listName}`)
+    .send({
+      username: process.env.SHAREPOINT_USER,
+      password: process.env.SHAREPOINT_PSW,
+    })
+    .end((err, data) => {
+      if (err) {
+        handler(err, null)
+          .then(x => resolve(x))
+          .catch(err => reject(err));
+      } else {
+        handler(err, data.body)
+          .then(x => resolve(x))
+          .catch(err => reject(err));
+      }
+    });
   });
 }
 
@@ -304,13 +275,15 @@ if (require.main === module) {
     if (process.argv[2] == 'locations') {
       readSharepointList('Paikat', locationsHandler);
     } else if (process.argv[2] == 'events') {
-      readSharepointList('Leiriaikataulu', eventsHandler); 
+      readSharepointList('Leiriaikataulu', eventsHandler);
     }
   } else {
     // events depend on locations data
     readSharepointList('Paikat', locationsHandler)
-    .then(() => {
-      readSharepointList('Leiriaikataulu', eventsHandler);
+    .then(() => readSharepointList('Leiriaikataulu', eventsHandler))
+    .catch(err => {
+      console.log('Sharepoint loader error');
+      console.error(err);
     });
   }
 }

@@ -5,61 +5,59 @@ import _ from 'lodash';
 import uuid from 'uuid';
 
 const TranslationModel = app.models.Translation;
-const createTranslation = Promise.promisify(TranslationModel.create, {context: TranslationModel});
+const createTranslation = Promise.promisify(TranslationModel.create, { context: TranslationModel });
 
 /* Put here model names what you want to translate automatically
  * Order of models matters!!!
  */
 const translateableList = [
-  'InstructionCategory',
-  'Instruction',
   'AchievementCategory',
   'Achievement',
   'LocationCategory',
-  'Location'
+  'Location',
 ];
 
 function getTranslations(modelName) {
-	return Promise.try(() => require(path.resolve(__dirname, `./translations_to_create/${modelName}`)));
+  return Promise.try(() => require(path.resolve(__dirname, `./translations_to_create/${modelName}`)));
 }
 
 function createTranslationsForModel(modelName) {
-	const model = app.models[modelName];
-	const createModel = Promise.promisify(model.create, {context: model});
+  const model = app.models[modelName];
+  const createModel = Promise.promisify(model.create, { context: model });
 
-	return getTranslations(modelName)
-		.then(modelData => {
-				_.forEach(modelData, function(fixture) {
-					var modelJSON = {
-            "lastModified": Date.now(),   // automatically set lastModified
-          };
-					var translations = [];
+  return getTranslations(modelName)
+    .then(modelData => {
+      _.forEach(modelData, fixture => {
+        const modelJSON = {
+          'lastModified': Date.now(),   // automatically set lastModified
+        };
+        const translations = [];
 
-					_.forEach(fixture, function(value, key) {
-						if(typeof value === 'object') {
-							// generate model JSON with uuids in case of translation
-							var textUuid = uuid.v1();
-							modelJSON[key] = textUuid;
+        _.forEach(fixture, (value, key) => {
+          if (typeof value === 'object') {
+            // generate model JSON with uuids in case of translation
+            const textUuid = uuid.v1();
+            modelJSON[key] = textUuid;
 
-							// add translations too
-							_.forEach(value, function(text, lang) {
-								translations.push({
-									"lang": lang,
-									"text": text,
-									"guId": textUuid,
-								});
-							});
-						} else {
-							modelJSON[key] = value;
-						}
-						
-					});
-					createModel(modelJSON)
-						.then(createTranslation(translations))
-					  .catch(err => console.error(`Failed to create translations for model ${ modelName }: `, err));
-				});
+            // add translations too
+            _.forEach(value, (text, lang) => {
+              translations.push({
+                'lang': lang,
+                'text': text,
+                'guId': textUuid,
+              });
+            });
+          } else {
+            modelJSON[key] = value;
+          }
 
-		});
+        });
+        createModel(modelJSON)
+          .then(createTranslation(translations))
+          .catch(err => console.error(`Failed to create translations for model ${ modelName }: `, err));
+      });
+
+    });
 }
 
 // Pikkukikka joka suorittaa promiseReturningFunctionin peräkkäin jokaiselle values-listan jäsenelle niin,
@@ -71,10 +69,10 @@ function forAll(values, promiseReturningFunction) {
 }
 
 export function createTranslations() {
-	return forAll(translateableList, createTranslationsForModel);
+  return forAll(translateableList, createTranslationsForModel);
 }
 
 if (require.main === module) {
-	createTranslations()
-		.catch(err => console.error('Failed to create translations: ', err));
+  createTranslations()
+    .catch(err => console.error('Failed to create translations: ', err));
 }

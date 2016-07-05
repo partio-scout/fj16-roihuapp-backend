@@ -23,7 +23,7 @@ Set database settings as environment variable:
 Install all dependencies:
     `npm install`
 
-## Environment variaples to be able to use all features of the app:
+## Environment variables to be able to use all features of the app:
 
 ### User login with only email
 
@@ -34,6 +34,10 @@ AWS_SES_PASS - aws-ses password
 
 SHAREPOINT_USER - sharepoint username
 SHAREPOINT_PSW  - sharepoint password
+
+### Instructions source endpoint
+
+INSTRUCTIONS_SOURCE - http://myurl.com
 
 ## Running the app
 

@@ -1,85 +1,80 @@
-import app from '../../server/server';
 import Promise from 'bluebird';
-import * as translationUtils from '../utils/translations';
 import _ from 'lodash';
-import * as errorUtils from '../utils/errors';
 
 module.exports = function(InstructionCategory) {
 
   InstructionCategory.FindTranslations = function(language, afterDate, cb) {
-    const Instruction = app.models.Instruction;
+    const findCategory = Promise.promisify(InstructionCategory.find, { context: InstructionCategory });
 
-    translationUtils.getLangIfNotExists(language)
-      .then(lang => {
+    if (!language) language = 'EN';
 
-        const timeNow = new Date();
-        const timeNext = new Date(timeNow);
-        timeNext.setHours(timeNow.getHours() + 1);
-        const response = {
-          'timestamp': timeNow.toISOString(),
-          'next_check': timeNext.toISOString(),
-          'language': lang,
-        };
-        const rCategories = [];
+    const response = {
+      timestamp: '2016-07-03T06:00:00.000Z',
+      next_check: '2016-07-03T06:00:00.000Z',
+      ttl: 3600,
+      language: language,
+      categories: [],
+    };
 
-        translationUtils.getTranslationsForModel(InstructionCategory, lang)
-          .then(categoryTranslations => {
-            const promises = [];
-            _.forEach(categoryTranslations, category => {
-              const catArticles = [];
-              let articleFilter = { where: { categoryId: category.idFromSource } };
+    let andFilter = [
+      { lang: language },
+    ];
+    if (afterDate) {
+      // Five minustes "safezone" for filtering
+      const afterDate_5min_before = new Date(afterDate);
+      afterDate_5min_before.setMinutes(afterDate_5min_before.getMinutes() - 5);
 
-              if (afterDate) {
-                // Five minustes "safezone" for filtering
-                const afterDate_5min_before = new Date(afterDate);
-                afterDate_5min_before.setMinutes(afterDate_5min_before.getMinutes() - 5);
+      andFilter = [
+        { lang: language },
+        { lastModified: afterDate_5min_before },
+      ];
+    }
 
-                articleFilter = { where: {
-                  and: [
-                    /*{ lastModified: { gt: afterDate } },*/
-                    { lastModified: { gt: afterDate_5min_before } },
-                    { categoryId: category.idFromSource },
-                  ],
-                } };
-              }
+    findCategory({
+      where: {
+        lang: language,
+      },
+      order: 'sortNo DESC',
+      fields: {
+        lang: false,
+      },
+      include: {
+        relation: 'instructions',
+        scope: {
+          where: {
+            and: andFilter,
+          },
+          fields: ['instructionId', 'categoryId', 'description', 'lastModified', 'sortNo', 'name'],
+        },
+      },
+    }).then(categories => {
+      // remap field names
+      let currentCategory;
+      _.forEach(categories, category => {
+        currentCategory = category.toJSON();
+        const instr = [];
+        _.forEach(currentCategory.instructions, instruction => {
 
-              const instructionPromise = translationUtils.getTranslationsForModel(Instruction, lang, articleFilter)
-                .then(instructionTranslations => {
-                  const catInstr = [];
-                  _.forEach(instructionTranslations, instruct => {
-                    catInstr.push({             // add single instruction
-                      'title': instruct.name,
-                      'bodytext': instruct.description,
-                      'sort_no': instruct.sortNo,
-                      'last_modified': instruct.lastModified,
-                      'id': instruct.instructionId,
-                    });
-                  });
-                  catArticles.push(catInstr);   // add instruction group to category
-
-                })
-                .then(rCategories.push({
-                  'title': category.name,
-                  'id': category.categoryId,
-                  'sort_no': category.sortNo,
-                  'last_modified': category.lastModified,
-                  'articles': catArticles,
-                }))
-                .catch(err => {
-                  cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
-                  return;
-                });
-
-              promises.push(instructionPromise);
-            });
-
-            Promise.all(promises)
-              .then(() => {
-                response.categories = rCategories;
-                cb(null, response);
-              });
+          instr.push({
+            id: instruction.instructionId,
+            title: instruction.name,
+            bodytext: instruction.description,
+            sort_no: instruction.sortNo,
+            last_modified: instruction.lastModified,
           });
+        });
+
+        response.categories.push({
+          title: currentCategory.name,
+          id: currentCategory.categoryId,
+          sort_no: currentCategory.sortNo,
+          last_modified: currentCategory.lastModified,
+          articles: [instr],
+        });
       });
+
+      cb(null, response);
+    });
 
   };
 

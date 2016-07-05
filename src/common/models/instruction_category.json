@@ -1,13 +1,93 @@
 {
   "name": "InstructionCategory",
-  "base": "BaseCategory",
-  "idInjection": true,
+  "base": "PersistedModel",
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
   "postgresql": {
     "schema": "public",
     "table": "instruction_category"
+  },
+  "properties": {
+    "categoryId": {
+      "type": "Number",
+      "id": true,
+      "generated": true,
+      "required": false,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "category_id",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "YES"
+      },
+      "_selectable": false,
+      "comments": "id"
+    },
+    "lastModified": {
+      "type": "Date",
+      "required": true,
+      "postgresql": {
+        "columnName": "last_modified",
+        "dataType": "timestamp",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      }
+    },
+    "sortNo": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "sort_no",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "name": {
+      "type": "String",
+      "required": true,
+      "index": true,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "name",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "nimi"
+    },
+    "lang": {
+      "type": "String",
+      "required": true,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "lang",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "NO"
+      },
+      "_selectable": false,
+      "comments": "kielikoodi"
+    }
   },
   "validations": [],
   "relations": {
@@ -18,7 +98,18 @@
     }
   },
   "acls": [
-
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
   ],
   "methods": {}
 }
