@@ -23,6 +23,8 @@ describe('Achievement', () => {
       request(app).put(`/api/RoihuUsers/1/achievements/rel/1`)
       .expect(401);
     });
+
+    it('should get achievement translations', () => testUtils.get('/api/AchievementCategories/Translations').expect(200));
   });
 
   describe('Authenticated user', () => {

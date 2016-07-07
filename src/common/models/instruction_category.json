@@ -105,10 +105,11 @@
       "permission": "DENY"
     },
     {
-      "accessType": "READ",
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "ALLOW"
+      "permission": "ALLOW",
+      "property": "FindTranslations"
     }
   ],
   "methods": {}
