@@ -119,6 +119,20 @@ describe('RoihuUser', () => {
     it('find: Calendar', () => testUtils.get('/api/RoihuUsers/1/Calendar').expect(401));
     it('find: CalendarEvents', () => testUtils.get('/api/RoihuUsers/1/CalendarEvents').expect(401));
 
+    it('get user through achievement', () => testUtils.get('/api/achievements?filter[include]=usersCompleted').expect(401));
+    it('get user through achievementCategory', () => {
+      const filter = {
+        include: {
+          relation: 'achievements',
+          scope: {
+            relation: 'usersCompleted',
+          },
+        },
+      };
+      testUtils.get(`/api/achievementCategories?filter=${filter}`).expect(401);
+    });
+    it('get user through CalendarEvent', () => testUtils.get('/api/CalendarEvents?filter[include]=usersInEvent').expect(401));
+
   });
 
   describe('authorized user should not allow', () => {
@@ -145,6 +159,20 @@ describe('RoihuUser', () => {
     it('find: CompletedAchievements', () => testUtils.get(`/api/RoihuUsers/${userId}/completedachievements`, token).expect(401));
     it('find: Calendar', () => testUtils.get(`/api/RoihuUsers/${userId}/Calendar`, token).expect(401));
     it('find: CalendarEvents', () => testUtils.get(`/api/RoihuUsers/${userId}/CalendarEvents`, token).expect(401));
+
+    it('get user through achievement', () => testUtils.get('/api/achievements?filter[include]=usersCompleted', token).expect(401));
+    it('get user through achievementCategory', () => {
+      const filter = {
+        include: {
+          relation: 'achievements',
+          scope: {
+            relation: 'usersCompleted',
+          },
+        },
+      };
+      testUtils.get(`/api/achievementCategories?filter=${filter}`, token).expect(401);
+    });
+    it('get user through CalendarEvent', () => testUtils.get('/api/CalendarEvents?filter[include]=usersInEvent', token).expect(401));
   });
 
 });

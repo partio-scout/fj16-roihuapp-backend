@@ -5,6 +5,7 @@ import Promise from 'bluebird';
 import { resetDatabase } from '../../scripts/seed-database';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import * as testUtils from '../utils/testutils';
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -67,5 +68,7 @@ describe('Instructions', () => {
   it('should give correct language SV', done => {
     testForLanguage('/api/InstructionCategories/Translations', 200, 'SV', done);
   });
+
+  it('should allow get Instructions', () => testUtils.get('/api/InstructionCategories/Translations').expect(200));
 
 });

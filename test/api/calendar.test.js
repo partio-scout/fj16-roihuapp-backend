@@ -171,5 +171,11 @@ describe('Calendar', () => {
         expect(res.body.events).to.be.empty;
       });
     });
+
+    it('should not allow get users through event', () => {
+      request(app).get('/api/calendarEvents/translations')
+      .query({ include: 'usersInEvent' })
+      .expect(401);
+    });
   });
 });
