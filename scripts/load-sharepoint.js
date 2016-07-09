@@ -283,7 +283,7 @@ if (require.main === module) {
     .then(() => readSharepointList('Leiriaikataulu', eventsHandler))
     .catch(err => {
       console.log('Sharepoint loader error');
-      console.error(err);
+      console.log(err);
     });
   }
 }

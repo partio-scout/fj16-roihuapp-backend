@@ -11,7 +11,6 @@ export function instructionsHandler(articles, categories) {
   const deleteInstruction = Promise.promisify(Instruction.destroyAll, { context: Instruction });
   const deleteInstructionCategory = Promise.promisify(InstructionCategory.destroyAll, { context: InstructionCategory });
 
-  const chars = [];
   return new Promise((resolve, reject) => {
     const instructions = [];
     const instructionCategories = [];
@@ -52,7 +51,6 @@ export function instructionsHandler(articles, categories) {
         createInstuctionCategory(instructionCategories),
         createInstuction(instructions),
         (inst, cat) => {
-          console.log(chars);
           resolve();
         }).catch(err => {
           reject(err);
@@ -104,7 +102,7 @@ if (require.main === module) {
     process.exit(0);
   })
   .catch(err => {
-    console.error(err);
+    console.log(err);
     process.exit(0);
   });
 }
