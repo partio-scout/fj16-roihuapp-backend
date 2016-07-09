@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "***Begin sharepoint sync***" >> ${OPENSHIFT_LOG_DIR}/load-sharepoint.log
+date >> ${OPENSHIFT_LOG_DIR}/load-sharepoint.log
+npm run load-sharepoint >> ${OPENSHIFT_LOG_DIR}/load-sharepoint.log
+echo "***End sharepoint sync***" >> ${OPENSHIFT_LOG_DIR}/load-sharepoint.log

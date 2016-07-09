@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "***Begin instructions sync***" >> ${OPENSHIFT_LOG_DIR}/load-instructions.log
+date >> ${OPENSHIFT_LOG_DIR}/load-instructions.log
+npm run load-instructions >> ${OPENSHIFT_LOG_DIR}/load-instructions.log
+echo "***End instructions sync***" >> ${OPENSHIFT_LOG_DIR}/load-instructions.log
