@@ -60,6 +60,7 @@ module.exports = function(LocationCategory) {
                       'grid_latitude': loc.gridLatitude,
                       'grid_longitude': loc.gridLongitude,
                       'deleted': loc.deleted,
+                      'imageUrl': loc.imageUrl,
                     });
                   });
                 })
