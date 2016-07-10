@@ -45,6 +45,14 @@ Start server with `npm start`
 
 You can enable dev settings and api explorer with `NODE_ENV=dev npm start`
 
+## Branches and deployment destinations
+
+Branch -> roihu2016 url -> original url -> deployment type
+
+master -> http://app-dev.roihu2016.fi -> http://roihuapp-demo.herokuapp.com -> CircleCI
+staging -> http://app-staging.roihu2016.fi -> http://roihuappstaging-fj16.rhcloud.com -> manual
+prod -> http://app.roihu2016.fi -> http://roihuapp-fj16.rhcloud.com -> manual
+
 ## Valid endpoints
 
 All GET requests should use lang parameter like `LocationCategories/translations?lang=FI`
