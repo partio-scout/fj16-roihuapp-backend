@@ -88,6 +88,7 @@ describe('Translations', () => {
       },
       gridLatitude: 'X',
       gridLongitude: '10',
+      imageUrl: 'http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png',
     };
 
     beforeEach(done => {
@@ -111,6 +112,7 @@ describe('Translations', () => {
           gpsLongitude: 25.454545,
           gridLatitude: 'H',
           gridLongitude: '08',
+          imageUrl: 'http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png',
         },
         {
           name: {
@@ -130,6 +132,7 @@ describe('Translations', () => {
           gpsLongitude: 1,
           gridLatitude: 'x',
           gridLongitude: '11',
+          imageUrl: 'http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png',
         },
       ])).nodeify(done);
     });
@@ -146,6 +149,7 @@ describe('Translations', () => {
 
           expect(location.gridLatitude).to.equal('X');
           expect(location.gridLongitude).to.equal('10');
+          expect(location.imageUrl).to.equal('http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png');
           return Promise.resolve();
         });
 
