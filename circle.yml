@@ -8,7 +8,3 @@ deployment:
     branch: master
     heroku:
       appname: roihuapp-demo
-  beta:
-    branch: beta
-    heroku:
-      appname: roihuapp-beta
