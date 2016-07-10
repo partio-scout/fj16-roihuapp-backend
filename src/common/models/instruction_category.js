@@ -45,6 +45,7 @@ module.exports = function(InstructionCategory) {
             and: andFilter,
           },
           fields: ['instructionId', 'categoryId', 'description', 'lastModified', 'sortNo', 'name'],
+          order: 'sortNo DESC',
         },
       },
     }).then(categories => {

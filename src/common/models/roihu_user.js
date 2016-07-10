@@ -263,6 +263,7 @@ export default function(RoihuUser) {
               'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
               'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
             ],
+            order: 'startTime ASC',
           },
         },
       })
@@ -293,6 +294,7 @@ export default function(RoihuUser) {
               sharepointId: false,
               source: false,
             },
+            order: 'startTime ASC',
           });
         }
       })
