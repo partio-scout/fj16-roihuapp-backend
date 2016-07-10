@@ -285,6 +285,17 @@
         "dataType": "boolean",
         "nullable": "YES"
       }
+    },
+    "imageUrl": {
+      "type": "string",
+      "postgresql": {
+        "columnName": "image_url",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
     }
   },
   "validations": [],

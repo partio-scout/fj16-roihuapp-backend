@@ -15,7 +15,8 @@
 	"gpsLatitude": "62.343434",
 	"gpsLongitude": "25.454545",
 	"gridLatitude": "H",
-	"gridLongitude": "08"
+	"gridLongitude": "08",
+	"imageUrl": "http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png"
 }, {
 	"name": {
 		"FI": "Kahvila 2",
@@ -33,7 +34,8 @@
 	"gpsLatitude": "62.343734",
 	"gpsLongitude": "25.457545",
 	"gridLatitude": "J",
-	"gridLongitude": "11"
+	"gridLongitude": "11",
+	"imageUrl": "http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png"
 }, {
 	"name": {
 		"FI": "Kahvila 3",
@@ -51,5 +53,6 @@
 	"gpsLatitude": "62.349434",
 	"gpsLongitude": "25.459545",
 	"gridLatitude": "R",
-	"gridLongitude": "21"
+	"gridLongitude": "21",
+	"imageUrl": "http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png"
 }]
