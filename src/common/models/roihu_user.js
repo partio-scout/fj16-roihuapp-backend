@@ -7,15 +7,20 @@ import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 import app from '../../server/server';
 import request from 'superagent';
+import loopback from 'loopback';
 
 export default function(RoihuUser) {
 
   RoihuUser.observe('before save', (ctx, next) => {
     // create random password if needed
     // and update fields to match REKI data
-    const userModel = ctx.instance || ctx.data;
 
-    RoihuUser.getRekiInformation(userModel.memberNumber)
+    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
+    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
+
+    const userModel = ctx.instance || ctx.data;
+    findUser(userId)
+    .then(user => RoihuUser.getRekiInformation(user.memberNumber))
     .then(userInfo => {
       userModel.subcamp = userInfo.subCamp,
       userModel.ageGroup = userInfo.ageGroup,
@@ -23,6 +28,7 @@ export default function(RoihuUser) {
       userModel.primaryTroopAndCity = userInfo.localGroup
     })
     .then(() => {
+      // set default field values here
       if (!userModel.password) {
         userModel.password = crypto.randomBytes(24).toString('hex');
       }
@@ -36,6 +42,11 @@ export default function(RoihuUser) {
       console.log(err);
     }).asCallback(next);
 
+  });
+
+  RoihuUser.afterRemote('findById', (ctx, modelInstance, next) => {
+
+    next();
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
@@ -89,13 +100,11 @@ export default function(RoihuUser) {
     const accessToken = process.env.REKI_ACCESSTOKEN;
 
     return new Promise((resolve, reject) => {
-      request.get(`${rekiUrl}/api/Participants/appInformation`)
-      .query({ memberNumber: memberNumber })
-      .query({ access_token: accessToken })
+      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}`)
       .end((err, userInfo) => {
         if (err) reject(err);
         else {
-          resolve(userInfo);
+          resolve(userInfo.body);
         }
       });
     });
