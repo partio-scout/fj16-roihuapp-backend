@@ -6,21 +6,36 @@ import path from 'path';
 import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 import app from '../../server/server';
+import request from 'superagent';
 
 export default function(RoihuUser) {
 
   RoihuUser.observe('before save', (ctx, next) => {
     // create random password if needed
-    if (ctx.instance) {
-      if (!ctx.instance.password) {
-        ctx.instance.password = crypto.randomBytes(24).toString('hex');
+    // and update fields to match REKI data
+    const userModel = ctx.instance || ctx.data;
+
+    RoihuUser.getRekiInformation(userModel.memberNumber)
+    .then(userInfo => {
+      userModel.subcamp = userInfo.subCamp,
+      userModel.ageGroup = userInfo.ageGroup,
+      userModel.phone = userInfo.phoneNumber,
+      userModel.primaryTroopAndCity = userInfo.localGroup
+    })
+    .then(() => {
+      if (!userModel.password) {
+        userModel.password = crypto.randomBytes(24).toString('hex');
       }
-    } else {
-      if (!ctx.data.password) {
-        ctx.data.password = crypto.randomBytes(24).toString('hex');
+
+      if (ctx.instance) {
+        ctx.instance = userModel;
+      } else {
+        ctx.data = userModel;
       }
-    }
-    next();
+    }).catch(err => {
+      console.log(err);
+    }).asCallback(next);
+
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
@@ -68,6 +83,23 @@ export default function(RoihuUser) {
       }
     }).asCallback(next);
   });
+
+  RoihuUser.getRekiInformation = (memberNumber) => {
+    const rekiUrl = process.env.REKI_URL;
+    const accessToken = process.env.REKI_ACCESSTOKEN;
+
+    return new Promise((resolve, reject) => {
+      request.get(`${rekiUrl}/api/Participants/appInformation`)
+      .query({ memberNumber: memberNumber })
+      .query({ access_token: accessToken })
+      .end((err, userInfo) => {
+        if (err) reject(err);
+        else {
+          resolve(userInfo);
+        }
+      });
+    });
+  };
 
   RoihuUser.addOrReduceAchievementScores = function(amount, achievementId) {
     const findAchievement = Promise.promisify(app.models.Achievement.findOne, { context: app.models.Achievement });
