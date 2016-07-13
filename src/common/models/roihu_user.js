@@ -39,8 +39,8 @@ export default function(RoihuUser) {
       } else {
         ctx.data = userModel;
       }
-    }).catch(err => {
-      console.log(err);
+    }).catch(() => {
+      // just catch it
     }).asCallback(next);
 
   });
