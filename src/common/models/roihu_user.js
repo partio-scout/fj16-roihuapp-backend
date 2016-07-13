@@ -45,6 +45,16 @@ export default function(RoihuUser) {
 
   });
 
+  RoihuUser.beforeRemote('prototype.updateAttributes', (ctx, modelInstance, next) => {
+    // prevent changes to membernumber
+    if (ctx.req && ctx.req.body)  {
+      if (ctx.req.body.memberNumber) {
+        delete ctx.req.body.memberNumber;
+      }
+    }
+    next();
+  });
+
   RoihuUser.beforeRemote('findById', (ctx, modelInstance, next) => {
     const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
     const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;

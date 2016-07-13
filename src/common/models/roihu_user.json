@@ -383,6 +383,13 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "calendar"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "create"
     }
   ],
   "methods": {}
