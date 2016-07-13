@@ -18,14 +18,15 @@ export default function(RoihuUser) {
     const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
     const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
 
-    const userModel = ctx.instance || ctx.data;
+    const userModel = ctx.instance || ctx.data;
     findUser(userId)
     .then(user => RoihuUser.getRekiInformation(user.memberNumber))
     .then(userInfo => {
-      userModel.subcamp = userInfo.subCamp,
-      userModel.ageGroup = userInfo.ageGroup,
-      userModel.phone = userInfo.phoneNumber,
-      userModel.primaryTroopAndCity = userInfo.localGroup
+      userModel.subcamp = userInfo.subCamp;
+      userModel.ageGroup = userInfo.ageGroup;
+      userModel.phone = userInfo.phoneNumber;
+      userModel.primaryTroopAndCity = userInfo.localGroup;
+      userModel.campUnit = userInfo.village;
     })
     .then(() => {
       // set default field values here
@@ -44,9 +45,16 @@ export default function(RoihuUser) {
 
   });
 
-  RoihuUser.afterRemote('findById', (ctx, modelInstance, next) => {
+  RoihuUser.beforeRemote('findById', (ctx, modelInstance, next) => {
+    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
+    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
 
-    next();
+    findUser(userId)
+    .then(user => Promise.fromCallback(callback => {
+      // initiate new save which will update user data from reki
+      user.lastModified = new Date();
+      user.save(callback);
+    })).asCallback(next);
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
@@ -95,7 +103,7 @@ export default function(RoihuUser) {
     }).asCallback(next);
   });
 
-  RoihuUser.getRekiInformation = (memberNumber) => {
+  RoihuUser.getRekiInformation = memberNumber => {
     const rekiUrl = process.env.REKI_URL;
     const accessToken = process.env.REKI_ACCESSTOKEN;
 
