@@ -13,35 +13,16 @@ export default function(RoihuUser) {
 
   RoihuUser.observe('before save', (ctx, next) => {
     // create random password if needed
-    // and update fields to match REKI data
-
-    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
-    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
-
-    const userModel = ctx.instance || ctx.data;
-    findUser(userId)
-    .then(user => RoihuUser.getRekiInformation(user.memberNumber))
-    .then(userInfo => {
-      userModel.subcamp = userInfo.subCamp;
-      userModel.ageGroup = userInfo.ageGroup;
-      userModel.phone = userInfo.phoneNumber;
-      userModel.primaryTroopAndCity = userInfo.localGroup;
-      userModel.campUnit = userInfo.village;
-    })
-    .then(() => {
-      // set default field values here
-      if (!userModel.password) {
-        userModel.password = crypto.randomBytes(24).toString('hex');
+    if (ctx.instance) {
+      if (!ctx.instance.password) {
+        ctx.instance.password = crypto.randomBytes(24).toString('hex');
       }
-
-      if (ctx.instance) {
-        ctx.instance = userModel;
-      } else {
-        ctx.data = userModel;
+    } else {
+      if (!ctx.data.password) {
+        ctx.data.password = crypto.randomBytes(24).toString('hex');
       }
-    }).catch(() => {
-      // just catch it
-    }).asCallback(next);
+    }
+    next();
 
   });
 
@@ -60,11 +41,18 @@ export default function(RoihuUser) {
     const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
 
     findUser(userId)
-    .then(user => Promise.fromCallback(callback => {
-      // initiate new save which will update user data from reki
-      user.lastModified = new Date();
-      user.save(callback);
-    })).asCallback(next);
+    .then(user => RoihuUser.getRekiInformation(user.memberNumber)
+      .then(rekiInfo => Promise.fromCallback(callback => {
+        user.subcamp = rekiInfo.subCamp;
+        user.ageGroup = rekiInfo.ageGroup;
+        user.phone = rekiInfo.phoneNumber;
+        user.primaryTroopAndCity = rekiInfo.localGroup;
+        //user.wave = getWaveFromVillage(rekiInfo.village);
+        user.campUnit = rekiInfo.campGroup;
+
+        user.save(callback);
+      }))
+    ).asCallback(next);
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
