@@ -160,6 +160,19 @@ export default function(RoihuUser) {
   };
 
   /*
+  Get village's wave from achievements as string value. Null if not found
+*/
+  RoihuUser.getVillageWave = function(village) {
+    const village_map = require(path.join(__dirname, '..', '..', '..', 'kyla_aallot.json'));
+    const village_data = village_map[village];
+    if (village_data) {
+      return village_data.aalto;
+    } else {
+      return null;
+    }
+  };
+
+  /*
     Get completed achievements as translated
   */
   RoihuUser.completedAchievements = function(userId, lang, cb) {
