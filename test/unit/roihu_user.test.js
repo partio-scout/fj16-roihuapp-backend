@@ -31,13 +31,15 @@ describe('RoihuUser', () => {
     it('returns null when user is not found', () =>
       expect(RoihuUser.findByMemberNumber('00404')).to.eventually.be.null);
 
+    after(() => RoihuUser.destroyById(userId));
+  });
+
+  describe('findWaveByVillage', () => {
     it('returns correct wave by village name', () =>
       expect(RoihuUser.getVillageWave('Minttu')).to.equal('B'));
 
     it('returns null by unknown village name', () =>
       expect(RoihuUser.getVillageWave('Mintti')).to.be.null);
-
-    after(() => RoihuUser.destroyById(userId));
   });
 
 });
