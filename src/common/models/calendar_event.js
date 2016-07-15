@@ -52,13 +52,16 @@ module.exports = function(CalendarEvent) {
           return events;
         })
         .then(events => {
-          // create regex to be used
-          const regex = new RegExp(`${textfilter}`, 'i');
-          // exclude events that don't match textfilter
-          const filteredEvents = _.filter(events, evt => {
-            if (evt.name.search(regex) == -1 && evt.description.search(regex) == -1) return false;
-            else return true;
-          });
+
+          if (textfilter) {
+            // create regex to be used
+            const regex = new RegExp(`${textfilter}`, 'i');
+            // exclude events that don't match textfilter
+            events = _.filter(events, evt => {
+              if (evt.name.search(regex) == -1 && evt.description.search(regex) == -1) return false;
+              else return true;
+            });
+          }
 
           const timeNow = new Date();
           const timeNext = new Date(timeNow);
@@ -68,7 +71,7 @@ module.exports = function(CalendarEvent) {
             timestamp: timeNow.toISOString(),
             next_check: timeNext.toISOString(),
             language: lang,
-            events: filteredEvents,
+            events: events,
           };
 
           cb(null, response);

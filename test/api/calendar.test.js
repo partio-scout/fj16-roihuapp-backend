@@ -151,7 +151,8 @@ describe('Calendar', () => {
 
     it('should allow get CalendarEvents without filter', () => {
       request(app).get('/api/calendarEvents/translations')
-      .expect(200);
+      .expect(200)
+      .expect(res => expect(res.body.events).to.not.be.empty);
     });
 
     it('should give response when filter has possible results', () => {
