@@ -23,8 +23,6 @@ describe('RoihuUser', () => {
       }).then(user => userId = user.id)
     );
 
-    RoihuUser.getVillageWave('Minttu');
-
     it('returns correct user by membernumber', () =>
       expect(RoihuUser.findByMemberNumber('12345')).to.eventually.have.property('firstname', 'Luigi'));
 
