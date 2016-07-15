@@ -187,4 +187,18 @@ describe('RoihuUser', () => {
     });
   });
 
+  describe('reki-integration', () => {
+    let userId;
+    let token;
+
+    before(() => resetDatabase()
+      .then(() => testUtils.createFixture('RoihuUser', testUser))
+      .then(user => {
+        userId = user.id;
+        return testUtils.loginUser(testUser.username, testUser.password).then(at => token = at.id );
+      })
+    );
+
+    it('should not throw error when reki is not responding', () => testUtils.get(`/api/RoihuUsers/${userId}`, token).expect(200));
+  });
 });

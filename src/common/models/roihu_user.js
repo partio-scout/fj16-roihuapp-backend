@@ -43,16 +43,24 @@ export default function(RoihuUser) {
     findUser(userId)
     .then(user => RoihuUser.getRekiInformation(user.memberNumber)
       .then(rekiInfo => Promise.fromCallback(callback => {
-        user.subcamp = rekiInfo.subCamp;
-        user.ageGroup = rekiInfo.ageGroup;
-        user.phone = rekiInfo.phoneNumber;
-        user.primaryTroopAndCity = rekiInfo.localGroup;
-        //user.wave = getWaveFromVillage(rekiInfo.village);
-        user.campUnit = rekiInfo.campGroup;
+        if (rekiInfo) {
 
-        user.save(callback);
+          user.subcamp = rekiInfo.subCamp;
+          user.ageGroup = rekiInfo.ageGroup;
+          user.phone = rekiInfo.phoneNumber;
+          user.primaryTroopAndCity = rekiInfo.localGroup;
+          //user.wave = getWaveFromVillage(rekiInfo.village);
+          user.campUnit = rekiInfo.campGroup;
+
+          user.save(callback);
+        } else {
+          callback();
+        }
       }))
-    ).asCallback(next);
+    ).asCallback((err, data) => {
+      if (err && err.code == 'ENOTFOUND') console.error(err);
+      next();
+    });
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
