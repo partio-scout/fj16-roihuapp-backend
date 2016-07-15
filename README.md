@@ -80,6 +80,7 @@ All GET requests should use lang parameter like `LocationCategories/translations
     * to filter results use loopback filters https://docs.strongloop.com/display/public/LB/Querying+data 
     * `include` filter may result in unwanted behavior
     * `fields` filter will be overwritten
+    * use `textfilter` param to search text from name and description
 * Users calendar -> GET api/RoihuUsers/{id}/calendar
 * Add event to calendar -> PUT api/RoihuUsers/{id}/calendarEvents/rel/{fk}
 * remove event from calendar -> DELETE api/RoihuUsers/{id}/calendarEvents/rel/{fk}
