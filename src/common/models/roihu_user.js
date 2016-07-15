@@ -58,7 +58,8 @@ export default function(RoihuUser) {
         }
       }))
     ).asCallback((err, data) => {
-      if (err && err.code == 'ENOTFOUND') console.error(err);
+      if (err && err.code == 'ENOTFOUND') console.error('REKI_URL not found', err);
+      else if (err) console.log(err);
       next();
     });
   });
