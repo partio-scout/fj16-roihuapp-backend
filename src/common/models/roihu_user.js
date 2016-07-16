@@ -49,7 +49,7 @@ export default function(RoihuUser) {
           user.ageGroup = rekiInfo.ageGroup;
           user.phone = rekiInfo.phoneNumber;
           user.primaryTroopAndCity = rekiInfo.localGroup;
-          //user.wave = getWaveFromVillage(rekiInfo.village);
+          user.wave = RoihuUser.getVillageWave(rekiInfo.village);
           user.campUnit = rekiInfo.campGroup;
 
           user.save(callback);
