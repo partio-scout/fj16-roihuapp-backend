@@ -13,6 +13,32 @@ const translateableModels = [
   'LocationCategory',
 ];
 
+function getPropertyQuestions(modelName) {
+  return _.map(app.models[modelName].definition.properties, (settings, propertyName) => ({
+    type: 'input',
+    name: propertyName,
+    message: `${propertyName}\n required: ${settings.required || false}\n generated: ${settings.generated || false}\n > `,
+  }));
+}
+
+function getEditQuestions(modelInstance) {
+  return _.map(modelInstance.__data, (value, key) => ({
+    type: 'input',
+    name: key,
+    message: `${key}: "${value}" (current) >`,
+  }));
+}
+
+function findModelById(modelName, id) {
+  const findById = Promise.promisify(app.models[modelName].findById, { context: app.models[modelName] });
+  return findById(id);
+}
+
+function createNewModel(modelName, data) {
+  const create = Promise.promisify(app.models[modelName].create, { context: app.models[modelName] });
+  return create(data);
+}
+
 function askForConfirmation(infoMsg) {
   console.log(infoMsg);
   return inquirer.prompt([
@@ -24,15 +50,25 @@ function askForConfirmation(infoMsg) {
   ]).then(answers => answers.confirmation);
 }
 
-function askForTranslateableModelName() {
+function askForModelName(modelNames) {
   return inquirer.prompt([
     {
       type: 'list',
       name: 'modelName',
       message: 'Choose target model',
-      choices: _.map(translateableModels, model => ({ name: model, value: model })),
-    }
+      choices: _.map(modelNames, model => ({ name: model, value: model })),
+    },
   ]).then(answers => answers.modelName);
+}
+
+function askForInput(message) {
+  return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'value',
+      message: message,
+    },
+  ]).then(answers => answers.value);
 }
 
 function createTranslations() {
@@ -106,8 +142,47 @@ function deleteModels() {
   });
 }
 
-function editTranslations() {
-  askForTranslateableModelName
+function createModel() {
+  let modelName;
+  askForModelName(models)
+  .then(modelName => {
+    modelName = modelName;
+    return inquirer.prompt(getPropertyQuestions(modelName));
+  })
+  .then(answers => createNewModel(modelName, answers))
+  .then(msg => {
+    console.log(msg);
+    process.exit(0);
+  });
+}
+
+function updateBasicModel() {
+  let modelToEdit;
+
+  askForModelName(_.filter(models, m => (translateableModels.indexOf(m) === -1)))
+  .then(modelName => askForInput('Model id number:')
+    .then(id => findModelById(modelName, id))
+    .then(m => {
+      modelToEdit = m;
+      console.log('Do not edit id field if you dont know what you are doing!');
+      console.log('If you dont want to edit field, write field current value as answer.');
+      return inquirer.prompt(getEditQuestions(modelToEdit));
+    })
+    .then(answers => {
+      console.log('Changing\n', modelToEdit, '\nto\n', answers);
+      _.forEach(answers, (value, key) => {
+        modelToEdit[key] = value;
+      });
+      return askForConfirmation()
+      .then(confirmation => Promise.fromCallback(callback => {
+        if (confirmation) {
+          modelToEdit.save(callback);
+        } else {
+          callback();
+        }
+      }));
+    })
+  ).catch(e => console.log(e));
 }
 
 console.log('----------------------------');
@@ -122,6 +197,7 @@ inquirer.prompt([{
   choices: [
     { name: 'createTranslations', value: createTranslations },
     { name: 'deleteModels', value: deleteModels },
-    { name: 'editTranslations', value: editTranslations },
+    { name: 'createModel', value: createModel },
+    { name: 'updateBasicModel', value: updateBasicModel },
   ],
 }]).then(answers => answers.operation());
