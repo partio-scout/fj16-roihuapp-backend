@@ -1,0 +1,218 @@
+{
+  "Hiutale": {
+    "alaleiri": "Humina",
+    "aalto": "A",
+    "maara": "457",
+    "llpk": "5"
+  },
+  "Höyry": {
+    "alaleiri": "Humina",
+    "aalto": "A",
+    "maara": "384",
+    "llpk": "5"
+  },
+  "Kuohu": {
+    "alaleiri": "Humina",
+    "aalto": "A",
+    "maara": "289",
+    "llpk": "3"
+  },
+  "Kuura": {
+    "alaleiri": "Humina",
+    "aalto": "B",
+    "maara": "460",
+    "llpk": "5"
+  },
+  "Rae": {
+    "alaleiri": "Humina",
+    "aalto": "B",
+    "maara": "316",
+    "llpk": "3"
+  },
+  "Riite": {
+    "alaleiri": "Humina",
+    "aalto": "B",
+    "maara": "453",
+    "llpk": "5"
+  },
+  "Hurmaava Irvikissa": {
+    "alaleiri": "Hurma",
+    "aalto": "B",
+    "maara": "376",
+    "llpk": "4"
+  },
+  "Hurmaava Möhköfantti": {
+    "alaleiri": "Hurma",
+    "aalto": "B",
+    "maara": "429",
+    "llpk": "5"
+  },
+  "Hurmaava Mörkö": {
+    "alaleiri": "Hurma",
+    "aalto": "A",
+    "maara": "392",
+    "llpk": "5"
+  },
+  "Hurmaava Rattata": {
+    "alaleiri": "Hurma",
+    "aalto": "B",
+    "maara": "406",
+    "llpk": "4"
+  },
+  "Hurmaava Räähkä": {
+    "alaleiri": "Hurma",
+    "aalto": "A",
+    "maara": "478",
+    "llpk": "6"
+  },
+  "Hurmaava Spyro": {
+    "alaleiri": "Hurma",
+    "aalto": "A",
+    "maara": "385",
+    "llpk": "4"
+  },
+  "Papaija": {
+    "alaleiri": "Polte",
+    "aalto": "B",
+    "maara": "410",
+    "llpk": "5"
+  },
+  "Pepino": {
+    "alaleiri": "Polte",
+    "aalto": "B",
+    "maara": "393",
+    "llpk": "5"
+  },
+  "Persikka": {
+    "alaleiri": "Polte",
+    "aalto": "A",
+    "maara": "376",
+    "llpk": "5"
+  },
+  "Persimoni": {
+    "alaleiri": "Polte",
+    "aalto": "A",
+    "maara": "352",
+    "llpk": "3"
+  },
+  "Pomelo": {
+    "alaleiri": "Polte",
+    "aalto": "B",
+    "maara": "425",
+    "llpk": "5"
+  },
+  "Pomeranssi": {
+    "alaleiri": "Polte",
+    "aalto": "A",
+    "maara": "371",
+    "llpk": "4"
+  },
+  "Andromeda": {
+    "alaleiri": "Raiku",
+    "aalto": "A",
+    "maara": "410",
+    "llpk": "4"
+  },
+  "Kassiopeia": {
+    "alaleiri": "Raiku",
+    "aalto": "B",
+    "maara": "394",
+    "llpk": "5"
+  },
+  "Kefeus": {
+    "alaleiri": "Raiku",
+    "aalto": "A",
+    "maara": "417",
+    "llpk": "5"
+  },
+  "Kentauri": {
+    "alaleiri": "Raiku",
+    "aalto": "A",
+    "maara": "388",
+    "llpk": "4"
+  },
+  "Orion": {
+    "alaleiri": "Raiku",
+    "aalto": "B",
+    "maara": "487",
+    "llpk": "7"
+  },
+  "Pegasus": {
+    "alaleiri": "Raiku",
+    "aalto": "B",
+    "maara": "381",
+    "llpk": "4"
+  },
+  "Basilika": {
+    "alaleiri": "Syke",
+    "aalto": "B",
+    "maara": "389",
+    "llpk": "5"
+  },  
+  "Kumina": {
+    "alaleiri": "Syke",
+    "aalto": "A",
+    "maara": "395",
+    "llpk": "5"
+  },  
+  "Minttu": {
+    "alaleiri": "Syke",
+    "aalto": "B",
+    "maara": "399",
+    "llpk": "4"
+  },  
+  "Pippuri": {
+    "alaleiri": "Syke",
+    "aalto": "A",
+    "maara": "387",
+    "llpk": "4"
+  },  
+  "Rakuuna": {
+    "alaleiri": "Syke",
+    "aalto": "B",
+    "maara": "426",
+    "llpk": "5"
+  },  
+  "Tilli": {
+    "alaleiri": "Syke",
+    "aalto": "A",
+    "maara": "461",
+    "llpk": "5"
+  },  
+  "Aalto": {
+    "alaleiri": "Unity",
+    "aalto": "B",
+    "maara": "628",
+    "llpk": "6"
+  },
+  "Koski": {
+    "alaleiri": "Unity",
+    "aalto": "A",
+    "maara": "343",
+    "llpk": "5"
+  },
+  "Lähde": {
+    "alaleiri": "Unity",
+    "aalto": "B",
+    "maara": "345",
+    "llpk": "5"
+  },
+  "Putous": {
+    "alaleiri": "Unity",
+    "aalto": "A",
+    "maara": "456",
+    "llpk": "6"
+  },
+  "Suisto": {
+    "alaleiri": "Unity",
+    "aalto": "A",
+    "maara": "427",
+    "llpk": "6"
+  },
+  "Virta": {
+    "alaleiri": "Unity",
+    "aalto": "B",
+    "maara": "430",
+    "llpk": "6"
+  }
+}

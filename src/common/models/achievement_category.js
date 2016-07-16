@@ -38,40 +38,43 @@ module.exports = function(AchievementCategory) {
           _.forEach(categoryTranslations, category => {
             const catAchievements = [];
             let userScoreInCategory = 0;
-            const AchievementPromise = translationUtils.getTranslationsForModel(Achievement, lang, { where: { categoryId: category.idFromSource } })
-              .then(AchievementTranslations => {
-                _.forEach(AchievementTranslations, ach => {
-                  const userAchieved = (_.indexOf(userCompletedAchievemets, ach.achievementId) === -1) ? false : true;
-                  if (userAchieved) {
-                    userScoreInCategory += 1;
-                  }
-                  catAchievements.push({             // add single Achievement
-                    'title': ach.name,
-                    'bodytext': ach.description,
-                    'sort_no': ach.sortNo,
-                    'last_modified': ach.lastModified,
-                    'id': ach.achievementId,
-                    'achievement_count': ach.achievementCount,
-                    'userAchieved': userAchieved,
-                  });
-
+            const AchievementPromise = translationUtils.getTranslationsForModel(Achievement, lang, {
+              where: { categoryId: category.idFromSource },
+              order: 'sortNo DESC',
+            })
+            .then(AchievementTranslations => {
+              _.forEach(AchievementTranslations, ach => {
+                const userAchieved = (_.indexOf(userCompletedAchievemets, ach.achievementId) === -1) ? false : true;
+                if (userAchieved) {
+                  userScoreInCategory += 1;
+                }
+                catAchievements.push({             // add single Achievement
+                  'title': ach.name,
+                  'bodytext': ach.description,
+                  'sort_no': ach.sortNo,
+                  'last_modified': ach.lastModified,
+                  'id': ach.achievementId,
+                  'achievement_count': ach.achievementCount,
+                  'userAchieved': userAchieved,
                 });
-              })
-              .then(() => rCategories.push({
-                'title': category.name,
-                'id': category.categoryId,
-                'sort_no': category.sortNo,
-                'last_modified': category.lastModified,
-                'achievement_count': category.achievementCount,
-                'leading_score': category.leadingScore,
-                'average_score': category.averageScore,
-                'user_score': userScoreInCategory,
-                'achievements': catAchievements,
-              }))
-              .catch(err => {
-                cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
-                return;
+
               });
+            })
+            .then(() => rCategories.push({
+              'title': category.name,
+              'id': category.categoryId,
+              'sort_no': category.sortNo,
+              'last_modified': category.lastModified,
+              'achievement_count': category.achievementCount,
+              'leading_score': category.leadingScore,
+              'average_score': category.averageScore,
+              'user_score': userScoreInCategory,
+              'achievements': catAchievements,
+            }))
+            .catch(err => {
+              cb(errorUtils.createHTTPError('Something went wrong', 500, err.message), null);
+              return;
+            });
 
             promises.push(AchievementPromise);
           });

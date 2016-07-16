@@ -6,6 +6,8 @@ import path from 'path';
 import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 import app from '../../server/server';
+import request from 'superagent';
+import loopback from 'loopback';
 
 export default function(RoihuUser) {
 
@@ -21,6 +23,45 @@ export default function(RoihuUser) {
       }
     }
     next();
+
+  });
+
+  RoihuUser.beforeRemote('prototype.updateAttributes', (ctx, modelInstance, next) => {
+    // prevent changes to membernumber
+    if (ctx.req && ctx.req.body)  {
+      if (ctx.req.body.memberNumber) {
+        delete ctx.req.body.memberNumber;
+      }
+    }
+    next();
+  });
+
+  RoihuUser.beforeRemote('findById', (ctx, modelInstance, next) => {
+    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
+    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
+
+    findUser(userId)
+    .then(user => RoihuUser.getRekiInformation(user.memberNumber)
+      .then(rekiInfo => Promise.fromCallback(callback => {
+        if (rekiInfo) {
+
+          user.subcamp = rekiInfo.subCamp;
+          user.ageGroup = rekiInfo.ageGroup;
+          user.phone = rekiInfo.phoneNumber;
+          user.primaryTroopAndCity = rekiInfo.localGroup;
+          user.wave = RoihuUser.getVillageWave(rekiInfo.village);
+          user.campUnit = rekiInfo.campGroup;
+
+          user.save(callback);
+        } else {
+          callback();
+        }
+      }))
+    ).asCallback((err, data) => {
+      if (err && err.code == 'ENOTFOUND') console.error('REKI_URL not found', err);
+      else if (err) console.log(err);
+      next();
+    });
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
@@ -68,6 +109,21 @@ export default function(RoihuUser) {
       }
     }).asCallback(next);
   });
+
+  RoihuUser.getRekiInformation = memberNumber => {
+    const rekiUrl = process.env.REKI_URL;
+    const accessToken = process.env.REKI_ACCESSTOKEN;
+
+    return new Promise((resolve, reject) => {
+      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}`)
+      .end((err, userInfo) => {
+        if (err) reject(err);
+        else {
+          resolve(userInfo.body);
+        }
+      });
+    });
+  };
 
   RoihuUser.addOrReduceAchievementScores = function(amount, achievementId) {
     const findAchievement = Promise.promisify(app.models.Achievement.findOne, { context: app.models.Achievement });
@@ -126,15 +182,22 @@ export default function(RoihuUser) {
     .then(generateAccessToken)
     .then(token => {
       // mail settings in nodemailer format
+      const os = require('os');
       const url = `${process.env.APP_URL}/emailredirect/${token.userId}/${token.id}`;
       const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.js'));
       const transporter = nodemailer.createTransport(mailSettings);
+      const text_fi = 'Avaa tämä linkki puhelimesi nettiselaimella, jolloin Roihu 2016-appi aukeaa niin, että olet kirjautuneena.';
+      const text_en = 'Open this link using your phone\'s Internet browser. This launches the Roihu 2016 app so that you are logged in.';
+      const text_se = 'Öppna denna länk med telefonens webbläsare. Detta startar Roihu 2016 appen så att du är inloggad.';
+      const text_text = `${text_fi} ${os.EOL} ${text_en} ${os.EOL} ${text_se} ${os.EOL} ${os.EOL}`;
+      const text_html = `${text_fi} <br/> ${text_en} <br/> ${text_se} <br/> <br/>`;
+
       const mailOptions = {
         from: `"roihuapp" <noreply@roihu2016.fi>`,
         to: mail,
         subject: 'Roihuapp email login',
-        text: url,
-        html: `<a href="${url}">${url}</a>`,
+        text: `${text_text}${url}`,
+        html: `${text_html}<a href="${url}">${url}</a>`,
       };
 
       transporter.sendMail(mailOptions, (err, info) => {
@@ -150,6 +213,19 @@ export default function(RoihuUser) {
       cb(err, null);
     });
 
+  };
+
+  /*
+  Get village's wave from achievements as string value. Null if not found
+*/
+  RoihuUser.getVillageWave = function(village) {
+    const village_map = require(path.join(__dirname, '..', '..', '..', 'kyla_aallot.json'));
+    const village_data = village_map[village];
+    if (village_data) {
+      return village_data.aalto;
+    } else {
+      return null;
+    }
   };
 
   /*
@@ -261,8 +337,9 @@ export default function(RoihuUser) {
             fields: [
               'eventId', 'type', 'name', 'description', 'locationName', 'lastModified',
               'status', 'startTime', 'endTime', 'gpsLatitude', 'gpsLongitude', 'gridLatitude',
-              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount',
+              'gridLongitude', 'subcamp', 'camptroop', 'ageGroups', 'wave', 'participantCount','imageUrl',
             ],
+            order: 'startTime ASC',
           },
         },
       })
@@ -293,6 +370,7 @@ export default function(RoihuUser) {
               sharepointId: false,
               source: false,
             },
+            order: 'startTime ASC',
           });
         }
       })

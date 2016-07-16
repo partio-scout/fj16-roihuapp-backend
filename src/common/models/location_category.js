@@ -25,25 +25,31 @@ module.exports = function(LocationCategory) {
             const promises = [];
             _.forEach(categoryTranslations, category => {
               const articles = [];
-              let articleFilter = { where: {
-                and: [
-                  /*{ deleted: false },*/
-                  { categoryId: category.idFromSource },
-                ],
-              } };
+              let articleFilter = {
+                where: {
+                  and: [
+                    /*{ deleted: false },*/
+                    { categoryId: category.idFromSource },
+                  ],
+                },
+                order: 'sortNo DESC',
+              };
 
               if (afterDate) {
                 // Five minustes "safezone" for filtering
                 const afterDate_5min_before = new Date(afterDate);
                 afterDate_5min_before.setMinutes(afterDate_5min_before.getMinutes() - 5);
 
-                articleFilter = { where: {
-                  and: [
-                    /*{ lastModified: { gt: afterDate } },*/
-                    { lastModified: { gt: afterDate_5min_before } },
-                    { categoryId: category.idFromSource },
-                  ],
-                } };
+                articleFilter = {
+                  where: {
+                    and: [
+                      /*{ lastModified: { gt: afterDate } },*/
+                      { lastModified: { gt: afterDate_5min_before } },
+                      { categoryId: category.idFromSource },
+                    ],
+                  },
+                  order: 'sortNo DESC',
+                };
               }
 
               const LocationPromise = translationUtils.getTranslationsForModel(Location, lang, articleFilter)
@@ -60,6 +66,7 @@ module.exports = function(LocationCategory) {
                       'grid_latitude': loc.gridLatitude,
                       'grid_longitude': loc.gridLongitude,
                       'deleted': loc.deleted,
+                      'imageUrl': loc.imageUrl,
                     });
                   });
                 })

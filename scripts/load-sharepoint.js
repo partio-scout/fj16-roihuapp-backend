@@ -66,6 +66,7 @@ export function locationsHandler(err, data) {
             'gridLatitude': getGridCoordinates(item.Koordinaattiruutu).lat,
             'gridLongitude': getGridCoordinates(item.Koordinaattiruutu).lon,
             'lastModified': item.Modified,
+            'imageUrl': item.imageUrl,
           });
         });
         localTranslationsDone.push(lt);
@@ -171,6 +172,7 @@ export function eventsHandler(err, data) {
                 ageGroups: joinFieldArray(item.Ik_x00e4_kausi, '|'),
                 wave: joinFieldArray(item.Aalto, '|'),
                 source: 1,
+                imageUrl: locFI.imageUrl,
               });
             });
           })

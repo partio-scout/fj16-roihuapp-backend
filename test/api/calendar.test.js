@@ -13,20 +13,20 @@ const expect = chai.expect;
 const RoihuUser = app.models.RoihuUser;
 const testEvent = {
   name: {
-    FI: 'FI_EVENT',
-    SV: 'SV_EVENT',
-    EN: 'EN_EVENT',
+    FI: 'Autoajelu',
+    SV: 'Bil',
+    EN: 'Car trip',
   },
   description: {
-    FI: '',
-    SV: '',
-    EN: '',
+    FI: 'Ajelu moottoriajoneuvolla',
+    SV: 'Trip med motor thing',
+    EN: 'roadtrip',
   },
   type: 'TEST',
   locationName: {
-    FI: 'test',
-    SV: 'test',
-    EN: 'test',
+    FI: 'test_fi',
+    SV: 'test_sv',
+    EN: 'test_en',
   },
   status: 'searchable',
   startTime: Date.now(),
@@ -151,7 +151,8 @@ describe('Calendar', () => {
 
     it('should allow get CalendarEvents without filter', () => {
       request(app).get('/api/calendarEvents/translations')
-      .expect(200);
+      .expect(200)
+      .expect(res => expect(res.body.events).to.not.be.empty);
     });
 
     it('should give response when filter has possible results', () => {
@@ -166,6 +167,43 @@ describe('Calendar', () => {
     it('should give empty response when filter does not have possible results', () => {
       request(app).get('/api/calendarEvents/translations')
       .query({ filter: { where: { subcamp: 'Raiku' } } })
+      .expect(200)
+      .expect(res => {
+        expect(res.body.events).to.be.empty;
+      });
+    });
+
+    it('should give response when textfilter has possible results on name', () =>
+      request(app).get('/api/calendarEvents/translations')
+      .query({ textfilter: 'car' })
+      .expect(200)
+      .expect(res => {
+        expect(res.body).to.deep.have.property('events.[0].name', 'Car trip');
+      })
+    );
+
+    it('should give response when textfilter has possible results on description', () =>
+      request(app).get('/api/calendarEvents/translations')
+      .query({ textfilter: 'road' })
+      .expect(200)
+      .expect(res => {
+        expect(res.body).to.deep.have.property('events.[0].description', 'roadtrip');
+      })
+    );
+
+    it('should give response when textfilter has possible results on both name and description', () =>
+      request(app).get('/api/calendarEvents/translations')
+      .query({ textfilter: 'trip' })
+      .expect(200)
+      .expect(res => {
+        expect(res.body).to.deep.have.property('events.[0].name', 'Car trip');
+        expect(res.body).to.deep.have.property('events.[0].description', 'roadtrip');
+      })
+    );
+
+    it('should give empty response when textfilter does not have possible results', () => {
+      request(app).get('/api/calendarEvents/translations')
+      .query({ textfilter: 'Saunailta' })
       .expect(200)
       .expect(res => {
         expect(res.body.events).to.be.empty;

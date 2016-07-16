@@ -16,7 +16,8 @@
         "ContentTypeId": "0x01005A0823D3D28F9B4090F445AED05F49F5",
         "ID": 25,
         "Modified": "2016-04-11T20:28:25Z",
-        "Created": "2016-04-11T20:28:25Z"
+        "Created": "2016-04-11T20:28:25Z",
+        "ImageUrl": "http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png"
     },
     {
         "FileSystemObjectType": 0,
@@ -35,7 +36,8 @@
         "ContentTypeId": "0x01005A0823D3D28F9B4090F445AED05F49F5",
         "ID": 25,
         "Modified": "2016-04-11T20:28:25Z",
-        "Created": "2016-04-11T20:28:25Z"
+        "Created": "2016-04-11T20:28:25Z",
+        "ImageUrl": "http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png"
     },
     {
         "FileSystemObjectType": 0,
@@ -54,6 +56,7 @@
         "ContentTypeId": "0x01005A0823D3D28F9B4090F445AED05F49F5",
         "ID": 25,
         "Modified": "2016-04-11T20:28:25Z",
-        "Created": "2016-04-11T20:28:25Z"
+        "Created": "2016-04-11T20:28:25Z",
+        "ImageUrl": "http://roihu2016.fi/sites/default/files/roihu_valk_rgb_web.png"
     }
 ]

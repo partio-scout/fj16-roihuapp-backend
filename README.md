@@ -45,6 +45,14 @@ Start server with `npm start`
 
 You can enable dev settings and api explorer with `NODE_ENV=dev npm start`
 
+## Branches and deployment destinations
+
+Branch -> roihu2016 url -> original url -> deployment type
+
+* master -> http://app-dev.roihu2016.fi -> http://roihuapp-demo.herokuapp.com -> CircleCI
+* staging -> http://app-staging.roihu2016.fi -> http://roihuappstaging-fj16.rhcloud.com -> manual
+* prod -> http://app.roihu2016.fi -> http://roihuapp-fj16.rhcloud.com -> manual
+
 ## Valid endpoints
 
 All GET requests should use lang parameter like `LocationCategories/translations?lang=FI`
@@ -72,6 +80,7 @@ All GET requests should use lang parameter like `LocationCategories/translations
     * to filter results use loopback filters https://docs.strongloop.com/display/public/LB/Querying+data 
     * `include` filter may result in unwanted behavior
     * `fields` filter will be overwritten
+    * use `textfilter` param to search text from name and description
 * Users calendar -> GET api/RoihuUsers/{id}/calendar
 * Add event to calendar -> PUT api/RoihuUsers/{id}/calendarEvents/rel/{fk}
 * remove event from calendar -> DELETE api/RoihuUsers/{id}/calendarEvents/rel/{fk}

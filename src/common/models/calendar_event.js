@@ -7,7 +7,7 @@ import app from '../../server/server';
 
 module.exports = function(CalendarEvent) {
 
-  CalendarEvent.FindTranslations = function(language, filter, cb) {
+  CalendarEvent.FindTranslations = function(language, filter, textfilter, cb) {
     const ctx = loopback.getCurrentContext();
     const RoihuUser = app.models.RoihuUser;
     const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
@@ -52,6 +52,17 @@ module.exports = function(CalendarEvent) {
           return events;
         })
         .then(events => {
+
+          if (textfilter) {
+            // create regex to be used
+            const regex = new RegExp(`${textfilter}`, 'i');
+            // exclude events that don't match textfilter
+            events = _.filter(events, evt => {
+              if (evt.name.search(regex) == -1 && evt.description.search(regex) == -1) return false;
+              else return true;
+            });
+          }
+
           const timeNow = new Date();
           const timeNext = new Date(timeNow);
           timeNext.setHours(timeNow.getHours() + 1);
@@ -90,6 +101,7 @@ module.exports = function(CalendarEvent) {
       accepts: [
         { arg: 'lang', type: 'string', http: { source: 'query' }, required: false },
         { arg: 'filter', type: 'object', required: false },
+        { arg: 'textfilter', type: 'string', required: false },
       ],
       returns: { type: 'array', root: true },
     }

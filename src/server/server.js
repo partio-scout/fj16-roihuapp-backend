@@ -2,6 +2,8 @@ import loopback from 'loopback';
 import boot from 'loopback-boot';
 import path from 'path';
 
+const morgan = require('morgan');
+
 const app = loopback();
 
 export default app;
@@ -17,6 +19,10 @@ app.start = function() {
 const bootstrapFileName = path.resolve(__dirname, 'bootstrap.js');
 app.set('standalone', require.main.filename === bootstrapFileName);
 app.set('isDev', process.env.NODE_ENV === 'dev');
+
+if (app.get('standalone')) {
+  app.middleware('routes:before', morgan('combined'));
+}
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
