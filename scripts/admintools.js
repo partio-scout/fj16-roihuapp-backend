@@ -10,8 +10,19 @@ const translateableModels = [
   'Location',
   'Achievement',
   'AchievementCategory',
-  'LocationCategory'
+  'LocationCategory',
 ];
+
+function askForConfirmation(infoMsg) {
+  console.log(infoMsg);
+  return inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'confirmation',
+      message: 'Are you sure?',
+    },
+  ]).then(answers => answers.confirmation);
+}
 
 function createTranslations() {
   inquirer.prompt([
@@ -19,9 +30,7 @@ function createTranslations() {
       type: 'list',
       name: 'modelName',
       message: 'Choose target model',
-      choices: _.map(translateableModels, model => {
-        return { name: model, value: model };
-      }),
+      choices: _.map(translateableModels, model => ({ name: model, value: model })),
     },
     {
       type: 'editor',
@@ -34,7 +43,7 @@ function createTranslations() {
       message: 'Are you sure?',
     },
   ]).then(answers => {
-    if (answers.confirmation)  {
+    if (answers.confirmation) {
       return translationUtils.createTranslationsForModel(answers.modelName, JSON.parse(answers.modelJSON));
     } else {
       console.log('Aborting');
@@ -42,15 +51,48 @@ function createTranslations() {
     }
   }).asCallback((err, msq) => {
     if (err) console.error(err);
-    console.log(msq);
+    console.log('done');
     process.exit(0);
   });
 
 }
 
 function deleteModels() {
-  console.log('Not implemented yet');
-  process.exit(0);
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'modelName',
+      message: 'Choose target model',
+      choices: models,
+    },
+    {
+      type: 'input',
+      name: 'where',
+      message: 'Where filter ie { "userId": 3 }',
+    },
+  ]).then(answers => {
+    const findModels = Promise.promisify(app.models[answers.modelName].find, { context: app.models[answers.modelName] });
+    const deleteModels = Promise.promisify(app.models[answers.modelName].destroyAll, { context: app.models[answers.modelName] });
+    const where = JSON.parse(answers.where);
+
+    return findModels({ where: where })
+    .then(models =>
+      askForConfirmation(`About to delete ${models.length} instances of ${answers.modelName}`)
+      .then(confirmation => {
+        if (confirmation) {
+          return deleteModels(where);
+        } else {
+          console.log('Aborting');
+          return;
+        }
+      }));
+  }).then(msg => {
+    console.log('Deleted', msg.count, 'instances');
+    process.exit(0);
+  }).catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 }
 
 console.log('----------------------------');
