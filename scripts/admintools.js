@@ -13,16 +13,6 @@ const translateableModels = [
   'LocationCategory'
 ];
 
-function isContinuingAllowed() {
-  return inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'confirmation',
-      message: 'Are you sure?',
-    },
-  ]).then(answers => answers.confirmation);
-}
-
 function createTranslations() {
   inquirer.prompt([
     {
@@ -36,19 +26,26 @@ function createTranslations() {
     {
       type: 'editor',
       name: 'modelJSON',
-      message: 'Paste translations json to editor.\nIf editor doesn\'t show, make sure that EDITOR env variable has your preferred editor in it.\nFor example EDITOR=nano',
+      message: 'Paste translations json to editor.\nIf editor doesn\'t show, make sure that EDITOR env variable has your preferred editor in it. For example EDITOR=nano',
+    },
+    {
+      type: 'confirm',
+      name: 'confirmation',
+      message: 'Are you sure?',
     },
   ]).then(answers => {
-    isContinuingAllowed()
-    .then(ok => {
-      if (ok) {
-        // do stuff
-      } else {
-        console.log('Aborting');
-        process.exit(0);
-      }
-    });
-  });  
+    if (answers.confirmation)  {
+      return translationUtils.createTranslationsForModel(answers.modelName, JSON.parse(answers.modelJSON));
+    } else {
+      console.log('Aborting');
+      process.exit(0);
+    }
+  }).asCallback((err, msq) => {
+    if (err) console.error(err);
+    console.log(msq);
+    process.exit(0);
+  });
+
 }
 
 function deleteModels() {
