@@ -35,8 +35,8 @@ function findModelById(modelName, id) {
 }
 
 function createNewModel(modelName, data) {
-  const create = Promise.promisify(app.models[modelName].create, { context: app.models[modelName] });
-  return create(data);
+  const createM = Promise.promisify(app.models[modelName].create, { context: app.models[modelName] });
+  return createM(data);
 }
 
 function askForConfirmation(infoMsg) {
@@ -143,16 +143,17 @@ function deleteModels() {
 }
 
 function createModel() {
-  let modelName;
   askForModelName(models)
-  .then(modelName => {
-    modelName = modelName;
-    return inquirer.prompt(getPropertyQuestions(modelName));
-  })
-  .then(answers => createNewModel(modelName, answers))
-  .then(msg => {
-    console.log(msg);
-    process.exit(0);
+  .then(modelName => inquirer.prompt(getPropertyQuestions(modelName))
+    .then(answers => createNewModel(modelName, answers))
+    .then(msg => {
+      console.log(msg);
+      process.exit(0);
+    })
+  )
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
   });
 }
 
