@@ -32,4 +32,12 @@ describe('RoihuUser', () => {
     after(() => RoihuUser.destroyById(userId));
   });
 
+  describe('findWaveByVillage', () => {
+    it('returns correct wave by village name', () =>
+      expect(RoihuUser.getVillageWave('Minttu')).to.equal('B'));
+
+    it('returns null by unknown village name', () =>
+      expect(RoihuUser.getVillageWave('Mintti')).to.be.null);
+  });
+
 });
