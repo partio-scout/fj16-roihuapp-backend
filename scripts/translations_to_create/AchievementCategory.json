@@ -71,5 +71,17 @@
 		"averageScore": 0,
     	"idFromSource": 60,
 		"sortNo": 60
+	},
+	{
+		"name": {
+			"FI": "Henkiohjelma",
+			"SV": "Andligt Program",
+			"EN": "Spiritual Programme"
+		},
+		"achievementCount": 0,
+		"leadingScore": 0,
+		"averageScore": 0,
+    	"idFromSource": 70,
+		"sortNo": 70
 	}
 ]
