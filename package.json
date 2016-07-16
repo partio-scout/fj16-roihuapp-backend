@@ -14,7 +14,8 @@
     "seed-database": "babel-node scripts/seed-database.js",
     "create-translations": "babel-node scripts/create-translations.js",
     "load-sharepoint": "babel-node scripts/load-sharepoint.js",
-    "load-instructions": "babel-node scripts/load-instructions.js"
+    "load-instructions": "babel-node scripts/load-instructions.js",
+    "admintools": "babel-node scripts/admintools.js"
   },
   "dependencies": {
     "babel-cli": "^6.6.5",
@@ -29,6 +30,7 @@
     "cors": "^2.7.1",
     "errorhandler": "^1.4.2",
     "history": "^1.17.0",
+    "inquirer": "^1.1.2",
     "lodash": "^4.6.1",
     "loopback": "^2.25.0",
     "loopback-boot": "^2.14.2",
