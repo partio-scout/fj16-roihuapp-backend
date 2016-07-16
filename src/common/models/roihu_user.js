@@ -6,6 +6,8 @@ import path from 'path';
 import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 import app from '../../server/server';
+import request from 'superagent';
+import loopback from 'loopback';
 
 export default function(RoihuUser) {
 
@@ -21,6 +23,45 @@ export default function(RoihuUser) {
       }
     }
     next();
+
+  });
+
+  RoihuUser.beforeRemote('prototype.updateAttributes', (ctx, modelInstance, next) => {
+    // prevent changes to membernumber
+    if (ctx.req && ctx.req.body)  {
+      if (ctx.req.body.memberNumber) {
+        delete ctx.req.body.memberNumber;
+      }
+    }
+    next();
+  });
+
+  RoihuUser.beforeRemote('findById', (ctx, modelInstance, next) => {
+    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
+    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
+
+    findUser(userId)
+    .then(user => RoihuUser.getRekiInformation(user.memberNumber)
+      .then(rekiInfo => Promise.fromCallback(callback => {
+        if (rekiInfo) {
+
+          user.subcamp = rekiInfo.subCamp;
+          user.ageGroup = rekiInfo.ageGroup;
+          user.phone = rekiInfo.phoneNumber;
+          user.primaryTroopAndCity = rekiInfo.localGroup;
+          //user.wave = getWaveFromVillage(rekiInfo.village);
+          user.campUnit = rekiInfo.campGroup;
+
+          user.save(callback);
+        } else {
+          callback();
+        }
+      }))
+    ).asCallback((err, data) => {
+      if (err && err.code == 'ENOTFOUND') console.error('REKI_URL not found', err);
+      else if (err) console.log(err);
+      next();
+    });
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
@@ -68,6 +109,21 @@ export default function(RoihuUser) {
       }
     }).asCallback(next);
   });
+
+  RoihuUser.getRekiInformation = memberNumber => {
+    const rekiUrl = process.env.REKI_URL;
+    const accessToken = process.env.REKI_ACCESSTOKEN;
+
+    return new Promise((resolve, reject) => {
+      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}`)
+      .end((err, userInfo) => {
+        if (err) reject(err);
+        else {
+          resolve(userInfo.body);
+        }
+      });
+    });
+  };
 
   RoihuUser.addOrReduceAchievementScores = function(amount, achievementId) {
     const findAchievement = Promise.promisify(app.models.Achievement.findOne, { context: app.models.Achievement });
