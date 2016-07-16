@@ -24,6 +24,17 @@ function askForConfirmation(infoMsg) {
   ]).then(answers => answers.confirmation);
 }
 
+function askForTranslateableModelName() {
+  return inquirer.prompt([
+    {
+      type: 'list',
+      name: 'modelName',
+      message: 'Choose target model',
+      choices: _.map(translateableModels, model => ({ name: model, value: model })),
+    }
+  ]).then(answers => answers.modelName);
+}
+
 function createTranslations() {
   inquirer.prompt([
     {
@@ -95,6 +106,10 @@ function deleteModels() {
   });
 }
 
+function editTranslations() {
+  askForTranslateableModelName
+}
+
 console.log('----------------------------');
 console.log('--   Roihuapp admintools  --');
 console.log('--    USE WITH OWN RISK   --');
@@ -107,5 +122,6 @@ inquirer.prompt([{
   choices: [
     { name: 'createTranslations', value: createTranslations },
     { name: 'deleteModels', value: deleteModels },
+    { name: 'editTranslations', value: editTranslations },
   ],
 }]).then(answers => answers.operation());
