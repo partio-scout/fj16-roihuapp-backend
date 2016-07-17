@@ -1,0 +1,15 @@
+#!/bin/bash
+cd ${OPENSHIFT_REPO_DIR}
+
+echo "***Begin achievement category score update***" >> ${OPENSHIFT_LOG_DIR}/update-achievement-score.log
+date >> ${OPENSHIFT_LOG_DIR}/update-achievement-score.log
+
+ps_out=`ps -ef | grep 'score_update.sql' | grep -v 'grep'`
+result=$(echo $ps_out | grep "score_update.sql")
+if [[ "$result" != "" ]];then
+    echo "!Update already running" >> ${OPENSHIFT_LOG_DIR}/update-achievement-score.log
+else
+    psql -h $OPENSHIFT_POSTGRESQL_DB_HOST -f score_update.sql >> ${OPENSHIFT_LOG_DIR}/update-achievement-score.log
+fi
+echo "***End achievement category score update***" >> ${OPENSHIFT_LOG_DIR}/update-achievement-score.log
+
