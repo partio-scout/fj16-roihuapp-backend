@@ -186,9 +186,9 @@ export default function(RoihuUser) {
       const url = `${process.env.APP_URL}/emailredirect/${token.userId}/${token.id}`;
       const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.js'));
       const transporter = nodemailer.createTransport(mailSettings);
-      const text_fi = 'Avaa tämä linkki puhelimesi nettiselaimella, jolloin Roihu 2016-appi aukeaa niin, että olet kirjautuneena.';
+      const text_fi = 'Avaa tämä linkki puhelimesi nettiselaimella, jolloin Roihu 2016 -appi aukeaa niin, että olet kirjautuneena.';
       const text_en = 'Open this link using your phone\'s Internet browser. This launches the Roihu 2016 app so that you are logged in.';
-      const text_se = 'Öppna denna länk med telefonens webbläsare. Detta startar Roihu 2016 appen så att du är inloggad.';
+      const text_se = 'Öppna den här länken med webbläsaren i din telefon. Då öppnas Roihu 2016-appen och du är automatiskt inloggad.';
       const text_text = `${text_fi} ${os.EOL} ${text_en} ${os.EOL} ${text_se} ${os.EOL} ${os.EOL}`;
       const text_html = `${text_fi} <br/> ${text_en} <br/> ${text_se} <br/> <br/>`;
 
