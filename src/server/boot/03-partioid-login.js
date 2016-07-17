@@ -54,7 +54,7 @@ export default function(app) {
       .then(generateAccessToken)
       .then(token => res.redirect(`roihu://${token.userId}/${token.id}`))
       .catch(err => {
-        res.status(500).send('Oho, nyt tapahtui virhe. Joko sinulla ei ole Kuksassa sähköpostiosoitetta, eli käy lisäämässä se, odota muutama tunti, ja yritä sitten uudelleen kirjautua appiin. Tai joku toinen, luultavasti perheenjäsenesi käyttää samaa sähköpostiosoitetta Kuksassa. Käy varmistamassa, että kullakin perheenjäsenellä on Kuksassa eri sähköpostiosoite. Odota taas muutama tunti ja yritä kirjautua uudelleen. Jos tällaista tapahtuu uudelleen, ole yhteydessä digitaaliset.palvelut@roihu2016.fi. Sori! :(');
+        res.status(500).send('Oho, nyt tapahtui virhe. Tämä voi johtua siitä ettei sinulla ole Kuksassa sähköpostiosoitetta, tai appiin on jo kirjauduttu käyttäen Kuksasta tulevaa sähköpostiosoitetta. Varmista että Kuksasta lyötyy sähköpostiosoite ja ettei sähköpostilla ole jo yritetty tehdä tunnusta. Tiedot päivittyvät Kuksasta muutaman tunnin välein. Jos tällaista tapahtuu uudelleen, ole yhteydessä digitaaliset.palvelut@roihu2016.fi. Pahoittelut häiriöstä.');
         console.error((new Date()), err);
       });
   });
