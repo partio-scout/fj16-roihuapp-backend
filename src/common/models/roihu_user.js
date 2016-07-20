@@ -68,7 +68,7 @@ export default function(RoihuUser) {
         'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.': 'Perheleiri',
         'samoajat (15-17v.)': 'Samoajat',
         'aikuiset (yli 22v.)': 'Aikuiset',
-        'vaeltajat (18-22v.)': 'vaeltajat',
+        'vaeltajat (18-22v.)': 'Vaeltajat',
         'tarpojat (12-15v.)': 'Tarpojat',
       };
 
