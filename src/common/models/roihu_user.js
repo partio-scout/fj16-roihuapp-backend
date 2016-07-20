@@ -41,7 +41,7 @@ export default function(RoihuUser) {
     const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
 
     findUser(userId)
-    .then(user => RoihuUser.getRekiInformation(user.memberNumber)
+    .then(user => RoihuUser.getRekiInformation(user.memberNumber, user.email)
       .then(rekiInfo => Promise.fromCallback(callback => {
         if (rekiInfo) {
 
@@ -118,12 +118,12 @@ export default function(RoihuUser) {
     }).asCallback(next);
   });
 
-  RoihuUser.getRekiInformation = memberNumber => {
+  RoihuUser.getRekiInformation = (memberNumber, email) => {
     const rekiUrl = process.env.REKI_URL;
     const accessToken = process.env.REKI_ACCESSTOKEN;
 
     return new Promise((resolve, reject) => {
-      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}`)
+      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}&email=${email}`)
       .end((err, userInfo) => {
         if (err) reject(err);
         else {
