@@ -41,12 +41,12 @@ export default function(RoihuUser) {
     const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
 
     findUser(userId)
-    .then(user => RoihuUser.getRekiInformation(user.memberNumber)
+    .then(user => RoihuUser.getRekiInformation(user.memberNumber, user.email)
       .then(rekiInfo => Promise.fromCallback(callback => {
         if (rekiInfo) {
 
           user.subcamp = rekiInfo.subCamp;
-          user.ageGroup = rekiInfo.ageGroup;
+          user.ageGroup = getAgeGroupPlural(rekiInfo.ageGroup);
           user.phone = rekiInfo.phoneNumber;
           user.primaryTroopAndCity = rekiInfo.localGroup;
           user.wave = RoihuUser.getVillageWave(rekiInfo.village);
@@ -62,6 +62,37 @@ export default function(RoihuUser) {
       else if (err) console.log(err);
       next();
     });
+
+    function getAgeGroupPlural(ageGroup) {
+      const ageGroups = {
+        'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.': 'Perheleiri',
+        'samoajat (15-17v.)': 'Samoajat',
+        'aikuiset (yli 22v.)': 'Aikuiset',
+        'vaeltajat (18-22v.)': 'vaeltajat',
+        'tarpojat (12-15v.)': 'Tarpojat',
+      };
+
+      return ageGroups[ageGroup] || ageGroup;
+    }
+  });
+
+  RoihuUser.afterRemote('findById', (ctx, modelInstance, next) => {
+    if (ctx.result) {
+      ctx.result.ageGroup = getAgeGroupTranslations(ctx.result.ageGroup);
+    }
+    next();
+
+    function getAgeGroupTranslations(ageGroup) {
+      const ageGroups = {
+        'Perheleiri': 'Perheleiri/Familjeläger/Family camp (0-11)',
+        'Tarpojat': 'Tarpoja/Spejarscout/Tracker (12-15)',
+        'Samoajat': 'Samoaja/Explorerscout/Explorer (15-17)',
+        'Vaeltajat': 'Vaeltaja/Roverscout/Rover (18-22)',
+        'Aikuiset': 'Aikuinen/Äldre ledare/Adult ( >22)',
+        'Muu': 'Muu/Andra/Other',
+      };
+      return ageGroups[ageGroup] || ageGroup;
+    }
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
@@ -110,12 +141,12 @@ export default function(RoihuUser) {
     }).asCallback(next);
   });
 
-  RoihuUser.getRekiInformation = memberNumber => {
+  RoihuUser.getRekiInformation = (memberNumber, email) => {
     const rekiUrl = process.env.REKI_URL;
     const accessToken = process.env.REKI_ACCESSTOKEN;
 
     return new Promise((resolve, reject) => {
-      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}`)
+      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}&email=${email}`)
       .end((err, userInfo) => {
         if (err) reject(err);
         else {
@@ -186,9 +217,9 @@ export default function(RoihuUser) {
       const url = `${process.env.APP_URL}/emailredirect/${token.userId}/${token.id}`;
       const mailSettings = require(path.join(__dirname, '..', '..', '..', 'mailsettings.js'));
       const transporter = nodemailer.createTransport(mailSettings);
-      const text_fi = 'Avaa tämä linkki puhelimesi nettiselaimella, jolloin Roihu 2016-appi aukeaa niin, että olet kirjautuneena.';
+      const text_fi = 'Avaa tämä linkki puhelimesi nettiselaimella, jolloin Roihu 2016 -appi aukeaa niin, että olet kirjautuneena.';
       const text_en = 'Open this link using your phone\'s Internet browser. This launches the Roihu 2016 app so that you are logged in.';
-      const text_se = 'Öppna denna länk med telefonens webbläsare. Detta startar Roihu 2016 appen så att du är inloggad.';
+      const text_se = 'Öppna den här länken med webbläsaren i din telefon. Då öppnas Roihu 2016-appen och du är automatiskt inloggad.';
       const text_text = `${text_fi} ${os.EOL} ${text_en} ${os.EOL} ${text_se} ${os.EOL} ${os.EOL}`;
       const text_html = `${text_fi} <br/> ${text_en} <br/> ${text_se} <br/> <br/>`;
 
@@ -224,7 +255,7 @@ export default function(RoihuUser) {
     if (village_data) {
       return village_data.aalto;
     } else {
-      return null;
+      return 'A';
     }
   };
 

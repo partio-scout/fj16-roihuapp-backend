@@ -36,8 +36,8 @@ describe('RoihuUser', () => {
     it('returns correct wave by village name', () =>
       expect(RoihuUser.getVillageWave('Minttu')).to.equal('B'));
 
-    it('returns null by unknown village name', () =>
-      expect(RoihuUser.getVillageWave('Mintti')).to.be.null);
+    it('returns A as default village name', () =>
+      expect(RoihuUser.getVillageWave('Mintti')).to.equal('A'));
   });
 
 });
