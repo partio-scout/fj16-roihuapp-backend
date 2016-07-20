@@ -46,7 +46,7 @@ export default function(RoihuUser) {
         if (rekiInfo) {
 
           user.subcamp = rekiInfo.subCamp;
-          user.ageGroup = familyCampSpellingFix(rekiInfo.ageGroup);
+          user.ageGroup = getAgeGroupPlural(rekiInfo.ageGroup);
           user.phone = rekiInfo.phoneNumber;
           user.primaryTroopAndCity = rekiInfo.localGroup;
           user.wave = RoihuUser.getVillageWave(rekiInfo.village);
@@ -63,12 +63,16 @@ export default function(RoihuUser) {
       next();
     });
 
-    function familyCampSpellingFix(ageGroup) {
-      if (ageGroup === 'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.') {
-        return 'Perheleiri (0-11v.)';
-      } else {
-        return ageGroup;
-      }
+    function getAgeGroupPlural(ageGroup) {
+      const ageGroups = {
+        'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.': 'Perheleiri',
+        'samoajat (15-17v.)': 'Samoajat',
+        'aikuiset (yli 22v.)': 'Aikuiset',
+        'vaeltajat (18-22v.)': 'vaeltajat',
+        'tarpojat (12-15v.)': 'Tarpojat',
+      };
+
+      return ageGroups[ageGroup] || ageGroup;
     }
   });
 
