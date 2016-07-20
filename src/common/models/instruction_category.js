@@ -11,7 +11,7 @@ module.exports = function(InstructionCategory) {
     const response = {
       timestamp: '2016-07-03T06:00:00.000Z',
       next_check: '2016-07-03T06:00:00.000Z',
-      ttl: 3600,
+      ttl: 82800,
       language: language,
       categories: [],
     };
