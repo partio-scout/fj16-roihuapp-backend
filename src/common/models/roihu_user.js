@@ -46,7 +46,7 @@ export default function(RoihuUser) {
         if (rekiInfo) {
 
           user.subcamp = rekiInfo.subCamp;
-          user.ageGroup = rekiInfo.ageGroup;
+          user.ageGroup = familyCampSpellingFix(rekiInfo.ageGroup);
           user.phone = rekiInfo.phoneNumber;
           user.primaryTroopAndCity = rekiInfo.localGroup;
           user.wave = RoihuUser.getVillageWave(rekiInfo.village);
@@ -62,6 +62,14 @@ export default function(RoihuUser) {
       else if (err) console.log(err);
       next();
     });
+
+    function familyCampSpellingFix(ageGroup) {
+      if (ageGroup === 'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.') {
+        return 'Perheleiri (0-11v.)';
+      } else {
+        return ageGroup;
+      }
+    }
   });
 
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
