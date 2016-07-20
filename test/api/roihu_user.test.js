@@ -20,6 +20,7 @@ const testUser = {
   username: 'luigispurdonte',
   password: 'letmein',
   memberNumber: '12345',
+  ageGroup: 'Samoajat',
 };
 
 const testUser2 = {
@@ -200,5 +201,24 @@ describe('RoihuUser', () => {
     );
 
     it('should not throw error when reki is not responding', () => testUtils.get(`/api/RoihuUsers/${userId}`, token).expect(200));
+  });
+
+  describe('Local translations', () => {
+    let userId;
+    let token;
+
+    before(() => resetDatabase()
+      .then(() => testUtils.createFixture('RoihuUser', testUser))
+      .then(user => {
+        userId = user.id;
+        return testUtils.loginUser(testUser.username, testUser.password).then(at => token = at.id );
+      })
+    );
+
+    it('should give correct translation for ageGroup', () =>
+      testUtils.get(`/api/RoihuUsers/${userId}`, token)
+      .expect(200)
+      .expect(res => expect(res.body).to.have.property('ageGroup', 'Samoaja/Explorerscout/Explorer (15-17)'))
+    );
   });
 });
