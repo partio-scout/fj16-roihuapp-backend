@@ -90,7 +90,7 @@
       "scale": null,
       "postgresql": {
         "columnName": "last_modified",
-        "dataType": "timestamp",
+        "dataType": "timestamp with time zone",
         "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,

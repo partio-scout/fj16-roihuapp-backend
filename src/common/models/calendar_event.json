@@ -141,7 +141,7 @@
       "scale": null,
       "postgresql": {
         "columnName": "start_time",
-        "dataType": "timestamp",
+        "dataType": "timestamp with time zone",
         "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
@@ -158,7 +158,7 @@
       "scale": null,
       "postgresql": {
         "columnName": "end_time",
-        "dataType": "timestamp",
+        "dataType": "timestamp with time zone",
         "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
