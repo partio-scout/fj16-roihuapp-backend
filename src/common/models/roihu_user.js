@@ -232,7 +232,7 @@ export default function(RoihuUser) {
     if (village_data) {
       return village_data.aalto;
     } else {
-      return null;
+      return 'A';
     }
   };
 
