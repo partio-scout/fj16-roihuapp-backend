@@ -76,6 +76,25 @@ export default function(RoihuUser) {
     }
   });
 
+  RoihuUser.afterRemote('findById', (ctx, modelInstance, next) => {
+    if (ctx.result) {
+      ctx.result.ageGroup = getAgeGroupTranslations(ctx.result.ageGroup);
+    }
+    next();
+
+    function getAgeGroupTranslations(ageGroup) {
+      const ageGroups = {
+        'Perheleiri': 'Perheleiri/Familjeläger/Family camp (0-11)',
+        'Tarpojat': 'Tarpoja/Spejarscout/Tracker (12-15)',
+        'Samoajat': 'Samoaja/Explorerscout/Explorer (15-17)',
+        'Vaeltajat': 'Vaeltaja/Roverscout/Rover (18-22)',
+        'Aikuiset': 'Aikuinen/Äldre ledare/Adult ( >22)',
+        'Muu': 'Muu/Andra/Other',
+      };
+      return ageGroups[ageGroup] || ageGroup;
+    }
+  });
+
   RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
     // check if user already has achieved this achievement
     RoihuUser.getCompletedAchievementIds(ctx.req.params.id)
