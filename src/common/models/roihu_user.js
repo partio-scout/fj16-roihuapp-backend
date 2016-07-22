@@ -51,6 +51,10 @@ export default function(RoihuUser) {
           user.primaryTroopAndCity = rekiInfo.localGroup;
           user.wave = RoihuUser.getVillageWave(rekiInfo.village);
           user.campUnit = rekiInfo.campGroup;
+          user.nickname = rekiInfo.nickname || user.nickname;
+          user.firstname = rekiInfo.firstName || user.firstname;
+          user.lastname = rekiInfo.lastName || user.lastname;
+          user.country = rekiInfo.country;
 
           user.save(callback);
         } else {
