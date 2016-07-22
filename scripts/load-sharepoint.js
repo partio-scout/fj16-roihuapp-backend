@@ -137,9 +137,9 @@ export function eventsHandler(err, data) {
           const locPromise = findLocation({ where: { idFromSource: item.PaikkaId } })
           .then(location => {
             Promise.join(
-            translationUtils.translateModel(location, 'FI'),
-            translationUtils.translateModel(location, 'SV'),
-            translationUtils.translateModel(location, 'EN'),
+            translationUtils.translateModel(location.__data, 'FI'),
+            translationUtils.translateModel(location.__data, 'SV'),
+            translationUtils.translateModel(location.__data, 'EN'),
             (locFI, locSV, locEN) => {
               events.push({
                 name: {
@@ -286,6 +286,7 @@ if (require.main === module) {
     .catch(err => {
       console.log('Sharepoint loader error');
       console.log(err);
-    });
+    })
+    .finally(() => process.exit(0));
   }
 }
