@@ -31,5 +31,11 @@ sp_load() {
 if [ ! -z "$1" ]; then
   ATTEMPT_MAX=$1
 fi
-echo "Attempt sharepoint load $ATTEMPT_MAX times"
-sp_load
+
+# run every 5 minutes
+minute=$(date +%M)
+if [ $(($minute % 5)) -eq 0 ]; then
+  echo "Attempt sharepoint load $ATTEMPT_MAX times"
+  sp_load
+fi
+
