@@ -228,9 +228,9 @@ export default function(RoihuUser) {
       const text_html = `${text_fi} <br/> ${text_en} <br/> ${text_se} <br/> <br/>`;
 
       const mailOptions = {
-        from: `"roihuapp" <noreply@roihu2016.fi>`,
+        from: `"Mobile-app" <noreply@example.com>`,
         to: mail,
-        subject: 'Roihuapp email login',
+        subject: 'Mobile-app email login',
         text: `${text_text}${url}`,
         html: `${text_html}<a href="${url}">${url}</a>`,
       };

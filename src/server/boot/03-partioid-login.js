@@ -40,7 +40,7 @@ export default function(app) {
   app.get('/saml/login', (req, res) =>
     partioid.getAuthorizeUrl(req, (err, url) => {
       if (err) {
-        res.status(500).send('Oho! Nyt tapahtui virhe. Jos tällaista tapahtuu uudelleen, ole yhteydessä digitaaliset.palvelut@roihu2016.fi. Sori! :(');
+        res.status(500).send('Oho! Nyt tapahtui virhe. Jos tällaista tapahtuu uudelleen, ole yhteydessä support@example.com. Sori! :(');
         console.error((new Date()), err);
       } else {
         res.redirect(url);
@@ -54,7 +54,7 @@ export default function(app) {
       .then(generateAccessToken)
       .then(token => res.redirect(`roihu://${token.userId}/${token.id}`))
       .catch(err => {
-        res.status(500).send('Oho, nyt tapahtui virhe. Tämä voi johtua siitä ettei sinulla ole Kuksassa sähköpostiosoitetta, tai appiin on jo kirjauduttu käyttäen Kuksasta tulevaa sähköpostiosoitetta. Varmista että Kuksasta lyötyy sähköpostiosoite ja ettei sähköpostilla ole jo yritetty tehdä tunnusta. Tiedot päivittyvät Kuksasta muutaman tunnin välein. Jos tällaista tapahtuu uudelleen, ole yhteydessä digitaaliset.palvelut@roihu2016.fi. Pahoittelut häiriöstä.');
+        res.status(500).send('Oho, nyt tapahtui virhe. Tämä voi johtua siitä ettei sinulla ole Kuksassa sähköpostiosoitetta, tai appiin on jo kirjauduttu käyttäen Kuksasta tulevaa sähköpostiosoitetta. Varmista että Kuksasta lyötyy sähköpostiosoite ja ettei sähköpostilla ole jo yritetty tehdä tunnusta. Tiedot päivittyvät Kuksasta muutaman tunnin välein. Jos tällaista tapahtuu uudelleen, ole yhteydessä support@example.com. Pahoittelut häiriöstä.');
         console.error((new Date()), err);
       });
   });
