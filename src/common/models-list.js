@@ -7,8 +7,8 @@
 const modelList = [
   ['AccessToken', false],
   ['ACL', false],
-  ['Role', true],
-  ['RoihuUser', true],
+  ['Role', false],
+  ['RoihuUser', false],
   ['RoleMapping', false],
   ['InstructionCategory', false],
   ['Translation', false],
