@@ -1,4 +1,4 @@
-# Roihuapp backend
+# Mobile application backend
 
 Finnjamboree 2016 mobile application backend
 
@@ -59,9 +59,9 @@ All GET requests should use lang parameter like `LocationCategories/translations
 
 #### Achievements
 
-* User completed achievements -> GET api/RoihuUsers/{id}/completedAchievements
-* Mark achievement completed -> PUT api/RoihuUsers/{id}/achievements/rel/{fk}
-* Mark achievement un-completed -> DELETE api/RoihuUsers/{id}/achievements/rel/{fk}
+* User completed achievements -> GET api/ApiUsers/{id}/completedAchievements
+* Mark achievement completed -> PUT api/ApiUsers/{id}/achievements/rel/{fk}
+* Mark achievement un-completed -> DELETE api/ApiUsers/{id}/achievements/rel/{fk}
 * All achievements -> GET api/AchievementCategories/translations
 
 #### Locations
@@ -81,14 +81,14 @@ All GET requests should use lang parameter like `LocationCategories/translations
     * `include` filter may result in unwanted behavior
     * `fields` filter will be overwritten
     * use `textfilter` param to search text from name and description
-* Users calendar -> GET api/RoihuUsers/{id}/calendar
-* Add event to calendar -> PUT api/RoihuUsers/{id}/calendarEvents/rel/{fk}
-* remove event from calendar -> DELETE api/RoihuUsers/{id}/calendarEvents/rel/{fk}
+* Users calendar -> GET api/ApiUsers/{id}/calendar
+* Add event to calendar -> PUT api/ApiUsers/{id}/calendarEvents/rel/{fk}
+* remove event from calendar -> DELETE api/ApiUsers/{id}/calendarEvents/rel/{fk}
 * Submit new event -> POST api/CalendarEvents
 
 #### Users
 
-* Login -> POST api/RoihuUsers/login
-* Logout ->  POST api/RoihuUsers/logout
-* Email login -> POST api/RoihuUsers/emailLogin
+* Login -> POST api/ApiUsers/login
+* Logout ->  POST api/ApiUsers/logout
+* Email login -> POST api/ApiUsers/emailLogin
 * Saml login -> POST saml/login

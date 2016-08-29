@@ -9,18 +9,18 @@ import Promise from 'bluebird';
 //chai.use(chaiAsPromised);
 
 //const expect = chai.expect;
-const RoihuUser = app.models.RoihuUser;
+const ApiUser = app.models.ApiUser;
 
 describe('Achievement', () => {
 
   describe('Unauthenticated user', () => {
     it('should not get others completed achievements', () => {
-      request(app).get(`/api/RoihuUsers/1/completedAchievements?lang=FI`)
+      request(app).get(`/api/ApiUsers/1/completedAchievements?lang=FI`)
       .expect(401);
     });
 
     it('should not allow to mark others achievement completed', () => {
-      request(app).put(`/api/RoihuUsers/1/achievements/rel/1`)
+      request(app).put(`/api/ApiUsers/1/achievements/rel/1`)
       .expect(401);
     });
 
@@ -33,7 +33,7 @@ describe('Achievement', () => {
     let achId;
 
     before(done => {
-      const p1 = RoihuUser.create({
+      const p1 = ApiUser.create({
         lastModified: new Date(),
         lastname: 'Spurdonte',
         firstname: 'Luigi',
@@ -43,7 +43,7 @@ describe('Achievement', () => {
         username: 'letmein',
       }).then(user => User = user);
 
-      const p2 = RoihuUser.create({
+      const p2 = ApiUser.create({
         lastModified: new Date(),
         lastname: 'x',
         firstname: 'y',
@@ -76,7 +76,7 @@ describe('Achievement', () => {
 
     it('should get own completed achievements', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).get(`/api/RoihuUsers/${User.id}/completedAchievements?lang=FI`)
+        request(app).get(`/api/ApiUsers/${User.id}/completedAchievements?lang=FI`)
         .query({ access_token: token.id })
         .expect(200);
       });
@@ -84,7 +84,7 @@ describe('Achievement', () => {
 
     it('should not get others completed achievements', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).get(`/api/RoihuUsers/${User2Id}/completedAchievements?lang=FI`)
+        request(app).get(`/api/ApiUsers/${User2Id}/completedAchievements?lang=FI`)
         .query({ access_token: token.id })
         .expect(401);
       });
@@ -92,7 +92,7 @@ describe('Achievement', () => {
 
     it('should allow to mark achievement completed', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).put(`/api/RoihuUsers/${User.id}/achievements/rel/${achId}`)
+        request(app).put(`/api/ApiUsers/${User.id}/achievements/rel/${achId}`)
         .query({ access_token: token.id })
         .expect(200);
       });
@@ -100,7 +100,7 @@ describe('Achievement', () => {
 
     it('should allow to mark achievement not completed', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).delete(`/api/RoihuUsers/${User.id}/achievements/rel/${achId}`)
+        request(app).delete(`/api/ApiUsers/${User.id}/achievements/rel/${achId}`)
         .query({ access_token: token.id })
         .expect(200);
       });
@@ -108,15 +108,15 @@ describe('Achievement', () => {
 
     it('should not allow to mark others achievement completed', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).put(`/api/RoihuUsers/${User2Id}/achievements/rel/${achId}`)
+        request(app).put(`/api/ApiUsers/${User2Id}/achievements/rel/${achId}`)
         .query({ access_token: token.id })
         .expect(401);
       });
     });
 
     after(() => {
-      testUtils.deleteFixtureIfExists('RoihuUser', User.id || 9999);
-      testUtils.deleteFixtureIfExists('RoihuUser', User2Id || 9999);
+      testUtils.deleteFixtureIfExists('ApiUser', User.id || 9999);
+      testUtils.deleteFixtureIfExists('ApiUser', User2Id || 9999);
       testUtils.deleteFixtureIfExists('Achievement', achId || 9999);
     });
   });

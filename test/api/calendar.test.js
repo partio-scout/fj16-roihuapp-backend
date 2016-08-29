@@ -10,7 +10,7 @@ import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const RoihuUser = app.models.RoihuUser;
+const ApiUser = app.models.ApiUser;
 const testEvent = {
   name: {
     FI: 'Autoajelu',
@@ -41,12 +41,12 @@ const testEvent = {
 describe('Calendar', () => {
   describe('Unauthenticated user', () => {
     it('should not get others calendars', () => {
-      request(app).get(`/api/RoihuUsers/1/calendar?lang=FI`)
+      request(app).get(`/api/ApiUsers/1/calendar?lang=FI`)
       .expect(401);
     });
 
     it('should not allow to add events to calendars', () => {
-      request(app).put(`/api/RoihuUsers/1/calendar/rel/1`)
+      request(app).put(`/api/ApiUsers/1/calendar/rel/1`)
       .expect(401);
     });
   });
@@ -57,7 +57,7 @@ describe('Calendar', () => {
     let evtId;
 
     before(done => {
-      const p1 = RoihuUser.create({
+      const p1 = ApiUser.create({
         lastModified: new Date(),
         lastname: 'Spurdonte',
         firstname: 'Luigi',
@@ -67,7 +67,7 @@ describe('Calendar', () => {
         username: 'letmein',
       }).then(user => User = user);
 
-      const p2 = RoihuUser.create({
+      const p2 = ApiUser.create({
         lastModified: new Date(),
         lastname: 'x',
         firstname: 'y',
@@ -86,7 +86,7 @@ describe('Calendar', () => {
 
     it('should get own calendar', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).get(`/api/RoihuUsers/${User.id}/calendar?lang=FI`)
+        request(app).get(`/api/ApiUsers/${User.id}/calendar?lang=FI`)
         .query({ access_token: token.id })
         .expect(200);
       });
@@ -94,7 +94,7 @@ describe('Calendar', () => {
 
     it('should not get others calendars', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).get(`/api/RoihuUsers/${User2Id}/calendar?lang=FI`)
+        request(app).get(`/api/ApiUsers/${User2Id}/calendar?lang=FI`)
         .query({ access_token: token.id })
         .expect(401);
       });
@@ -102,7 +102,7 @@ describe('Calendar', () => {
 
     it('should allow to add event to calendar', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).put(`/api/RoihuUsers/${User.id}/calendar/rel/${evtId}`)
+        request(app).put(`/api/ApiUsers/${User.id}/calendar/rel/${evtId}`)
         .query({ access_token: token.id })
         .expect(200);
       });
@@ -110,7 +110,7 @@ describe('Calendar', () => {
 
     it('should allow to remove event from calendar', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).delete(`/api/RoihuUsers/${User.id}/calendar/rel/${evtId}`)
+        request(app).delete(`/api/ApiUsers/${User.id}/calendar/rel/${evtId}`)
         .query({ access_token: token.id })
         .expect(200);
       });
@@ -118,7 +118,7 @@ describe('Calendar', () => {
 
     it('should not allow to add events to others calendars', () => {
       testUtils.withLoggedInUser('letmein', 'letmein', token => {
-        request(app).put(`/api/RoihuUsers/${User2Id}/calendar/rel/${evtId}`)
+        request(app).put(`/api/ApiUsers/${User2Id}/calendar/rel/${evtId}`)
         .query({ access_token: token.id })
         .expect(401);
       });

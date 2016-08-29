@@ -8,7 +8,7 @@ const modelList = [
   ['AccessToken', false],
   ['ACL', false],
   ['Role', false],
-  ['RoihuUser', false],
+  ['ApiUser', false],
   ['RoleMapping', false],
   ['InstructionCategory', false],
   ['Translation', false],
@@ -18,8 +18,8 @@ const modelList = [
   ['Location', false],
   ['AchievementCategory', false],
   ['Achievement', false],
-  ['AchievementRoihuUser', false],
-  ['CalendarEventRoihuUser', false],
+  ['AchievementApiUser', false],
+  ['CalendarEventApiUser', false],
 ];
 
 export function getModelCreationList() {

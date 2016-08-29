@@ -17,12 +17,12 @@ const conf = {
 const partioid = new SAML(conf);
 
 export default function(app) {
-  const RoihuUser = app.models.RoihuUser;
+  const ApiUser = app.models.ApiUser;
   const validatePostResponse = Promise.promisify(partioid.validatePostResponse, { context: partioid });
 
   function findOrProvisionUser(samlResult) {
-    return RoihuUser.findByMemberNumber(samlResult.membernumber).then(user =>
-      user || RoihuUser.create({
+    return ApiUser.findByMemberNumber(samlResult.membernumber).then(user =>
+      user || ApiUser.create({
         firstname: samlResult.firstname,
         lastname: samlResult.lastname,
         email: samlResult.email,

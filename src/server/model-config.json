@@ -20,7 +20,7 @@
     "dataSource": "db",
     "public": false
   },
-  "RoihuUser": {
+  "ApiUser": {
     "dataSource": "db",
     "public": true
   },

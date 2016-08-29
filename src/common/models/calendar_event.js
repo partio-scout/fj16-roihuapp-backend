@@ -9,8 +9,8 @@ module.exports = function(CalendarEvent) {
 
   CalendarEvent.FindTranslations = function(language, filter, textfilter, cb) {
     const ctx = loopback.getCurrentContext();
-    const RoihuUser = app.models.RoihuUser;
-    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
+    const ApiUser = app.models.ApiUser;
+    const findUser = Promise.promisify(ApiUser.findById, { context: ApiUser });
     let currentUserId = -1;
 
     if (ctx.active.accessToken) {   // user is logged in
