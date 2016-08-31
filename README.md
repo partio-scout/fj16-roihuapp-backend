@@ -29,8 +29,7 @@ Install all dependencies:
 
 ### User login with only email
 
-AWS_SES_USER - aws-ses username
-AWS_SES_PASS - aws-ses password
+Define your email send settings in `mailsettings.js` file. Set `APP_URL` environment variable to application url, so that link in email is correct.
 
 ## Running the app
 
