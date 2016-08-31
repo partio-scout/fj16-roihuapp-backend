@@ -1,6 +1,6 @@
 # Mobile application backend
 
-Finnjamboree 2016 mobile application backend
+Finnjamboree 2016 mobile application backend.
 
 # Development
 
@@ -31,15 +31,6 @@ Install all dependencies:
 
 AWS_SES_USER - aws-ses username
 AWS_SES_PASS - aws-ses password
-
-### Sharepoint integration
-
-SHAREPOINT_USER - sharepoint username
-SHAREPOINT_PSW  - sharepoint password
-
-### Instructions source endpoint
-
-INSTRUCTIONS_SOURCE - http://myurl.com
 
 ## Running the app
 
