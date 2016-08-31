@@ -1,155 +1,184 @@
 [
-	{
-		"name": {
-			"FI": "Jätehuolto",
-			"SV": "Samma på svenska",
-			"EN": "Dump, Waste, and Recycling"
-		},
-		"idFromSource": 10,
-		"sortNo": 10
-	},
-	{
-		"name": {
-			"FI": "Pelisäännöt",
-			"SV": "Läger rulerna",
-			"EN": "Camp Rules"
-		},
-		"idFromSource": 20,
-		"sortNo": 20
-	},
-	{
-		"name": {
-			"FI": "Lääkintä",
-			"SV": "Medisinering",
-			"EN": "Medical"
-		},
-		"idFromSource": 30,
-		"sortNo": 30
-	},
-	{
-		"name": {
-			"FI": "Turvallisesti leirillä",
-			"SV": "Säkerhet",
-			"EN": "Camp Safety"
-		},
-		"idFromSource": 40,
-		"sortNo": 40
-	},
-	{
-		"name": {
-			"FI": "Vierailupäivä",
-			"SV": "Besökningsdag",
-			"EN": "Visiting Day"
-		},
-		"idFromSource": 50,
-		"sortNo": 50
-	},
-	{
-		"name": {
-			"FI": "Leirilippukunnan rakentaminen ja purkaminen",
-			"SV": "Lägerkår byggande och ta isär",
-			"EN": "Building and Taking Down the Camp Unit"
-		},
-		"idFromSource": 60,
-		"sortNo": 60
-	},
-	{
-		"name": {
-			"FI": "Leiritoimisto",
-			"SV": "Lägerbyrå",
-			"EN": "Camp Office"
-		},
-		"idFromSource": 70,
-		"sortNo": 70
-	},
-	{
-		"name": {
-			"FI": "Kehittämö",
-			"SV": "Developering",
-			"EN": "Development"
-		},
-		"idFromSource": 80,
-		"sortNo": 80
-	},
-	{
-		"name": {
-			"FI": "Leiriluotsien tehtävät",
-			"SV": "Lägerpilotens uppdraglist",
-			"EN": "Camp pilot dutys"
-		},
-		"idFromSource": 90,
-		"sortNo": 90
-	},
-	{
-		"name": {
-			"FI": "Saapuminen Roihulle",
-			"SV": "Ankomst till läger",
-			"EN": "Arriving at Roihu"
-		},
-		"idFromSource": 100,
-		"sortNo": 100
-	},
-	{
-		"name": {
-			"FI": "Viestintä leirin aikana",
-			"SV": "Lägerkommunikation",
-			"EN": "Camp Communications"
-		},
-		"idFromSource": 110,
-		"sortNo": 110
-	},
-	{
-		"name": {
-			"FI": "Ruokailut",
-			"SV": "Mål",
-			"EN": "Meals"
-		},
-		"idFromSource": 120,
-		"sortNo": 120
-	},
-	{
-		"name": {
-			"FI": "Ohjelma",
-			"SV": "Programm",
-			"EN": "Program"
-		},
-		"idFromSource": 130,
-		"sortNo": 130
-	},
-	{
-		"name": {
-			"FI": "Leiriseurakunta",
-			"SV": "Lägerförsamlingen",
-			"EN": "Camp Parish"
-		},
-		"idFromSource": 140,
-		"sortNo": 140
-	},
-	{
-		"name": {
-			"FI": "Tärkeät yhteystiedot",
-			"SV": "Kontaktinformation",
-			"EN": "Important Contacts"
-		},
-		"idFromSource": 150,
-		"sortNo": 150
-	},
-	{
-		"name": {
-			"FI": "Leirijohdon tervehdykset",
-			"SV": "Lägerledarens hälsningarna",
-			"EN": "Greetings from Camp Leaders"
-		},
-		"idFromSource": 160,
-		"sortNo": 160
-	},
-	{
-		"name": {
-			"FI": "KV-info",
-			"SV": "Utlänningarna",
-			"EN": "International Info"
-		},
-		"idFromSource": 170,
-		"sortNo": 170
-	}
+  {
+    "categoryId": 365,
+    "name": "Lägervardagen",
+    "sortNo": 0,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 364,
+    "name": "Leiriarki Roihulla",
+    "sortNo": 0,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 363,
+    "name": "Life at Roihu",
+    "sortNo": 0,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 257,
+    "name": "Roihu 2016 -appi",
+    "sortNo": 0,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 292,
+    "name": "Leirin pelisäännöt",
+    "sortNo": 1,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 256,
+    "name": "Ohjelma",
+    "sortNo": 2,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 316,
+    "name": "Hygienia",
+    "sortNo": 3,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 344,
+    "name": "Turvallisuus",
+    "sortNo": 4,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 345,
+    "name": "Leirin palveluita",
+    "sortNo": 5,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 346,
+    "name": "Leirin tekeminen",
+    "sortNo": 6,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 347,
+    "name": "Osana maailmaa",
+    "sortNo": 7,
+    "lang": "FI",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 296,
+    "name": "Lägrets spelregler",
+    "sortNo": 8,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 269,
+    "name": "Program",
+    "sortNo": 9,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 323,
+    "name": "Hygien",
+    "sortNo": 10,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 349,
+    "name": "Säkerhet",
+    "sortNo": 11,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 351,
+    "name": "Lägrets tjänster",
+    "sortNo": 12,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 356,
+    "name": "Att bygga ett läger",
+    "sortNo": 13,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 354,
+    "name": "Som en del av världen",
+    "sortNo": 14,
+    "lang": "SV",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 258,
+    "name": "Roihu 2016 App",
+    "sortNo": 25,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 293,
+    "name": "Camp rules",
+    "sortNo": 26,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 270,
+    "name": "Programme",
+    "sortNo": 27,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 328,
+    "name": "Hygiene",
+    "sortNo": 28,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 348,
+    "name": "Safety",
+    "sortNo": 29,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 352,
+    "name": "Services at the camp",
+    "sortNo": 30,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 355,
+    "name": "Building the camp",
+    "sortNo": 31,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  },
+  {
+    "categoryId": 353,
+    "name": "As a part of the world",
+    "sortNo": 32,
+    "lang": "EN",
+    "lastModified": "2016-08-31T09:18:13.194Z"
+  }
 ]

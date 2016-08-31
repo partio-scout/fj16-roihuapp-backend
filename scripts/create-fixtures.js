@@ -15,14 +15,16 @@ const translateableList = [
   'Achievement',
   'LocationCategory',
   'Location',
+  'CalendarEvent',
 ];
 
 // Model fixtures not needing translation
 const notTranslateableList = [
-
+  'InstructionCategory',
+  'Instruction',
 ];
 
-function getTranslations(modelName) {
+function getFixtures(modelName) {
   return Promise.try(() => require(path.resolve(__dirname, `./fixtures/${modelName}`)));
 }
 
@@ -30,7 +32,7 @@ function createTranslationsForModel(modelName) {
   const model = app.models[modelName];
   const createModel = Promise.promisify(model.create, { context: model });
 
-  return getTranslations(modelName)
+  return getFixtures(modelName)
     .then(modelData => {
       _.forEach(modelData, fixture => {
         const modelJSON = {
@@ -66,7 +68,11 @@ function createTranslationsForModel(modelName) {
 }
 
 function createFixturesForModel(modelName) {
+  const model = app.models[modelName];
+  const createModel = Promise.promisify(model.create, { context: model });
 
+  return getFixtures(modelName)
+    .then(fixtureData => createModel(fixtureData));
 }
 
 // Pikkukikka joka suorittaa promiseReturningFunctionin peräkkäin jokaiselle values-listan jäsenelle niin,
