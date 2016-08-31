@@ -188,21 +188,6 @@ describe('ApiUser', () => {
     });
   });
 
-  describe('reki-integration', () => {
-    let userId;
-    let token;
-
-    before(() => resetDatabase()
-      .then(() => testUtils.createFixture('ApiUser', testUser))
-      .then(user => {
-        userId = user.id;
-        return testUtils.loginUser(testUser.username, testUser.password).then(at => token = at.id );
-      })
-    );
-
-    it('should not throw error when reki is not responding', () => testUtils.get(`/api/ApiUsers/${userId}`, token).expect(200));
-  });
-
   describe('Local translations', () => {
     let userId;
     let token;

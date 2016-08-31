@@ -6,8 +6,6 @@ import path from 'path';
 import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 import app from '../../server/server';
-import request from 'superagent';
-import loopback from 'loopback';
 
 export default function(ApiUser) {
 
@@ -34,50 +32,6 @@ export default function(ApiUser) {
       }
     }
     next();
-  });
-
-  ApiUser.beforeRemote('findById', (ctx, modelInstance, next) => {
-    const findUser = Promise.promisify(ApiUser.findById, { context: ApiUser });
-    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
-
-    findUser(userId)
-    .then(user => ApiUser.getRekiInformation(user.memberNumber, user.email)
-      .then(rekiInfo => Promise.fromCallback(callback => {
-        if (rekiInfo) {
-
-          user.subcamp = rekiInfo.subCamp;
-          user.ageGroup = getAgeGroupPlural(rekiInfo.ageGroup);
-          user.phone = rekiInfo.phoneNumber;
-          user.primaryTroopAndCity = rekiInfo.localGroup;
-          user.wave = ApiUser.getVillageWave(rekiInfo.village);
-          user.campUnit = rekiInfo.campGroup;
-          user.nickname = rekiInfo.nickname || user.nickname;
-          user.firstname = rekiInfo.firstName || user.firstname;
-          user.lastname = rekiInfo.lastName || user.lastname;
-          user.country = rekiInfo.country;
-
-          user.save(callback);
-        } else {
-          callback();
-        }
-      }))
-    ).asCallback((err, data) => {
-      if (err && err.code == 'ENOTFOUND') console.error('REKI_URL not found', err);
-      else if (err) console.log(err);
-      next();
-    });
-
-    function getAgeGroupPlural(ageGroup) {
-      const ageGroups = {
-        'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.': 'Perheleiri',
-        'samoajat (15-17v.)': 'Samoajat',
-        'aikuiset (yli 22v.)': 'Aikuiset',
-        'vaeltajat (18-22v.)': 'Vaeltajat',
-        'tarpojat (12-15v.)': 'Tarpojat',
-      };
-
-      return ageGroups[ageGroup] || ageGroup;
-    }
   });
 
   ApiUser.afterRemote('findById', (ctx, modelInstance, next) => {
@@ -144,21 +98,6 @@ export default function(ApiUser) {
       }
     }).asCallback(next);
   });
-
-  ApiUser.getRekiInformation = (memberNumber, email) => {
-    const rekiUrl = process.env.REKI_URL;
-    const accessToken = process.env.REKI_ACCESSTOKEN;
-
-    return new Promise((resolve, reject) => {
-      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}&email=${email}`)
-      .end((err, userInfo) => {
-        if (err) reject(err);
-        else {
-          resolve(userInfo.body);
-        }
-      });
-    });
-  };
 
   ApiUser.addOrReduceAchievementScores = function(amount, achievementId) {
     const findAchievement = Promise.promisify(app.models.Achievement.findOne, { context: app.models.Achievement });

@@ -1,6 +1,6 @@
 # Mobile application backend
 
-Finnjamboree 2016 mobile application backend.
+Finnjamboree 2016 mobile application backend. All content types support unlimited amount of different language versions.
 
 # Development
 
