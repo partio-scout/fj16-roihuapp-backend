@@ -17,8 +17,13 @@ const translateableList = [
   'Location',
 ];
 
+// Model fixtures not needing translation
+const notTranslateableList = [
+
+];
+
 function getTranslations(modelName) {
-  return Promise.try(() => require(path.resolve(__dirname, `./translations_to_create/${modelName}`)));
+  return Promise.try(() => require(path.resolve(__dirname, `./fixtures/${modelName}`)));
 }
 
 function createTranslationsForModel(modelName) {
@@ -60,6 +65,10 @@ function createTranslationsForModel(modelName) {
     });
 }
 
+function createFixturesForModel(modelName) {
+
+}
+
 // Pikkukikka joka suorittaa promiseReturningFunctionin peräkkäin jokaiselle values-listan jäsenelle niin,
 // että promiseReturningFunctioneja on vain yksi suorituksessa kerrallaan.
 // Palauttaa tyhjän resolved-tilassa olevan promisen jos values-lista on tyhjä.
@@ -72,7 +81,14 @@ export function createTranslations() {
   return forAll(translateableList, createTranslationsForModel);
 }
 
+export function createModels() {
+  return forAll(notTranslateableList, createFixturesForModel);
+}
+
 if (require.main === module) {
   createTranslations()
-    .catch(err => console.error('Failed to create translations: ', err));
+  .catch(err => console.error('Failed to create translations: ', err));
+
+  createModels()
+  .catch(err => console.error('Failed to create models: ', err));
 }
