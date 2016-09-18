@@ -16,7 +16,7 @@ Make sure your postgreSQL instance is running and make sure that you have a post
 
 Set database settings as environment variable:
     
-    For runnig the app normally
+    For running the app normally
     `export DATABASE_URL=postgres://username:password@host:port/databasename`
 
     For running tests for the app
