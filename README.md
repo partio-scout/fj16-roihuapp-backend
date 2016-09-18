@@ -22,10 +22,12 @@ Set database settings as environment variable:
     For running tests for the app
     `export TEST_DATABASE_URL=postgres://username:password@host:port/databasename`
 
-Install all dependencies:
-    `npm install`
+Install all dependencies: `npm install`
 
-## Environment variables to be able to use all features of the app:
+Create tables: `npm run seed-database`
+
+Create sample data: `npm run create-fixtures`. Sample data is based on real data at Roihu2016 finnjamboree.
+
 
 ### User login with only email
 
