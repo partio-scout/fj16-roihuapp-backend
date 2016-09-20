@@ -186,10 +186,10 @@ function updateBasicModel() {
   ).catch(e => console.log(e));
 }
 
-console.log('----------------------------');
-console.log('--   Roihuapp admintools  --');
-console.log('--    USE WITH OWN RISK   --');
-console.log('----------------------------');
+console.log('-----------------------------');
+console.log('--  Mobile app admintools  --');
+console.log('--    USE WITH OWN RISK    --');
+console.log('-----------------------------');
 
 inquirer.prompt([{
   type: 'list',

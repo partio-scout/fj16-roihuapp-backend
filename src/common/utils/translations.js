@@ -291,6 +291,9 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
   });
 }
 
+/*
+  Allows locally translate fields using fixtures
+*/
 export function getLocalFieldTranslations(translationsFile, fieldValueKey, langs, defaultValue) {
   return Promise.try(() => require(path.resolve(__dirname, `./localTranslations/${translationsFile}`)))
   .then(translationData => {

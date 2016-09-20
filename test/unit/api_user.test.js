@@ -5,15 +5,15 @@ import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
-const RoihuUser = app.models.RoihuUser;
+const ApiUser = app.models.ApiUser;
 
-describe('RoihuUser', () => {
+describe('ApiUser', () => {
 
   describe('findByMemberNumber', () => {
     let userId;
 
     before(() =>
-      RoihuUser.create({
+      ApiUser.create({
         lastModified: new Date(),
         lastname: 'Spurdonte',
         firstname: 'Luigi',
@@ -24,20 +24,20 @@ describe('RoihuUser', () => {
     );
 
     it('returns correct user by membernumber', () =>
-      expect(RoihuUser.findByMemberNumber('12345')).to.eventually.have.property('firstname', 'Luigi'));
+      expect(ApiUser.findByMemberNumber('12345')).to.eventually.have.property('firstname', 'Luigi'));
 
     it('returns null when user is not found', () =>
-      expect(RoihuUser.findByMemberNumber('00404')).to.eventually.be.null);
+      expect(ApiUser.findByMemberNumber('00404')).to.eventually.be.null);
 
-    after(() => RoihuUser.destroyById(userId));
+    after(() => ApiUser.destroyById(userId));
   });
 
   describe('findWaveByVillage', () => {
     it('returns correct wave by village name', () =>
-      expect(RoihuUser.getVillageWave('Minttu')).to.equal('B'));
+      expect(ApiUser.getVillageWave('Minttu')).to.equal('B'));
 
     it('returns A as default village name', () =>
-      expect(RoihuUser.getVillageWave('Mintti')).to.equal('A'));
+      expect(ApiUser.getVillageWave('Mintti')).to.equal('A'));
   });
 
 });

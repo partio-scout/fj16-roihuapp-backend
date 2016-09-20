@@ -1,6 +1,8 @@
-# Roihuapp backend
+# Mobile application backend
 
-Finnjamboree 2016 mobile application backend
+Finnjamboree 2016 mobile application backend. All content types support unlimited amount of different language versions.
+
+# Development
 
 ## Prequisities
 
@@ -14,30 +16,22 @@ Make sure your postgreSQL instance is running and make sure that you have a post
 
 Set database settings as environment variable:
     
-    For runnig the app normally
+    For running the app normally
     `export DATABASE_URL=postgres://username:password@host:port/databasename`
 
     For running tests for the app
     `export TEST_DATABASE_URL=postgres://username:password@host:port/databasename`
 
-Install all dependencies:
-    `npm install`
+Install all dependencies: `npm install`
 
-## Environment variables to be able to use all features of the app:
+Create tables: `npm run seed-database`
+
+Create sample data: `npm run create-fixtures`. Sample data is based on real data at Roihu2016 finnjamboree.
+
 
 ### User login with only email
 
-AWS_SES_USER - aws-ses username
-AWS_SES_PASS - aws-ses password
-
-### Sharepoint integration
-
-SHAREPOINT_USER - sharepoint username
-SHAREPOINT_PSW  - sharepoint password
-
-### Instructions source endpoint
-
-INSTRUCTIONS_SOURCE - http://myurl.com
+Define your email send settings in `mailsettings.js` file. Set `APP_URL` environment variable to application url, so that link in email is correct.
 
 ## Running the app
 
@@ -45,23 +39,15 @@ Start server with `npm start`
 
 You can enable dev settings and api explorer with `NODE_ENV=dev npm start`
 
-## Branches and deployment destinations
-
-Branch -> roihu2016 url -> original url -> deployment type
-
-* master -> http://app-dev.roihu2016.fi -> http://roihuapp-demo.herokuapp.com -> CircleCI
-* staging -> http://app-staging.roihu2016.fi -> http://roihuappstaging-fj16.rhcloud.com -> manual
-* prod -> http://app.roihu2016.fi -> http://roihuapp-fj16.rhcloud.com -> manual
-
 ## Valid endpoints
 
 All GET requests should use lang parameter like `LocationCategories/translations?lang=FI`
 
 #### Achievements
 
-* User completed achievements -> GET api/RoihuUsers/{id}/completedAchievements
-* Mark achievement completed -> PUT api/RoihuUsers/{id}/achievements/rel/{fk}
-* Mark achievement un-completed -> DELETE api/RoihuUsers/{id}/achievements/rel/{fk}
+* User completed achievements -> GET api/ApiUsers/{id}/completedAchievements
+* Mark achievement completed -> PUT api/ApiUsers/{id}/achievements/rel/{fk}
+* Mark achievement un-completed -> DELETE api/ApiUsers/{id}/achievements/rel/{fk}
 * All achievements -> GET api/AchievementCategories/translations
 
 #### Locations
@@ -81,14 +67,14 @@ All GET requests should use lang parameter like `LocationCategories/translations
     * `include` filter may result in unwanted behavior
     * `fields` filter will be overwritten
     * use `textfilter` param to search text from name and description
-* Users calendar -> GET api/RoihuUsers/{id}/calendar
-* Add event to calendar -> PUT api/RoihuUsers/{id}/calendarEvents/rel/{fk}
-* remove event from calendar -> DELETE api/RoihuUsers/{id}/calendarEvents/rel/{fk}
+* Users calendar -> GET api/ApiUsers/{id}/calendar
+* Add event to calendar -> PUT api/ApiUsers/{id}/calendarEvents/rel/{fk}
+* remove event from calendar -> DELETE api/ApiUsers/{id}/calendarEvents/rel/{fk}
 * Submit new event -> POST api/CalendarEvents
 
 #### Users
 
-* Login -> POST api/RoihuUsers/login
-* Logout ->  POST api/RoihuUsers/logout
-* Email login -> POST api/RoihuUsers/emailLogin
+* Login -> POST api/ApiUsers/login
+* Logout ->  POST api/ApiUsers/logout
+* Email login -> POST api/ApiUsers/emailLogin
 * Saml login -> POST saml/login

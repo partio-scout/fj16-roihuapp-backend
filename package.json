@@ -12,9 +12,7 @@
     "linter": "eslint --ext js src test scripts",
     "test-mocha": "mocha --compilers js:babel-core/register ./test --recursive --timeout 5000",
     "seed-database": "babel-node scripts/seed-database.js",
-    "create-translations": "babel-node scripts/create-translations.js",
-    "load-sharepoint": "babel-node scripts/load-sharepoint.js",
-    "load-instructions": "babel-node scripts/load-instructions.js",
+    "create-fixtures": "babel-node scripts/create-fixtures.js",
     "admintools": "babel-node scripts/admintools.js",
     "console": "babel-node"
   },

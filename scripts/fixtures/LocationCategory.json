@@ -1,0 +1,142 @@
+[
+  {
+    "name": {
+      "FI": "Ruokalat",
+      "SV": "Kök / Matsal",
+      "EN": "Canteens"
+    },
+    "sortNo": 1,
+    "idFromSource": 1,
+    "lastModified": "2016-07-18T08:21:44Z"
+  },
+  {
+    "name": {
+      "FI": "Ohjelmat",
+      "SV": "Program",
+      "EN": "Programmes"
+    },
+    "sortNo": 2,
+    "idFromSource": 2,
+    "lastModified": "2016-07-18T14:09:32Z"
+  },
+  {
+    "name": {
+      "FI": "Alaleirit",
+      "SV": "Underläger",
+      "EN": "Subcamps"
+    },
+    "sortNo": 3,
+    "idFromSource": 3,
+    "lastModified": "2016-06-27T16:27:10Z"
+  },
+  {
+    "name": {
+      "FI": "Palvelu",
+      "SV": "Service",
+      "EN": "Service"
+    },
+    "sortNo": 4,
+    "idFromSource": 4,
+    "lastModified": "2016-07-18T08:30:19Z"
+  },
+  {
+    "name": {
+      "FI": "Toimistot",
+      "SV": "Kanslier",
+      "EN": "Offices"
+    },
+    "sortNo": 5,
+    "idFromSource": 5,
+    "lastModified": "2016-07-18T07:58:51Z"
+  },
+  {
+    "name": {
+      "FI": "Muut",
+      "SV": "Övrigt",
+      "EN": "Other"
+    },
+    "sortNo": 6,
+    "idFromSource": 6,
+    "lastModified": "2016-07-18T11:50:52Z"
+  },
+  {
+    "name": {
+      "FI": "Lääkintä ja pelastus",
+      "SV": "Sjukvård och räddning",
+      "EN": "First Aid and Rescue"
+    },
+    "sortNo": 7,
+    "idFromSource": 7,
+    "lastModified": "2016-07-18T07:57:16Z"
+  },
+  {
+    "name": {
+      "FI": "Myyntipaikat",
+      "SV": "Försäljning",
+      "EN": "Shops"
+    },
+    "sortNo": 8,
+    "idFromSource": 8,
+    "lastModified": "2016-07-24T12:37:45Z"
+  },
+  {
+    "name": {
+      "FI": "Nuotiopaikat",
+      "SV": "Eldplatser",
+      "EN": "Campfire Areas"
+    },
+    "sortNo": 9,
+    "idFromSource": 9,
+    "lastModified": "2016-07-18T10:57:20Z"
+  },
+  {
+    "name": {
+      "FI": "Peseytyminen",
+      "SV": "Tvättning",
+      "EN": "Showers"
+    },
+    "sortNo": 10,
+    "idFromSource": 10,
+    "lastModified": "2016-07-18T08:25:50Z"
+  },
+  {
+    "name": {
+      "FI": "Kiinteät rakennelmat",
+      "SV": "Fast bebyggelse",
+      "EN": "Permanent Buildings"
+    },
+    "sortNo": 11,
+    "idFromSource": 11,
+    "lastModified": "2016-07-18T11:20:07Z"
+  },
+  {
+    "name": {
+      "FI": "Kylät",
+      "SV": "Byar",
+      "EN": "Villages"
+    },
+    "sortNo": 12,
+    "idFromSource": 12,
+    "lastModified": "2016-06-27T16:33:15Z"
+  },
+  {
+    "name": {
+      "FI": "WC:t",
+      "SV": "Toaletter",
+      "EN": "Toilets"
+    },
+    "sortNo": 13,
+    "idFromSource": 13,
+    "lastModified": "2016-07-06T17:50:03Z"
+  },
+  {
+    "name": {
+      "FI": "Leirilippukunnat",
+      "SV": "Lägerkårer",
+      "EN": "Camp Units"
+    },
+    "sortNo": 14,
+    "idFromSource": 14,
+    "lastModified": "2016-07-16T10:43:44Z"
+  }
+]

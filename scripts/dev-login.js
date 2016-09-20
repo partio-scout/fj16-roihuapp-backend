@@ -13,7 +13,7 @@ const query = {
   },
 };
 
-app.models.RoihuUser.findOne(query, (err, user) => {
+app.models.ApiUser.findOne(query, (err, user) => {
   if (err) {
     console.error('Error loading user:', err);
     process.exit(1);

@@ -1,5 +1,5 @@
 {
-  "name": "RoihuUser",
+  "name": "ApiUser",
   "base": "User",
   "idInjection": false,
   "options": {
@@ -7,7 +7,7 @@
   },
   "postgresql": {
     "schema": "public",
-    "table": "roihu_user"
+    "table": "api_user"
   },
   "properties": {
     "id": {

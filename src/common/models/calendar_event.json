@@ -302,7 +302,7 @@
   "relations": {
     "usersInEvent": {
       "type": "hasAndBelongsToMany",
-      "model": "RoihuUser"
+      "model": "ApiUser"
     }
   },
   "acls": [

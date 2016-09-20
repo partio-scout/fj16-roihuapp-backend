@@ -15,17 +15,24 @@ const translateableList = [
   'Achievement',
   'LocationCategory',
   'Location',
+  'CalendarEvent',
 ];
 
-function getTranslations(modelName) {
-  return Promise.try(() => require(path.resolve(__dirname, `./translations_to_create/${modelName}`)));
+// Model fixtures not needing translation
+const notTranslateableList = [
+  'InstructionCategory',
+  'Instruction',
+];
+
+function getFixtures(modelName) {
+  return Promise.try(() => require(path.resolve(__dirname, `./fixtures/${modelName}`)));
 }
 
 function createTranslationsForModel(modelName) {
   const model = app.models[modelName];
   const createModel = Promise.promisify(model.create, { context: model });
 
-  return getTranslations(modelName)
+  return getFixtures(modelName)
     .then(modelData => {
       _.forEach(modelData, fixture => {
         const modelJSON = {
@@ -60,6 +67,14 @@ function createTranslationsForModel(modelName) {
     });
 }
 
+function createFixturesForModel(modelName) {
+  const model = app.models[modelName];
+  const createModel = Promise.promisify(model.create, { context: model });
+
+  return getFixtures(modelName)
+    .then(fixtureData => createModel(fixtureData));
+}
+
 // Pikkukikka joka suorittaa promiseReturningFunctionin peräkkäin jokaiselle values-listan jäsenelle niin,
 // että promiseReturningFunctioneja on vain yksi suorituksessa kerrallaan.
 // Palauttaa tyhjän resolved-tilassa olevan promisen jos values-lista on tyhjä.
@@ -72,7 +87,14 @@ export function createTranslations() {
   return forAll(translateableList, createTranslationsForModel);
 }
 
+export function createModels() {
+  return forAll(notTranslateableList, createFixturesForModel);
+}
+
 if (require.main === module) {
   createTranslations()
-    .catch(err => console.error('Failed to create translations: ', err));
+  .catch(err => console.error('Failed to create translations: ', err));
+
+  createModels()
+  .catch(err => console.error('Failed to create models: ', err));
 }

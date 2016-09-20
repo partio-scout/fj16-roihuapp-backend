@@ -6,12 +6,10 @@ import path from 'path';
 import _ from 'lodash';
 import * as translationUtils from '../utils/translations';
 import app from '../../server/server';
-import request from 'superagent';
-import loopback from 'loopback';
 
-export default function(RoihuUser) {
+export default function(ApiUser) {
 
-  RoihuUser.observe('before save', (ctx, next) => {
+  ApiUser.observe('before save', (ctx, next) => {
     // create random password if needed
     if (ctx.instance) {
       if (!ctx.instance.password) {
@@ -26,7 +24,7 @@ export default function(RoihuUser) {
 
   });
 
-  RoihuUser.beforeRemote('prototype.updateAttributes', (ctx, modelInstance, next) => {
+  ApiUser.beforeRemote('prototype.updateAttributes', (ctx, modelInstance, next) => {
     // prevent changes to membernumber
     if (ctx.req && ctx.req.body)  {
       if (ctx.req.body.memberNumber) {
@@ -36,51 +34,7 @@ export default function(RoihuUser) {
     next();
   });
 
-  RoihuUser.beforeRemote('findById', (ctx, modelInstance, next) => {
-    const findUser = Promise.promisify(RoihuUser.findById, { context: RoihuUser });
-    const userId = loopback.getCurrentContext() ? loopback.getCurrentContext().get('accessToken').userId : 0;
-
-    findUser(userId)
-    .then(user => RoihuUser.getRekiInformation(user.memberNumber, user.email)
-      .then(rekiInfo => Promise.fromCallback(callback => {
-        if (rekiInfo) {
-
-          user.subcamp = rekiInfo.subCamp;
-          user.ageGroup = getAgeGroupPlural(rekiInfo.ageGroup);
-          user.phone = rekiInfo.phoneNumber;
-          user.primaryTroopAndCity = rekiInfo.localGroup;
-          user.wave = RoihuUser.getVillageWave(rekiInfo.village);
-          user.campUnit = rekiInfo.campGroup;
-          user.nickname = rekiInfo.nickname || user.nickname;
-          user.firstname = rekiInfo.firstName || user.firstname;
-          user.lastname = rekiInfo.lastName || user.lastname;
-          user.country = rekiInfo.country;
-
-          user.save(callback);
-        } else {
-          callback();
-        }
-      }))
-    ).asCallback((err, data) => {
-      if (err && err.code == 'ENOTFOUND') console.error('REKI_URL not found', err);
-      else if (err) console.log(err);
-      next();
-    });
-
-    function getAgeGroupPlural(ageGroup) {
-      const ageGroups = {
-        'perheleirin ohjelmaan (0-11v.), muistathan merkitä lisätiedot osallistumisesta "vain perheleirin osallistujille" -osuuteen.': 'Perheleiri',
-        'samoajat (15-17v.)': 'Samoajat',
-        'aikuiset (yli 22v.)': 'Aikuiset',
-        'vaeltajat (18-22v.)': 'Vaeltajat',
-        'tarpojat (12-15v.)': 'Tarpojat',
-      };
-
-      return ageGroups[ageGroup] || ageGroup;
-    }
-  });
-
-  RoihuUser.afterRemote('findById', (ctx, modelInstance, next) => {
+  ApiUser.afterRemote('findById', (ctx, modelInstance, next) => {
     if (ctx.result) {
       ctx.result.ageGroup = getAgeGroupTranslations(ctx.result.ageGroup);
     }
@@ -99,32 +53,32 @@ export default function(RoihuUser) {
     }
   });
 
-  RoihuUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
+  ApiUser.beforeRemote('prototype.__link__achievements', (ctx, modelInstance, next) => {
     // check if user already has achieved this achievement
-    RoihuUser.getCompletedAchievementIds(ctx.req.params.id)
+    ApiUser.getCompletedAchievementIds(ctx.req.params.id)
     .then(completed => {
       if (_.indexOf(completed, parseInt(ctx.req.params.fk)) === -1) {
         // increase achievement counts for achievement and category
-        RoihuUser.addOrReduceAchievementScores(1, ctx.req.params.fk);
+        ApiUser.addOrReduceAchievementScores(1, ctx.req.params.fk);
       }
     }).asCallback(next);
   });
 
-  RoihuUser.beforeRemote('prototype.__unlink__achievements', (ctx, modelInstance, next) => {
+  ApiUser.beforeRemote('prototype.__unlink__achievements', (ctx, modelInstance, next) => {
     // check if user already has achieved this achievement
-    RoihuUser.getCompletedAchievementIds(ctx.req.params.id)
+    ApiUser.getCompletedAchievementIds(ctx.req.params.id)
     .then(completed => {
       if (_.indexOf(completed, parseInt(ctx.req.params.fk)) !== -1) {
         // decreace achievement counts for achievement and category
-        RoihuUser.addOrReduceAchievementScores(-1, ctx.req.params.fk);
+        ApiUser.addOrReduceAchievementScores(-1, ctx.req.params.fk);
       }
     }).asCallback(next);
   });
 
-  RoihuUser.beforeRemote('prototype.__link__calendarEvents', (ctx, modelInstance, next) => {
+  ApiUser.beforeRemote('prototype.__link__calendarEvents', (ctx, modelInstance, next) => {
     const CalendarEvent = app.models.CalendarEvent;
 
-    RoihuUser.getAttendingEventIds(ctx.req.params.id)
+    ApiUser.getAttendingEventIds(ctx.req.params.id)
     .then(eventIds => {
       if (_.indexOf(eventIds, parseInt(ctx.req.params.fk)) === -1) {
 
@@ -133,10 +87,10 @@ export default function(RoihuUser) {
     }).asCallback(next);
   });
 
-  RoihuUser.beforeRemote('prototype.__unlink__calendarEvents', (ctx, modelInstance, next) => {
+  ApiUser.beforeRemote('prototype.__unlink__calendarEvents', (ctx, modelInstance, next) => {
     const CalendarEvent = app.models.CalendarEvent;
 
-    RoihuUser.getAttendingEventIds(ctx.req.params.id)
+    ApiUser.getAttendingEventIds(ctx.req.params.id)
     .then(eventIds => {
       if (_.indexOf(eventIds, parseInt(ctx.req.params.fk)) !== -1) {
 
@@ -145,22 +99,7 @@ export default function(RoihuUser) {
     }).asCallback(next);
   });
 
-  RoihuUser.getRekiInformation = (memberNumber, email) => {
-    const rekiUrl = process.env.REKI_URL;
-    const accessToken = process.env.REKI_ACCESSTOKEN;
-
-    return new Promise((resolve, reject) => {
-      request.get(`${rekiUrl}/api/Participants/appInformation?access_token=${accessToken}&memberNumber=${memberNumber}&email=${email}`)
-      .end((err, userInfo) => {
-        if (err) reject(err);
-        else {
-          resolve(userInfo.body);
-        }
-      });
-    });
-  };
-
-  RoihuUser.addOrReduceAchievementScores = function(amount, achievementId) {
+  ApiUser.addOrReduceAchievementScores = function(amount, achievementId) {
     const findAchievement = Promise.promisify(app.models.Achievement.findOne, { context: app.models.Achievement });
     const findAchievementCategory = Promise.promisify(app.models.AchievementCategory.findOne, { context: app.models.AchievementCategory });
 
@@ -177,19 +116,19 @@ export default function(RoihuUser) {
     });
   };
 
-  RoihuUser.findByMemberNumber = function(memberNumber) {
+  ApiUser.findByMemberNumber = function(memberNumber) {
     const query = {
       where: {
         memberNumber: memberNumber,
       },
     };
-    return RoihuUser.findOne(query);
+    return ApiUser.findOne(query);
   };
 
-  RoihuUser.emailLogin = function(mail, cb) {
+  ApiUser.emailLogin = function(mail, cb) {
     const ACCESS_TOKEN_LIFETIME = 6 * 30 * 24 * 60 * 60;
-    const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
-    const createUser = Promise.promisify(RoihuUser.create, { context: RoihuUser });
+    const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
+    const createUser = Promise.promisify(ApiUser.create, { context: ApiUser });
 
     function findOrCreateUser(mail) {
       return findUser({ where: { email: mail } })
@@ -228,9 +167,9 @@ export default function(RoihuUser) {
       const text_html = `${text_fi} <br/> ${text_en} <br/> ${text_se} <br/> <br/>`;
 
       const mailOptions = {
-        from: `"roihuapp" <noreply@roihu2016.fi>`,
+        from: `"Mobile-app" <noreply@example.com>`,
         to: mail,
-        subject: 'Roihuapp email login',
+        subject: 'Mobile-app email login',
         text: `${text_text}${url}`,
         html: `${text_html}<a href="${url}">${url}</a>`,
       };
@@ -253,7 +192,7 @@ export default function(RoihuUser) {
   /*
   Get village's wave from achievements as string value. Null if not found
 */
-  RoihuUser.getVillageWave = function(village) {
+  ApiUser.getVillageWave = function(village) {
     const village_map = require(path.join(__dirname, '..', '..', '..', 'kyla_aallot.json'));
     const village_data = village_map[village];
     if (village_data) {
@@ -266,8 +205,8 @@ export default function(RoihuUser) {
   /*
     Get completed achievements as translated
   */
-  RoihuUser.completedAchievements = function(userId, lang, cb) {
-    const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+  ApiUser.completedAchievements = function(userId, lang, cb) {
+    const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
     findUser({
       where: { id: userId },
@@ -295,9 +234,9 @@ export default function(RoihuUser) {
     .catch(err => cb(err, null));
   };
 
-  RoihuUser.getCompletedAchievementIds = function(userId) {
+  ApiUser.getCompletedAchievementIds = function(userId) {
     return new Promise((resolve, reject) => {
-      const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+      const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
       if (userId) {
         findUser({
@@ -326,9 +265,9 @@ export default function(RoihuUser) {
     });
   };
 
-  RoihuUser.getAttendingEventIds = function(userId) {
+  ApiUser.getAttendingEventIds = function(userId) {
     return new Promise((resolve, reject) => {
-      const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+      const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
       if (userId) {
         findUser({
@@ -357,8 +296,8 @@ export default function(RoihuUser) {
     });
   };
 
-  RoihuUser.calendar = function(userId, lang, cb) {
-    const findUser = Promise.promisify(RoihuUser.findOne, { context: RoihuUser });
+  ApiUser.calendar = function(userId, lang, cb) {
+    const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
     const CalendarEvent = app.models.CalendarEvent;
 
     translationUtils.getLangIfNotExists(lang)
@@ -448,7 +387,7 @@ export default function(RoihuUser) {
     return _.split(stringValue, sep, 1)[0];
   }
 
-  RoihuUser.remoteMethod(
+  ApiUser.remoteMethod(
     'emailLogin',
     {
       http: { path: '/emailLogin', verb: 'post' },
@@ -459,7 +398,7 @@ export default function(RoihuUser) {
     }
   );
 
-  RoihuUser.remoteMethod(
+  ApiUser.remoteMethod(
     'completedAchievements',
     {
       http: { path: '/:id/completedAchievements', verb: 'get' },
@@ -471,7 +410,7 @@ export default function(RoihuUser) {
     }
   );
 
-  RoihuUser.remoteMethod(
+  ApiUser.remoteMethod(
     'calendar',
     {
       http: { path: '/:id/calendar', verb: 'get' },

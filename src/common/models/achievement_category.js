@@ -10,7 +10,7 @@ module.exports = function(AchievementCategory) {
   AchievementCategory.FindTranslations = function(language, cb) {
     const Achievement = app.models.Achievement;
     const ctx = loopback.getCurrentContext();
-    const RoihuUser = app.models.RoihuUser;
+    const ApiUser = app.models.ApiUser;
     let currentUserId = null;
 
     if (ctx.active.accessToken) {   // user is logged in
@@ -19,7 +19,7 @@ module.exports = function(AchievementCategory) {
 
     Promise.join(
       translationUtils.getLangIfNotExists(language),
-      RoihuUser.getCompletedAchievementIds(currentUserId),
+      ApiUser.getCompletedAchievementIds(currentUserId),
       (lang, userCompletedAchievemets) => {
 
         const timeNow = new Date();

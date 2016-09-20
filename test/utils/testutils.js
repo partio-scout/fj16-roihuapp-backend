@@ -5,7 +5,7 @@ import request from 'supertest-as-promised';
 
 export function loginUser(username, userpass) {
   userpass = userpass || 'salasana';
-  const promiseUserLogin = Promise.promisify(app.models.RoihuUser.login, { context: app.models.RoihuUser });
+  const promiseUserLogin = Promise.promisify(app.models.ApiUser.login, { context: app.models.ApiUser });
   return promiseUserLogin({
     username: username,
     password: userpass,
