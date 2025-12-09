@@ -176,7 +176,10 @@ export default function(ApiUser) {
     }
 
     function generateAccessToken(user) {
-      console.log('Generating access token for user:', user.id);
+      // Only log in dev mode to avoid exposing user IDs in production
+      if (process.env.NODE_ENV === 'dev') {
+        console.log('Generating access token for user:', user.id);
+      }
       return user.createAccessToken(ACCESS_TOKEN_LIFETIME);
     }
 
@@ -207,7 +210,7 @@ export default function(ApiUser) {
           console.error('Failed to send email:', err.message);
           cb(errorUtils.createHTTPError('mail send failed', 500, null), null);
         } else {
-          console.log('Email sent successfully to:', mail);
+          console.log('Login email sent successfully');
           cb(null, 'Mail sent!');
         }
       });

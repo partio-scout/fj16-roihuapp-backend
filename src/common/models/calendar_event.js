@@ -54,8 +54,10 @@ module.exports = function(CalendarEvent) {
         .then(events => {
 
           if (textfilter) {
+            // Escape special regex characters to prevent ReDoS attacks
+            const escapedFilter = textfilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             // create regex to be used
-            const regex = new RegExp(`${textfilter}`, 'i');
+            const regex = new RegExp(escapedFilter, 'i');
             // exclude events that don't match textfilter
             events = _.filter(events, evt => {
               if (evt.name.search(regex) === -1 && evt.description.search(regex) === -1) return false;
