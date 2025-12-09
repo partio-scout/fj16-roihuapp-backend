@@ -235,7 +235,7 @@ export default function(ApiUser) {
   };
 
   ApiUser.getCompletedAchievementIds = function(userId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
       if (userId) {
@@ -251,11 +251,11 @@ export default function(ApiUser) {
         .then(user => {
           user = user.toJSON();
 
-          const userCompletedAchievemets = [];
+          const userCompletedAchievements = [];
           _.forEach(user.achievements, achievement => {
-            userCompletedAchievemets.push(achievement.achievementId);
+            userCompletedAchievements.push(achievement.achievementId);
           });
-          return userCompletedAchievemets;
+          return userCompletedAchievements;
         })
         .then(completed => resolve(completed))
         .catch(() => resolve([]));
@@ -266,7 +266,7 @@ export default function(ApiUser) {
   };
 
   ApiUser.getAttendingEventIds = function(userId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
       if (userId) {

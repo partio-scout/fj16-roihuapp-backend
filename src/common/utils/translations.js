@@ -100,7 +100,7 @@ export function getTranslation(lang, guid) {
 }
 
 export function isUUID(text) {
-  return (validate_uuid(text, 1) || validate_uuid(text, 4)) ? true : false;
+  return validate_uuid(text, 1) || validate_uuid(text, 4);
 }
 
 /*
@@ -110,11 +110,11 @@ export function getLangIfNotExists(lang) {
   const TranslationModel = app.models.Translation;
   const countTranslation = Promise.promisify(TranslationModel.count, { context: TranslationModel });
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     if (!lang) resolve('EN');
     else countTranslation({ lang: lang })
       .then(count => {
-        if (count == 0) resolve('EN');
+        if (count === 0) resolve('EN');
         else resolve(lang);
       });
   });
@@ -249,7 +249,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
       });
       _.forEach(newFixtures, newFixture => {
         newIds.push(newFixture[linkingKey]);
-        if (currentIds.indexOf(newFixture[linkingKey]) == -1) {
+        if (currentIds.indexOf(newFixture[linkingKey]) === -1) {
           toCreate.push(newFixture);
         } else {
           toUpdate.push(newFixture);
@@ -257,7 +257,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
       });
 
       _.forEach(currentData, currentInstance => {
-        if (newIds.indexOf(currentInstance[linkingKey]) == -1) {
+        if (newIds.indexOf(currentInstance[linkingKey]) === -1) {
           toDelete.push(currentInstance);
         }
       });

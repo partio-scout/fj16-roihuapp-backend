@@ -46,7 +46,7 @@ module.exports = function(CalendarEvent) {
         .then(translatedEvents => {
           const events = [];
           _.forEach(translatedEvents, event => {
-            if (event.status != 'searchable') return;  // skip everything not searchable
+            if (event.status !== 'searchable') return;  // skip everything not searchable
             events.push(event);
           });
           return events;
@@ -58,7 +58,7 @@ module.exports = function(CalendarEvent) {
             const regex = new RegExp(`${textfilter}`, 'i');
             // exclude events that don't match textfilter
             events = _.filter(events, evt => {
-              if (evt.name.search(regex) == -1 && evt.description.search(regex) == -1) return false;
+              if (evt.name.search(regex) === -1 && evt.description.search(regex) === -1) return false;
               else return true;
             });
           }
