@@ -142,13 +142,13 @@ export default function(ApiUser) {
             password: crypto.randomBytes(24).toString('hex'),
             lastModified: new Date(),
           })
-          .catch(err => console.log(err));
+          .catch(err => console.error('Error creating user:', err.message));
         }
       });
     }
 
     function generateAccessToken(user) {
-      console.log(user);
+      console.log('Generating access token for user:', user.id);
       return user.createAccessToken(ACCESS_TOKEN_LIFETIME);
     }
 
@@ -176,14 +176,16 @@ export default function(ApiUser) {
 
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
-          console.error(err);
+          console.error('Failed to send email:', err.message);
           cb(errorUtils.createHTTPError('mail send failed', 500, null), null);
+        } else {
+          console.log('Email sent successfully to:', mail);
+          cb(null, 'Mail sent!');
         }
-        cb(null, 'Mail sent!');
-        console.log(info);
       });
     })
     .catch(err => {
+      console.error('Error in emailLogin:', err.message);
       cb(err, null);
     });
 

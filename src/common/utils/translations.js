@@ -273,7 +273,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
     .then(() => {
       _.forEach(toDelete, del => {
         if (soft) {
-          console.log('Warning! using soft delete may not work properly!');
+          console.warn('Warning! using soft delete may not work properly!');
           updateModel({ [linkingKey]: del[linkingKey] }, { deleted: true, lastModified: Date.now() });
         } else {
           destroyModels({ [linkingKey]: del[linkingKey] });
@@ -284,8 +284,8 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
       resolve();
     })
     .catch(err => {
-      console.log('Error happened');
-      console.log('Please make sure your model has "deleted" field even if softdelete is not used');
+      console.error('Error during CRUD operation:', err.message);
+      console.error('Please make sure your model has "deleted" field even if softdelete is not used');
       reject(err);
     });
   });
