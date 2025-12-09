@@ -90,6 +90,9 @@ module.exports = function(CalendarEvent) {
     return findEvent({
       where: { eventId: eventId },
     }).then(event => {
+      if (!event) {
+        throw new Error('Event not found');
+      }
       event.updateAttribute('participantCount', event.participantCount + amount);
     });
   };

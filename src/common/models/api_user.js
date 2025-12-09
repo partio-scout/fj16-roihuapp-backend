@@ -106,12 +106,18 @@ export default function(ApiUser) {
     return findAchievement({
       where: { achievementId: achievementId },
     }).then(achievement => {
+      if (!achievement) {
+        throw new Error('Achievement not found');
+      }
       achievement.updateAttribute('achievementCount', achievement.achievementCount + amount);
       return findAchievementCategory({
         // PUT CORRECT ID HERE WHEN IT CHANGES!!!
         where: { idFromSource: achievement.categoryId },
       });
     }).then(category => {
+      if (!category) {
+        throw new Error('Achievement category not found');
+      }
       category.updateAttribute('achievementCount', category.achievementCount + amount);
     });
   };
@@ -126,6 +132,17 @@ export default function(ApiUser) {
   };
 
   ApiUser.emailLogin = function(mail, cb) {
+    // Validate email input
+    if (!mail || typeof mail !== 'string' || !mail.trim()) {
+      return cb(errorUtils.createHTTPError('Valid email is required', 400, null), null);
+    }
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(mail)) {
+      return cb(errorUtils.createHTTPError('Invalid email format', 400, null), null);
+    }
+
     const ACCESS_TOKEN_LIFETIME = 6 * 30 * 24 * 60 * 60;
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
     const createUser = Promise.promisify(ApiUser.create, { context: ApiUser });
@@ -208,6 +225,11 @@ export default function(ApiUser) {
     Get completed achievements as translated
   */
   ApiUser.completedAchievements = function(userId, lang, cb) {
+    // Validate userId
+    if (!userId || typeof userId !== 'number' || userId <= 0) {
+      return cb(errorUtils.createHTTPError('Valid user ID is required', 400, null), null);
+    }
+
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
     findUser({
@@ -215,6 +237,10 @@ export default function(ApiUser) {
       include: 'achievements',
     })
     .then(user => {
+      if (!user) {
+        return cb(errorUtils.createHTTPError('User not found', 404, null), null);
+      }
+
       const u = user.toJSON();
 
       translationUtils.getLangIfNotExists(lang)
@@ -299,6 +325,11 @@ export default function(ApiUser) {
   };
 
   ApiUser.calendar = function(userId, lang, cb) {
+    // Validate userId
+    if (!userId || typeof userId !== 'number' || userId <= 0) {
+      return cb(errorUtils.createHTTPError('Valid user ID is required', 400, null), null);
+    }
+
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
     const CalendarEvent = app.models.CalendarEvent;
 
