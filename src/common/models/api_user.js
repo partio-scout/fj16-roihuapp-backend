@@ -122,6 +122,11 @@ export default function(ApiUser) {
     });
   };
 
+  /**
+   * Find a user by their member number
+   * @param {string} memberNumber - The member number to search for
+   * @returns {Promise<Object>} The user object if found
+   */
   ApiUser.findByMemberNumber = function(memberNumber) {
     const query = {
       where: {
@@ -131,6 +136,12 @@ export default function(ApiUser) {
     return ApiUser.findOne(query);
   };
 
+  /**
+   * Email-based login - sends a login link to the user's email
+   * @param {string} mail - User's email address
+   * @param {Function} cb - Callback function(error, result)
+   * @returns {void}
+   */
   ApiUser.emailLogin = function(mail, cb) {
     // Validate email input
     if (!mail || typeof mail !== 'string' || !mail.trim()) {
@@ -208,9 +219,11 @@ export default function(ApiUser) {
 
   };
 
-  /*
-  Get village's wave from achievements as string value. Null if not found
-*/
+  /**
+   * Get village's wave from achievements as string value
+   * @param {string} village - Village name
+   * @returns {string} Wave identifier (defaults to 'A' if not found)
+   */
   ApiUser.getVillageWave = function(village) {
     const village_map = require(path.join(__dirname, '..', '..', '..', 'kyla_aallot.json'));
     const village_data = village_map[village];
@@ -221,9 +234,13 @@ export default function(ApiUser) {
     }
   };
 
-  /*
-    Get completed achievements as translated
-  */
+  /**
+   * Get user's completed achievements with translations
+   * @param {number} userId - User ID
+   * @param {string} lang - Language code (e.g., 'EN', 'FI')
+   * @param {Function} cb - Callback function(error, achievements)
+   * @returns {void}
+   */
   ApiUser.completedAchievements = function(userId, lang, cb) {
     // Validate userId
     if (!userId || typeof userId !== 'number' || userId <= 0) {
@@ -262,6 +279,11 @@ export default function(ApiUser) {
     .catch(err => cb(err, null));
   };
 
+  /**
+   * Get list of achievement IDs that a user has completed
+   * @param {number} userId - User ID
+   * @returns {Promise<Array<number>>} Array of achievement IDs
+   */
   ApiUser.getCompletedAchievementIds = function(userId) {
     return new Promise(resolve => {
       const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
@@ -293,6 +315,11 @@ export default function(ApiUser) {
     });
   };
 
+  /**
+   * Get list of event IDs that a user is attending
+   * @param {number} userId - User ID
+   * @returns {Promise<Array<number>>} Array of event IDs
+   */
   ApiUser.getAttendingEventIds = function(userId) {
     return new Promise(resolve => {
       const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
@@ -324,6 +351,13 @@ export default function(ApiUser) {
     });
   };
 
+  /**
+   * Get user's calendar including their events and mandatory events
+   * @param {number} userId - User ID
+   * @param {string} lang - Language code (e.g., 'EN', 'FI')
+   * @param {Function} cb - Callback function(error, calendar)
+   * @returns {void}
+   */
   ApiUser.calendar = function(userId, lang, cb) {
     // Validate userId
     if (!userId || typeof userId !== 'number' || userId <= 0) {
