@@ -106,16 +106,27 @@ export default function(ApiUser) {
     return findAchievement({
       where: { achievementId: achievementId },
     }).then(achievement => {
+      if (!achievement) {
+        throw new Error('Achievement not found');
+      }
       achievement.updateAttribute('achievementCount', achievement.achievementCount + amount);
       return findAchievementCategory({
         // PUT CORRECT ID HERE WHEN IT CHANGES!!!
         where: { idFromSource: achievement.categoryId },
       });
     }).then(category => {
+      if (!category) {
+        throw new Error('Achievement category not found');
+      }
       category.updateAttribute('achievementCount', category.achievementCount + amount);
     });
   };
 
+  /**
+   * Find a user by their member number
+   * @param {string} memberNumber - The member number to search for
+   * @returns {Promise<Object>} The user object if found
+   */
   ApiUser.findByMemberNumber = function(memberNumber) {
     const query = {
       where: {
@@ -125,7 +136,24 @@ export default function(ApiUser) {
     return ApiUser.findOne(query);
   };
 
+  /**
+   * Email-based login - sends a login link to the user's email
+   * @param {string} mail - User's email address
+   * @param {Function} cb - Callback function(error, result)
+   * @returns {void}
+   */
   ApiUser.emailLogin = function(mail, cb) {
+    // Validate email input
+    if (!mail || typeof mail !== 'string' || !mail.trim()) {
+      return cb(errorUtils.createHTTPError('Valid email is required', 400, null), null);
+    }
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(mail)) {
+      return cb(errorUtils.createHTTPError('Invalid email format', 400, null), null);
+    }
+
     const ACCESS_TOKEN_LIFETIME = 6 * 30 * 24 * 60 * 60;
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
     const createUser = Promise.promisify(ApiUser.create, { context: ApiUser });
@@ -142,13 +170,16 @@ export default function(ApiUser) {
             password: crypto.randomBytes(24).toString('hex'),
             lastModified: new Date(),
           })
-          .catch(err => console.log(err));
+          .catch(err => console.error('Error creating user:', err.message));
         }
       });
     }
 
     function generateAccessToken(user) {
-      console.log(user);
+      // Only log in dev mode to avoid exposing user IDs in production
+      if (process.env.NODE_ENV === 'dev') {
+        console.log('Generating access token for user:', user.id);
+      }
       return user.createAccessToken(ACCESS_TOKEN_LIFETIME);
     }
 
@@ -176,22 +207,26 @@ export default function(ApiUser) {
 
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
-          console.error(err);
+          console.error('Failed to send email:', err.message);
           cb(errorUtils.createHTTPError('mail send failed', 500, null), null);
+        } else {
+          console.log('Login email sent successfully');
+          cb(null, 'Mail sent!');
         }
-        cb(null, 'Mail sent!');
-        console.log(info);
       });
     })
     .catch(err => {
+      console.error('Error in emailLogin:', err.message);
       cb(err, null);
     });
 
   };
 
-  /*
-  Get village's wave from achievements as string value. Null if not found
-*/
+  /**
+   * Get village's wave from achievements as string value
+   * @param {string} village - Village name
+   * @returns {string} Wave identifier (defaults to 'A' if not found)
+   */
   ApiUser.getVillageWave = function(village) {
     const village_map = require(path.join(__dirname, '..', '..', '..', 'kyla_aallot.json'));
     const village_data = village_map[village];
@@ -202,17 +237,31 @@ export default function(ApiUser) {
     }
   };
 
-  /*
-    Get completed achievements as translated
-  */
+  /**
+   * Get user's completed achievements with translations
+   * @param {number} userId - User ID
+   * @param {string} lang - Language code (e.g., 'EN', 'FI')
+   * @param {Function} cb - Callback function(error, achievements)
+   * @returns {void}
+   */
   ApiUser.completedAchievements = function(userId, lang, cb) {
+    // Validate userId - convert to number if string and validate
+    const numericUserId = Number(userId);
+    if (!userId || Number.isNaN(numericUserId) || numericUserId <= 0) {
+      return cb(errorUtils.createHTTPError('Valid user ID is required', 400, null), null);
+    }
+
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
     findUser({
-      where: { id: userId },
+      where: { id: numericUserId },
       include: 'achievements',
     })
     .then(user => {
+      if (!user) {
+        return cb(errorUtils.createHTTPError('User not found', 404, null), null);
+      }
+
       const u = user.toJSON();
 
       translationUtils.getLangIfNotExists(lang)
@@ -234,8 +283,13 @@ export default function(ApiUser) {
     .catch(err => cb(err, null));
   };
 
+  /**
+   * Get list of achievement IDs that a user has completed
+   * @param {number} userId - User ID
+   * @returns {Promise<Array<number>>} Array of achievement IDs
+   */
   ApiUser.getCompletedAchievementIds = function(userId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
       if (userId) {
@@ -251,11 +305,11 @@ export default function(ApiUser) {
         .then(user => {
           user = user.toJSON();
 
-          const userCompletedAchievemets = [];
+          const userCompletedAchievements = [];
           _.forEach(user.achievements, achievement => {
-            userCompletedAchievemets.push(achievement.achievementId);
+            userCompletedAchievements.push(achievement.achievementId);
           });
-          return userCompletedAchievemets;
+          return userCompletedAchievements;
         })
         .then(completed => resolve(completed))
         .catch(() => resolve([]));
@@ -265,8 +319,13 @@ export default function(ApiUser) {
     });
   };
 
+  /**
+   * Get list of event IDs that a user is attending
+   * @param {number} userId - User ID
+   * @returns {Promise<Array<number>>} Array of event IDs
+   */
   ApiUser.getAttendingEventIds = function(userId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
       if (userId) {
@@ -296,7 +355,20 @@ export default function(ApiUser) {
     });
   };
 
+  /**
+   * Get user's calendar including their events and mandatory events
+   * @param {number} userId - User ID
+   * @param {string} lang - Language code (e.g., 'EN', 'FI')
+   * @param {Function} cb - Callback function(error, calendar)
+   * @returns {void}
+   */
   ApiUser.calendar = function(userId, lang, cb) {
+    // Validate userId - convert to number if string and validate
+    const numericUserId = Number(userId);
+    if (!userId || Number.isNaN(numericUserId) || numericUserId <= 0) {
+      return cb(errorUtils.createHTTPError('Valid user ID is required', 400, null), null);
+    }
+
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
     const CalendarEvent = app.models.CalendarEvent;
 
@@ -304,7 +376,7 @@ export default function(ApiUser) {
     .then(language => {
       let User;
       findUser({
-        where: { id: userId },
+        where: { id: numericUserId },
         include: {
           relation: 'calendarEvents',
           scope: {

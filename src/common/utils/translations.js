@@ -5,9 +5,13 @@ import validate_uuid from 'uuid-validate';
 import uuid from 'uuid';
 import path from 'path';
 
-/*
-  FInd all models to match filter and translate them
-*/
+/**
+ * Find all models matching filter and translate their fields
+ * @param {Object} model - Loopback model to query
+ * @param {string} lang - Language code for translations (e.g., 'EN', 'FI')
+ * @param {Object} filter - Loopback filter object
+ * @returns {Promise<Array>} Array of translated model instances
+ */
 export function getTranslationsForModel(model, lang, filter) {
   const findModel = Promise.promisify(model.find, { context: model });
 
@@ -54,9 +58,12 @@ export function getTranslationsForModel(model, lang, filter) {
   });
 }
 
-/*
-  Translate single model instance
-*/
+/**
+ * Translate a single model instance
+ * @param {Object} modelInstance - Model instance to translate
+ * @param {string} lang - Language code for translations
+ * @returns {Promise<Object>} Translated model instance
+ */
 export function translateModel(modelInstance, lang) {
 
   return new Promise((resolve, reject) => {
@@ -86,9 +93,12 @@ export function translateModel(modelInstance, lang) {
   });
 }
 
-/*
-  Turn single guid into cleartext
-*/
+/**
+ * Get translation text for a specific GUID and language
+ * @param {string} lang - Language code
+ * @param {string} guid - UUID of the translation
+ * @returns {Promise<Object|null>} Translation object or null if not found
+ */
 export function getTranslation(lang, guid) {
   const TranslationModel = app.models.Translation;
   const findTranslation = Promise.promisify(TranslationModel.findOne, { context: TranslationModel });
@@ -99,22 +109,29 @@ export function getTranslation(lang, guid) {
     ] } });
 }
 
+/**
+ * Check if a text string is a valid UUID
+ * @param {string} text - Text to validate
+ * @returns {boolean} True if text is a valid UUID (v1 or v4)
+ */
 export function isUUID(text) {
-  return (validate_uuid(text, 1) || validate_uuid(text, 4)) ? true : false;
+  return validate_uuid(text, 1) || validate_uuid(text, 4);
 }
 
-/*
-  Get default language if lang is not found
-*/
+/**
+ * Get language code or return default if it doesn't exist
+ * @param {string} lang - Language code to check
+ * @returns {Promise<string>} The language code if valid, otherwise 'EN'
+ */
 export function getLangIfNotExists(lang) {
   const TranslationModel = app.models.Translation;
   const countTranslation = Promise.promisify(TranslationModel.count, { context: TranslationModel });
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     if (!lang) resolve('EN');
     else countTranslation({ lang: lang })
       .then(count => {
-        if (count == 0) resolve('EN');
+        if (count === 0) resolve('EN');
         else resolve(lang);
       });
   });
@@ -249,7 +266,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
       });
       _.forEach(newFixtures, newFixture => {
         newIds.push(newFixture[linkingKey]);
-        if (currentIds.indexOf(newFixture[linkingKey]) == -1) {
+        if (currentIds.indexOf(newFixture[linkingKey]) === -1) {
           toCreate.push(newFixture);
         } else {
           toUpdate.push(newFixture);
@@ -257,7 +274,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
       });
 
       _.forEach(currentData, currentInstance => {
-        if (newIds.indexOf(currentInstance[linkingKey]) == -1) {
+        if (newIds.indexOf(currentInstance[linkingKey]) === -1) {
           toDelete.push(currentInstance);
         }
       });
@@ -273,7 +290,7 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
     .then(() => {
       _.forEach(toDelete, del => {
         if (soft) {
-          console.log('Warning! using soft delete may not work properly!');
+          console.warn('Warning! using soft delete may not work properly!');
           updateModel({ [linkingKey]: del[linkingKey] }, { deleted: true, lastModified: Date.now() });
         } else {
           destroyModels({ [linkingKey]: del[linkingKey] });
@@ -284,8 +301,8 @@ export function CRUDModels(modelName, newFixtures, linkingKey, soft, whereFilter
       resolve();
     })
     .catch(err => {
-      console.log('Error happened');
-      console.log('Please make sure your model has "deleted" field even if softdelete is not used');
+      console.error('Error during CRUD operation:', err.message);
+      console.error('Please make sure your model has "deleted" field even if softdelete is not used');
       reject(err);
     });
   });
