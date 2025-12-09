@@ -245,15 +245,16 @@ export default function(ApiUser) {
    * @returns {void}
    */
   ApiUser.completedAchievements = function(userId, lang, cb) {
-    // Validate userId
-    if (!userId || typeof userId !== 'number' || userId <= 0) {
+    // Validate userId - convert to number if string and validate
+    const numericUserId = Number(userId);
+    if (!userId || Number.isNaN(numericUserId) || numericUserId <= 0) {
       return cb(errorUtils.createHTTPError('Valid user ID is required', 400, null), null);
     }
 
     const findUser = Promise.promisify(ApiUser.findOne, { context: ApiUser });
 
     findUser({
-      where: { id: userId },
+      where: { id: numericUserId },
       include: 'achievements',
     })
     .then(user => {
@@ -362,8 +363,9 @@ export default function(ApiUser) {
    * @returns {void}
    */
   ApiUser.calendar = function(userId, lang, cb) {
-    // Validate userId
-    if (!userId || typeof userId !== 'number' || userId <= 0) {
+    // Validate userId - convert to number if string and validate
+    const numericUserId = Number(userId);
+    if (!userId || Number.isNaN(numericUserId) || numericUserId <= 0) {
       return cb(errorUtils.createHTTPError('Valid user ID is required', 400, null), null);
     }
 
@@ -374,7 +376,7 @@ export default function(ApiUser) {
     .then(language => {
       let User;
       findUser({
-        where: { id: userId },
+        where: { id: numericUserId },
         include: {
           relation: 'calendarEvents',
           scope: {
